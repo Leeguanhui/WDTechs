@@ -4,14 +4,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.wd.tech.R;
+import com.wd.tech.bean.NewsBannder;
+import com.wd.tech.bean.Result;
+import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
+import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.NewsBannderPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +32,8 @@ import butterknife.ButterKnife;
  */
 public class Fragment_Page_one extends WDFragment {
 
+    private NewsBannderPresenter newsBannderPresenter;
+
     @Override
     public String getPageName() {
         return null;
@@ -35,6 +44,19 @@ public class Fragment_Page_one extends WDFragment {
     }
     @Override
     protected void initView() {
+        newsBannderPresenter = new NewsBannderPresenter(new Bannder());
+        newsBannderPresenter.request();
+    }
 
+    private class Bannder implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getContext(), "111", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }
