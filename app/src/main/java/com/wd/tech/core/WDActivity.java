@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-
 import butterknife.ButterKnife;
 import me.jessyan.autosize.internal.CustomAdapt;
 

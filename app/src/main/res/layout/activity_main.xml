@@ -1,70 +1,142 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <!-- 左侧滑动栏 -->
+    <LinearLayout
+        android:id="@+id/main_left_drawer_layout"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/mybackground"
+        android:orientation="vertical">
 
-    <com.wd.tech.activity.view.SlidingMenu
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/myheader"
+                android:layout_width="56dp"
+                android:layout_height="58dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="76dp"
+                android:scaleType="centerCrop"
+                app:placeholderImage="@drawable/header_image"
+                app:roundAsCircle="true"
+                app:roundBottomLeft="true"
+                app:roundBottomRight="true"
+                app:roundTopLeft="true"
+                app:roundTopRight="true" />
+
+            <TextView
+                android:id="@+id/myname"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="76dp"
+                android:layout_toRightOf="@+id/myheader"
+                android:text="JUKER"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/mysign"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myname"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/myheader"
+                android:text="众人皆醉我独醒"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="76dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/sign_imag"
+                android:src="@drawable/vipimage" />
+
+            <ImageView
+                android:id="@+id/sign_imag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="76dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/my_icon_sign_n" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sign_imag"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="12dp"
+                android:text="签到"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/melinear_shape" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <FrameLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RadioGroup
+            android:id="@+id/radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
-            <include layout="@layout/sideslip_layout" />
+            <RadioButton
+                android:id="@+id/one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/common_tab_informatiion_s"
+                android:gravity="center"
+                android:text="资讯" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/common_tab_message_n"
+                android:gravity="center"
+                android:text="消息" />
 
-                <FrameLayout
-                    android:id="@+id/fragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RadioGroup
-                    android:id="@+id/radio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/one"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:drawableTop="@drawable/common_tab_informatiion_s"
-                        android:gravity="center"
-                        android:text="资讯" />
-
-                    <RadioButton
-                        android:id="@+id/two"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:drawableTop="@drawable/common_tab_message_n"
-                        android:gravity="center"
-                        android:text="消息" />
-
-                    <RadioButton
-                        android:id="@+id/three"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:drawableTop="@drawable/common_tab_community_n"
-                        android:gravity="center"
-                        android:text="消息" />
-                </RadioGroup>
-            </LinearLayout>
-        </LinearLayout>
-    </com.wd.tech.activity.view.SlidingMenu>
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/common_tab_community_n"
+                android:gravity="center"
+                android:text="消息" />
+        </RadioGroup>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>

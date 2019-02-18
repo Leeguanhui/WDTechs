@@ -2,7 +2,6 @@ package com.wd.tech.activity.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -43,7 +42,7 @@ public class SlidingMenu extends HorizontalScrollView {
             ViewGroup menu = (ViewGroup) wrapper.getChildAt(0);
             ViewGroup content = (ViewGroup) wrapper.getChildAt(1);
             // dp to px
-            mMenuRightPadding = UIUtils.getWindowWidth() / 3 -100;
+            mMenuRightPadding = UIUtils.getWindowWidth() / 2;
 
             mMenuWidth = mScreenWidth - mMenuRightPadding;
             mHalfMenuWidth = mMenuWidth / 2;
