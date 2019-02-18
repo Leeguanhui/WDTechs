@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.wd.tech.R;
 
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
