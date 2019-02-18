@@ -3,8 +3,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="2" />
+        android:layout_height="30dp"
+        android:layout_marginTop="38dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="188dp"
+                android:background="@drawable/radiobutton_background_checked"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/message"
+                    android:layout_width="94dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:textSize="12sp"
+                    android:checked="true"
+                    android:textColor="@drawable/comment_stu_bg"
+                    android:background="@drawable/comment_stu_tv_bg"
+                    android:gravity="center"
+                    android:text="消息" />
+
+                <RadioButton
+                    android:id="@+id/linkman_contacts"
+                    android:layout_width="94dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:textColor="@drawable/comment_stu_bg"
+                    android:background="@drawable/comment_stu_tv_bg"
+                    android:textSize="12sp"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="联系人" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/addition"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/common_nav_btn_add" />
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 </LinearLayout>

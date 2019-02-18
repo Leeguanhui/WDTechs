@@ -13,8 +13,9 @@ import android.view.WindowManager;
 
 
 import butterknife.ButterKnife;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public abstract class WDActivity extends AppCompatActivity {
+public abstract class WDActivity extends AppCompatActivity implements CustomAdapt {
     private static String addr;
     public Dialog mLoadDialog;// 加载框
     /**
@@ -121,5 +122,15 @@ public abstract class WDActivity extends AppCompatActivity {
 
     public static String getdz() {
         return addr;
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 667;
     }
 }

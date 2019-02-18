@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0F0"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="80dp"
+       android:orientation="horizontal"
+       android:background="@drawable/titletouying"
+       >
+       <ImageView
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:id="@+id/menu"
+           android:src="@mipmap/homemenu"
+           android:layout_alignParentLeft="true"
+           android:paddingLeft="12dp"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="14dp"
+           />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:text="咨询"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="14dp"
+            android:layout_alignParentBottom="true"
+            />
+       <ImageView
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:layout_alignParentRight="true"
+           android:src="@mipmap/search"
+           android:id="@+id/search"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="14dp"
+           android:paddingRight="12dp"
+           />
+   </RelativeLayout>
 </LinearLayout>
