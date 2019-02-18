@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.wd.tech.R;
+import com.wd.tech.core.WDFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +23,18 @@ import butterknife.ButterKnife;
  * 作者：古祥坤 on 2019/2/18 15:50
  * 邮箱：1724959985@qq.com
  */
-public class Fragment_Page_one extends Fragment {
-    @BindView(R.id.listview)
-    ListView listview;
+public class Fragment_Page_one extends WDFragment {
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getContext(), R.layout.fragment_page_one, null);
-        ButterKnife.bind(this, view);
-        List<String> strings = new ArrayList<>();
-        for (int i = 0; i <50; i++) {
-            strings.add("数据" + i);
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1, strings);
-        listview.setAdapter(adapter);
-        return view;
+    public String getPageName() {
+        return null;
+    }
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_page_one;
+    }
+    @Override
+    protected void initView() {
+
     }
 }
