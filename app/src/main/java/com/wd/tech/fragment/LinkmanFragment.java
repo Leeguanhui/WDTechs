@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wd.tech.R;
+import com.wd.tech.core.WDFragment;
 
 /**
  * Created by zxk
@@ -16,11 +17,20 @@ import com.wd.tech.R;
  * QQ:666666
  * Describe:
  */
-public class LinkmanFragment extends Fragment {
-    @Nullable
+public class LinkmanFragment extends WDFragment {
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.linkman_layout, container, false);
-        return inflate;
+    public String getPageName() {
+        return null;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.linkman_layout;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 }
