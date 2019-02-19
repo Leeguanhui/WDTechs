@@ -1,17 +1,15 @@
 package com.wd.tech.activity.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.Result;
@@ -20,11 +18,13 @@ import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.NewsBannderPresenter;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * 作者：古祥坤 on 2019/2/18 15:50
@@ -32,8 +32,15 @@ import butterknife.ButterKnife;
  */
 public class Fragment_Page_one extends WDFragment {
 
-    private NewsBannderPresenter newsBannderPresenter;
+    @BindView(R.id.menu)
+    ImageView menu;
+    @BindView(R.id.search)
+    ImageView search;
 
+
+    private NewsBannderPresenter newsBannderPresenter;
+    private ArrayList<String> mImages;
+    private ArrayList<String> mItitles;
     @Override
     public String getPageName() {
         return null;
@@ -47,11 +54,17 @@ public class Fragment_Page_one extends WDFragment {
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         newsBannderPresenter.request();
     }
-
-    private class Bannder implements ICoreInfe<Result> {
+    private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
         @Override
-        public void success(Result data) {
-            Toast.makeText(getContext(), "111", Toast.LENGTH_SHORT).show();
+        public void success(Result<List<NewsBannder>> data) {
+            List<NewsBannder> result = data.getResult();
+            mImages = new ArrayList<>();
+            mItitles = new ArrayList<>();
+            for (int i=0;i<result.size();i++){
+                mImages.add(result.get(i).getImageUrl());
+                mItitles.add(result.get(i).getTitle());
+            }
+
         }
 
         @Override
@@ -59,4 +72,6 @@ public class Fragment_Page_one extends WDFragment {
 
         }
     }
+
+
 }
