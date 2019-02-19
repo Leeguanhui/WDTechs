@@ -1,6 +1,7 @@
 package com.wd.tech.activity;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddFriendsActivity extends WDActivity {
 
@@ -61,8 +64,6 @@ public class AddFriendsActivity extends WDActivity {
     }
 
 
-
-
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
         Class<?> tabLayout = tabs.getClass();
         Field tabStrip = null;
@@ -93,4 +94,9 @@ public class AddFriendsActivity extends WDActivity {
         }
     }
 
+
+    @OnClick(R.id.back)
+    public void onViewClicked() {
+        finish();
+    }
 }
