@@ -47,6 +47,7 @@ public class WDApplication extends Application {
     private static Context context;
 
     private static SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -66,6 +67,9 @@ public class WDApplication extends Application {
         //定位
         //推送
         //统计
+
+        //fresco
+        Fresco.initialize(this);
     }
 
     public static SharedPreferences getShare() {
