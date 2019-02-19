@@ -43,5 +43,9 @@
            android:paddingRight="12dp"
            />
    </RelativeLayout>
-
+   <com.jcodecraeer.xrecyclerview.XRecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/xrecy"
+       ></com.jcodecraeer.xrecyclerview.XRecyclerView>
 </LinearLayout>
