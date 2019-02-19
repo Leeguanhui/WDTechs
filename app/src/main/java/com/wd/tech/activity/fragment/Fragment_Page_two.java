@@ -1,15 +1,23 @@
 package com.wd.tech.activity.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.wd.tech.R;
+import com.wd.tech.activity.AddFriendsActivity;
 import com.wd.tech.activity.adapter.WDFragmentAdapter;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.fragment.LinkmanFragment;
@@ -39,9 +47,11 @@ public class Fragment_Page_two extends WDFragment {
     RadioGroup radioGroup;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    Unbinder unbinder;
+    @BindView(R.id.addition)
+    ImageView addition;
     private List<Fragment> list;
     private WDFragmentAdapter wdFragmentAdapter;
+    private PopupWindow popupWindow;
 
     @Override
     public String getPageName() {
@@ -79,16 +89,34 @@ public class Fragment_Page_two extends WDFragment {
     }
 
 
-
     @OnClick({R.id.message, R.id.linkman_contacts})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.message:
-                viewPager.setCurrentItem(0,false);
+                viewPager.setCurrentItem(0, false);
                 break;
             case R.id.linkman_contacts:
-                viewPager.setCurrentItem(1,false);
+                viewPager.setCurrentItem(1, false);
                 break;
         }
     }
+
+    @OnClick(R.id.addition)
+    public void onViewClicked() {
+        View view = View.inflate(getContext(), R.layout.append_popwind, null);
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.setOutsideTouchable(true);
+        TextView text_you=view.findViewById(R.id.text_you);
+        text_you.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+        popupWindow.showAsDropDown(addition,0,55);
+    }
+
 }
