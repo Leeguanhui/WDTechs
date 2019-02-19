@@ -1,11 +1,13 @@
 package com.wd.tech.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -15,6 +17,13 @@ import com.wd.tech.activity.adapter.MyListViewAdapter;
 import com.wd.tech.activity.fragment.Fragment_Page_one;
 import com.wd.tech.activity.fragment.Fragment_Page_three;
 import com.wd.tech.activity.fragment.Fragment_Page_two;
+import com.wd.tech.activity.secondactivity.AttenActivity;
+import com.wd.tech.activity.secondactivity.CollectActivity;
+import com.wd.tech.activity.secondactivity.IntegActivity;
+import com.wd.tech.activity.secondactivity.InvitActivity;
+import com.wd.tech.activity.secondactivity.NotificaActivity;
+import com.wd.tech.activity.secondactivity.SettingActivity;
+import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.bean.PersonallistBean;
 import com.wd.tech.core.WDActivity;
 
@@ -38,6 +47,8 @@ public class MainActivity extends WDActivity {
     LinearLayout left;
     @BindView(R.id.right_layout)
     LinearLayout right;
+    @BindView(R.id.login_bnt)
+    LinearLayout login_bnt;
     private MyListViewAdapter myListViewAdapter;
     List<PersonallistBean> personallistBeanList = new ArrayList<>();
 
@@ -48,6 +59,7 @@ public class MainActivity extends WDActivity {
 
     @Override
     protected void initView() {
+        closeSwipeBack();
         myListViewAdapter = new MyListViewAdapter(this);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         fragment_page_one = new Fragment_Page_one();
@@ -108,33 +120,77 @@ public class MainActivity extends WDActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
+        //列表赋值
         for (int i = 0; i < 7; i++) {
             switch (i) {
                 case 0:
-                    personallistBeanList.add(new PersonallistBean("我的收藏", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("我的收藏", R.drawable.my_icon_collect_n));
                     break;
                 case 1:
                     personallistBeanList.add(new PersonallistBean("我的关注", R.drawable.my_icon_attention_n));
                     break;
                 case 2:
-                    personallistBeanList.add(new PersonallistBean("我的帖子", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("我的帖子", R.drawable.my_icon_card_n));
                     break;
                 case 3:
-                    personallistBeanList.add(new PersonallistBean("我的通知", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("我的通知", R.drawable.my_icon_notice_n));
                     break;
                 case 4:
-                    personallistBeanList.add(new PersonallistBean("我的积分", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("我的积分", R.drawable.my_icon_jifen_n));
                     break;
                 case 5:
-                    personallistBeanList.add(new PersonallistBean("我的任务", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("我的任务", R.drawable.my_icon_task_n));
                     break;
                 case 6:
-                    personallistBeanList.add(new PersonallistBean("设置", R.drawable.my_icon_attention_n));
+                    personallistBeanList.add(new PersonallistBean("设置", R.drawable.my_icon_setting_n));
                     break;
             }
         }
         myListViewAdapter.addAll(personallistBeanList);
         listview.setAdapter(myListViewAdapter);
+        //列表跳转
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        //我的收藏
+                        startActivity(new Intent(MainActivity.this, CollectActivity.class));
+                        break;
+                    case 1:
+                        //我的关注
+                        startActivity(new Intent(MainActivity.this, AttenActivity.class));
+                        break;
+                    case 2:
+                        //我的帖子
+                        startActivity(new Intent(MainActivity.this, InvitActivity.class));
+                        break;
+                    case 3:
+                        //我的通知
+                        startActivity(new Intent(MainActivity.this, NotificaActivity.class));
+                        break;
+                    case 4:
+                        //我的积分
+                        startActivity(new Intent(MainActivity.this, IntegActivity.class));
+                        break;
+                    case 5:
+                        //我的任务
+                        startActivity(new Intent(MainActivity.this, TaskActivity.class));
+                        break;
+                    case 6:
+                        //设置
+                        startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                        break;
+                }
+            }
+        });
+        //跳转到登录注册
+        login_bnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     @Override

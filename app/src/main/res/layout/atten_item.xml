@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/atten_header"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        app:placeholderImage="@drawable/header_image"
+        app:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/atten_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/atten_header"
+        android:text="玛卡龙"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/atten_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atten_name"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/atten_header"
+        android:text="最大的爱好就是看书看书看书"
+        android:textColor="#999999"
+        android:textSize="10sp" />
+</RelativeLayout>

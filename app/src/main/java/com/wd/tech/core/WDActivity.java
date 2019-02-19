@@ -12,11 +12,14 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import butterknife.ButterKnife;
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public abstract class WDActivity extends AppCompatActivity implements CustomAdapt {
+public abstract class WDActivity extends SwipeBackActivity {
     private static String addr;
     public Dialog mLoadDialog;// 加载框
+    private SwipeBackLayout mSwipeBackLayout;
     /**
      * 记录处于前台的Activity
      */
@@ -28,6 +31,8 @@ public abstract class WDActivity extends AppCompatActivity implements CustomAdap
         initLoad();
         setContentView(getLayoutId());
         ButterKnife.bind(this);//绑定布局
+        //初始化右滑退出
+        initSwipeBack();
         initView();
 
         //沉浸式状态栏
@@ -122,14 +127,23 @@ public abstract class WDActivity extends AppCompatActivity implements CustomAdap
     public static String getdz() {
         return addr;
     }
-
-    @Override
-    public boolean isBaseOnWidth() {
-        return false;
+    /**
+     * 初始化右滑退出
+     */
+    private void initSwipeBack() {
+        // 可以调用该方法，设置是否允许滑动退出
+        setSwipeBackEnable(true);
+        mSwipeBackLayout = getSwipeBackLayout();
+        // 设置滑动方向，可设置EDGE_LEFT, EDGE_RIGHT, EDGE_ALL, EDGE_BOTTOM
+        mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
+        // 滑动退出的效果只能从边界滑动才有效果，如果要扩大touch的范围，可以调用这个方法
+        // mSwipeBackLayout.setEdgeSize(200);
     }
 
-    @Override
-    public float getSizeInDp() {
-        return 667;
+    /**
+     * 关闭右滑退出
+     */
+    protected void closeSwipeBack() {
+        setSwipeBackEnable(false);
     }
 }

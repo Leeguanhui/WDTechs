@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/loginbg"
+    tools:context=".activity.RegActivity">
+    <ImageView
+        android:id="@+id/mIv_Head_Reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="128dp"
+        android:src="@drawable/reg_image" />
+
+    <RelativeLayout
+        android:id="@+id/RL_01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mIv_Head_Reg"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="40dp">
+
+        <ImageView
+            android:id="@+id/ICON_Name"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/register_icon_name_n" />
+
+        <EditText
+            android:id="@+id/mEt_Name_Reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/ICON_Name"
+            android:background="@null"
+            android:hint="昵称"
+            android:textColorHint="#fff"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/RL_01"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:background="#fff"></View>
+
+
+    <RelativeLayout
+        android:id="@+id/RL_02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL_01"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="40dp">
+
+        <ImageView
+            android:id="@+id/ICON_Phone"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/register_icon_phone_n" />
+
+        <EditText
+            android:id="@+id/mEt_Phone_Reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/ICON_Phone"
+            android:background="@null"
+            android:hint="手机号"
+            android:textColorHint="#fff"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/RL_02"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:background="#fff"></View>
+
+
+    <RelativeLayout
+        android:id="@+id/RL_03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RL_02"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="40dp">
+
+        <ImageView
+            android:id="@+id/ICON_Lock"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_icon_lock_n" />
+
+        <EditText
+            android:id="@+id/mEt_Pwd_Reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/ICON_Lock"
+            android:background="@null"
+            android:hint="登录密码"
+            android:textColorHint="#fff"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/View_03"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/RL_03"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:background="#fff"></View>
+
+    <TextView
+        android:id="@+id/mTv_ShortMessage_Reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/View_03"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:text="短信验证注册"
+        android:textColor="#fff"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/mBt_Reg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="96dp"
+        android:text="注册"
+        android:background="@drawable/shape_login"
+        android:textColor="#fff"
+        android:textSize="16sp" />
+
+</RelativeLayout>
