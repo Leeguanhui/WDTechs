@@ -9,20 +9,18 @@
 
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/circle_recycler"
+        android:id="@+id/communitylist_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"></com.jcodecraeer.xrecyclerview.XRecyclerView>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/add_circle"
         android:layout_width="39dp"
         android:layout_height="39dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/community_btn"
-        android:padding="10dp"
-        app:roundAsCircle="true"/>
+        android:src="@drawable/community_btn" />
 
 </RelativeLayout>

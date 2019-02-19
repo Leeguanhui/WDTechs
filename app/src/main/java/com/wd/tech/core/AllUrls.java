@@ -1,5 +1,6 @@
 package com.wd.tech.core;
 
+import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.Result;
 
@@ -21,4 +22,11 @@ public interface AllUrls {
     @GET("information/v1/bannerShow")
     Observable<Result<List<NewsBannder>>> Bannder(
     );
+
+    /**
+     * 社区列表
+     */
+    @GET("community/v1/findCommunityList")
+    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
+                                                              @Query("page") int page, @Query("count") int count);
 }
