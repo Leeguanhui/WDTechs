@@ -1,5 +1,6 @@
 package com.wd.tech.core;
 
+import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.Result;
@@ -32,4 +33,13 @@ public interface AllUrls {
     Observable<Result<LoginUserInfoBean>> login(
             @Field("phone") String phone,
             @Field("pwd") String pwd);
+    //查询咨询首页Bander图
+    @GET("information/v1/infoRecommendList")
+    Observable<Result<List<InfoRecommecndListBean>>> InFormation(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("plateId")int plateId,
+            @Query("page")int page,
+            @Query("count")int count
+    );
 }

@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
     android:orientation="vertical">
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/x_recyclerview"
+        android:background="#FFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="52dp">
         <EditText
+            android:id="@+id/search_edit"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
-            android:padding="5dp"
+            android:paddingLeft="44dp"
+            android:textSize="12sp"
             android:hint="搜索好友/群"
             android:layout_marginLeft="12dp"
             android:background="@drawable/edtext_selector"/>
+
         <ImageView
+            android:id="@+id/search_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
-             />
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="21dp"
+            android:layout_toRightOf="@+id/search_edit"
+            android:padding="5dp"
+            android:src="@mipmap/search" />
     </RelativeLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
 </LinearLayout>
