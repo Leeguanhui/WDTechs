@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.view.NewsDetails"
+    android:background="#ffffff"
 
     >
     <RelativeLayout
@@ -49,11 +50,19 @@
         android:layout_below="@id/writer"
         android:layout_marginTop="10dp"
         />
-    <TextView
-        android:layout_width="wrap_content"
+    <WebView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple"
         android:id="@+id/coment"
+        android:scrollbars="none"
         />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/type"
+            android:layout_below="@id/coment"
+            android:layout_marginTop="30dp"
+            ></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 </ScrollView>
