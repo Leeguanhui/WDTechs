@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.view.NewsDetails"
-    android:background="#ffffff"
-
     >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
         >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1111111111111111"
         android:textColor="#000000"
         android:textSize="16sp"
         android:layout_marginTop="40dp"
         android:id="@+id/title"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time"
         android:layout_below="@id/title"
-        android:text="1111111"
         android:textSize="10sp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:textColor="#999999"
         android:layout_marginTop="10dp"
         />
@@ -41,21 +43,26 @@
         android:textSize="12sp"
         android:layout_below="@id/time"
         android:layout_marginTop="10dp"
-        android:text="11111"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         />
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="336dp"
+        android:layout_width="match_parent"
         android:layout_height="187dp"
         android:id="@+id/simple"
         android:layout_below="@id/writer"
         android:layout_marginTop="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         />
-    <WebView
+    <com.wd.tech.activity.view.NoScrollWebView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple"
         android:id="@+id/coment"
         android:scrollbars="none"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         />
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -63,6 +70,63 @@
             android:id="@+id/type"
             android:layout_below="@id/coment"
             android:layout_marginTop="30dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             ></android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/type"
+            android:layout_marginTop="30dp"
+            android:background="#ffffff"
+            android:id="@+id/a"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="推荐"
+                android:textColor="#999999"
+                android:textSize="10sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                />
+           <android.support.v7.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/more"
+               android:layout_marginTop="20dp"
+               android:paddingLeft="12dp"
+               android:layout_marginBottom="20dp"
+               ></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:layout_below="@id/a"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="评论"
+                android:textColor="#999999"
+                android:textSize="10sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                />
+           <android.support.v7.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/comments"
+               android:layout_marginTop="20dp"
+               ></android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
     </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

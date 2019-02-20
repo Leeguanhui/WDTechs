@@ -2,6 +2,7 @@ package com.wd.tech.core;
 
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
+import com.wd.tech.bean.DetailsCommentsBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -106,4 +107,15 @@ public interface AllUrls {
                                  @Header("sessionId") String sessionId,
                                  @Field("friendUid")int friendUid,
                                  @Field("remark")String remark);
+    /**
+     * 查询咨询评论
+     */
+    @GET("information/v1/findAllInfoCommentList")
+    Observable<Result<List<DetailsCommentsBean>>> NewsComments(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("infoId")int infoId,
+            @Query("page")int page,
+            @Query("count")int count
+    );
 }
