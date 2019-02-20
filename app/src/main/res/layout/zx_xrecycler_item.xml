@@ -6,9 +6,9 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="140dp"
-        android:layout_height="92dp"
+        android:layout_height="95dp"
         app:roundedCornerRadius="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="12dp"
         android:id="@+id/simple"
         />
@@ -22,6 +22,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:paddingRight="12dp"
+        android:lines="1"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -42,10 +43,72 @@
         android:layout_height="wrap_content"
         android:id="@+id/writer"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/content"
         android:layout_toRightOf="@id/simple"
         android:textColor="#999999"
         android:textSize="10sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/data"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        android:layout_below="@id/writer"
+        android:layout_toRightOf="@id/simple"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/share"
+        android:text="1111"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/content"
+        android:layout_marginTop="18dp"
+        android:textColor="#666666"
+        android:textSize="10sp"
+        android:paddingRight="12dp"
+        />
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+        android:id="@+id/sharewith"
+        android:src="@mipmap/collect"
+        android:layout_toLeftOf="@id/share"
+        android:layout_below="@id/content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="6dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/likenum"
+        android:text="1111"
+        android:layout_toLeftOf="@id/sharewith"
+        android:layout_below="@id/content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="18dp"
+        android:textColor="#666666"
+        android:textSize="10sp"
+        android:paddingRight="12dp" />
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+        android:id="@+id/like"
+        android:src="@mipmap/collect_s"
+        android:layout_toLeftOf="@id/likenum"
+        android:layout_below="@id/content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="6dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/simple"
+        android:background="#f0f0f0"
+        android:layout_marginTop="10dp"
         />
 </RelativeLayout>

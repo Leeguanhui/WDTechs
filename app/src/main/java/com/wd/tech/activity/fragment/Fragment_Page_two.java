@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.wd.tech.R;
 import com.wd.tech.activity.AddFriendsActivity;
+import com.wd.tech.activity.FlockActivity;
 import com.wd.tech.activity.adapter.WDFragmentAdapter;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.fragment.LinkmanFragment;
@@ -113,6 +114,14 @@ public class Fragment_Page_two extends WDFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView text_qun=view.findViewById(R.id.text_qun);
+        text_qun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FlockActivity.class);
                 startActivity(intent);
             }
         });

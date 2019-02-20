@@ -6,6 +6,7 @@ import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
+import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
 
 import java.util.List;
@@ -87,4 +88,22 @@ public interface AllUrls {
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 咨询详情
+     */
+    @GET("information/v1/findInformationDetails")
+    Observable<Result<NewsDetailsBean>> NewsDetails(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("id")int id
+    );
+    /**
+     * 添加好友
+     */
+    @POST("verify/v1/addFriend")
+    Observable<Result> addFriend(@Header("userId") int userId,
+                                 @Header("sessionId") String sessionId,
+                                 @Field("friendUid")int friendUid,
+                                 @Field("remark")String remark);
 }

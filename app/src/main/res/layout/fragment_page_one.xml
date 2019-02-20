@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="80dp"
-       android:orientation="horizontal"
-       android:background="@drawable/titletouying"
-       >
-       <ImageView
-           android:layout_width="24dp"
-           android:layout_height="24dp"
-           android:id="@+id/menu"
-           android:src="@mipmap/homemenu"
-           android:layout_alignParentLeft="true"
-           android:paddingLeft="12dp"
-           android:layout_alignParentBottom="true"
-           android:layout_marginBottom="14dp"
-           />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/titletouying"
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/menu"
+            android:src="@mipmap/homemenu"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="14dp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,20 +29,21 @@
             android:layout_marginBottom="14dp"
             android:layout_alignParentBottom="true"
             />
-       <ImageView
-           android:layout_width="24dp"
-           android:layout_height="24dp"
-           android:layout_alignParentRight="true"
-           android:src="@mipmap/search"
-           android:id="@+id/search"
-           android:layout_alignParentBottom="true"
-           android:layout_marginBottom="14dp"
-           android:paddingRight="12dp"
-           />
-   </RelativeLayout>
-   <com.jcodecraeer.xrecyclerview.XRecyclerView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/xrecy"
-       ></com.jcodecraeer.xrecyclerview.XRecyclerView>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/search"
+            android:id="@+id/search"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="14dp"
+            android:paddingRight="12dp"
+            />
+    </RelativeLayout>
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/xrecy"
+        ></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
 </LinearLayout>
