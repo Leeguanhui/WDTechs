@@ -12,14 +12,14 @@ import io.reactivex.Observable;
  * QQ:666666
  * Describe:
  */
-public class AddFriendPresenter extends BasePresenter {
-    public AddFriendPresenter(ICoreInfe dataCall) {
+public class FindUserByPhonePresenter extends BasePresenter {
+    public FindUserByPhonePresenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.addFriend((int) args[0], (String) args[1],(int)args[2],(String) args[3]);
+        return allUrls.addFriend((int) args[0], (String) args[1],(String) args[2]);
     }
 }

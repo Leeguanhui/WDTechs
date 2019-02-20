@@ -54,14 +54,20 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        FindCollectBean findCollectBean = list.get(i);
-        vh.qiandao.setImageURI(findCollectBean.getThumbnail());
-        vh.date.setText(findCollectBean.getTitle());
+        if (list.size() > 0) {
+            FindCollectBean findCollectBean = list.get(i);
+            vh.qiandao.setImageURI(findCollectBean.getThumbnail());
+            vh.date.setText(findCollectBean.getTitle());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list.size() > 0) {
+            return list.size();
+        } else {
+            return 10;
+        }
     }
 
 

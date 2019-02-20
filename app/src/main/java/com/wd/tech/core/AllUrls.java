@@ -101,9 +101,20 @@ public interface AllUrls {
     /**
      * 添加好友
      */
-    @POST("verify/v1/addFriend")
-    Observable<Result> addFriend(@Header("userId") int userId,
-                                 @Header("sessionId") String sessionId,
-                                 @Field("friendUid")int friendUid,
-                                 @Field("remark")String remark);
+    @GET("usererify1/findUserByPhone")
+    Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
+                                                   @Header("sessionId") String sessionId,
+                                                   @Query("phone") String phone);
+    /**
+     * 详情评论
+     */
+    @GET("information/v1/findAllInfoCommentList")
+    Observable<Result<NewsDetailsBean>> NewsComments(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("infoId")int infoId,
+            @Query("page")int page,
+            @Query("count")int count
+    );
+
 }
