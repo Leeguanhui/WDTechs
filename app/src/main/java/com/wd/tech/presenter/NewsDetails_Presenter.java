@@ -8,18 +8,18 @@ import io.reactivex.Observable;
 
 /**
  * 作者：夏洪武
- * 时间：2019/2/19.
+ * 时间：2019/2/20.
  * 邮箱：
  * 说明：
  */
-public class ZxInformationPresenter extends BasePresenter {
-    public ZxInformationPresenter(ICoreInfe dataCall) {
+public class NewsDetails_Presenter extends BasePresenter {
+    public NewsDetails_Presenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.InFormation((int)args[0],(String)args[1],(int)args[2],(int)args[3],(int)args[4]);
+        return allUrls.NewsDetails((int)args[0],(String) args[1],(int)args[2]);
     }
 }

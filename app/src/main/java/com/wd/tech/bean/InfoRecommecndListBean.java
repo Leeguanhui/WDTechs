@@ -144,6 +144,14 @@ public class InfoRecommecndListBean {
         private int id;
         private String title;
         private String url;
+        private String pic;
+        public String getPic() {
+            return pic;
+        }
+
+        public void setPic(String pic) {
+            this.pic = pic;
+        }
         public String getContent() {
             return content;
         }
