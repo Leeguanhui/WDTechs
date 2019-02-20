@@ -2,7 +2,6 @@ package com.wd.tech.core;
 
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
-import com.wd.tech.bean.DetailsCommentsBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -39,7 +38,7 @@ public interface AllUrls {
      * 社区列表
      */
     @GET("community/v1/findCommunityList")
-    Observable<Result<List<CommunityListBean>>> communityList(
+    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
             @Query("page") int page, @Query("count") int count);
 
     /**
@@ -97,31 +96,25 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsDetails(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("id") int id
+            @Query("id")int id
     );
     /**
      * 添加好友
      */
-    @POST("verify/v1/addFriend")
-    Observable<Result> addFriend(@Header("userId") int userId,
-                                 @Header("sessionId") String sessionId,
-                                 @Field("friendUid")int friendUid,
-                                 @Field("remark")String remark);
+    @GET("usererify1/findUserByPhone")
+    Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
+                                                   @Header("sessionId") String sessionId,
+                                                   @Query("phone") String phone);
     /**
-     * 查询咨询评论
+     * 详情评论
      */
     @GET("information/v1/findAllInfoCommentList")
-    Observable<Result<List<DetailsCommentsBean>>> NewsComments(
+    Observable<Result<NewsDetailsBean>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("infoId")int infoId,
             @Query("page")int page,
             @Query("count")int count
     );
-    @GET("user/verify/v1/findUserByPhone")
-    Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
-                                                   @Header("sessionId") String sessionId,
-                                                   @Query("phone") String phone,
-                                                   @Field("friendUid") int friendUid,
-                                                   @Field("remark") String remark);
+
 }
