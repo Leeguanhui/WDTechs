@@ -70,6 +70,7 @@ public class WDApplication extends Application {
 
         //fresco
         Fresco.initialize(this);
+
     }
 
     public static SharedPreferences getShare() {

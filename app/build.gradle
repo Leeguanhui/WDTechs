@@ -52,7 +52,4 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
-
-    implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'org.greenrobot:greendao-generator:3.2.2'
 }
