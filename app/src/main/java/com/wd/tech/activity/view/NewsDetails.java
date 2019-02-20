@@ -1,9 +1,11 @@
 package com.wd.tech.activity.view;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -31,7 +33,7 @@ public class NewsDetails extends WDActivity {
     @BindView(R.id.simple)
     SimpleDraweeView simple;
     @BindView(R.id.coment)
-    TextView coment;
+    WebView coment;
     private NewsDetails_Presenter newsDetails_presenter;
 
     @Override
@@ -65,8 +67,8 @@ public class NewsDetails extends WDActivity {
             String format = formatter.format(result.getReleaseTime());
             time.setText(format + "");
             writer.setText(result.getSource());
-            //coment.setMovementMethod(ScrollingMovementMethod.getInstance());//滚动
-            coment.setText(Html.fromHtml(result.getContent()));
+            coment.setVerticalFadingEdgeEnabled(false);
+            coment.loadDataWithBaseURL(null,result.getContent(),"text/html", "utf-8", null);
         }
 
         @Override
