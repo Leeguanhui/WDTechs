@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.ImageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.image.setImageURI(Uri.parse(mList.get(i)));
-
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(viewHolder.itemView.getContext(), ImageActivity.class);
+                intent.putExtra("image", mList.get(i));
+                viewHolder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
