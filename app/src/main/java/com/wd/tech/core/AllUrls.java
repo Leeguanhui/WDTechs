@@ -42,4 +42,12 @@ public interface AllUrls {
             @Query("page")int page,
             @Query("count")int count
     );
+    /**
+     * 添加好友
+     */
+    @POST("verify/v1/addFriend")
+    Observable<Result> addFriend(@Header("userId") int userId,
+                                 @Header("sessionId") String sessionId,
+                                 @Field("friendUid")int friendUid,
+                                 @Field("remark")String remark);
 }

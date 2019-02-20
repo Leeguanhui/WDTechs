@@ -5,39 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
+
     android:orientation="vertical">
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/x_recyclerview"
         android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="52dp">
-        <EditText
-            android:id="@+id/search_edit"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="12dp"
-            android:paddingLeft="44dp"
-            android:textSize="12sp"
-            android:hint="搜索好友/群"
-            android:layout_marginLeft="12dp"
-            android:background="@drawable/edtext_selector"/>
 
-        <ImageView
-            android:id="@+id/search_image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="21dp"
-            android:layout_toRightOf="@+id/search_edit"
-            android:padding="5dp"
-            android:src="@mipmap/search" />
-    </RelativeLayout>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp">
+                <EditText
+                    android:id="@+id/search_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="12dp"
+                    android:paddingLeft="44dp"
+                    android:textSize="12sp"
+                    android:hint="搜索好友/群"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/edtext_selector"/>
+
+                <ImageView
+                    android:id="@+id/search_image"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:layout_toRightOf="@+id/search_edit"
+                    android:padding="5dp"
+                    android:src="@mipmap/search" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/layout_newsyou"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="#F00"
+                    android:src="@mipmap/nav_icon_addfriend"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:text="新朋友"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F2F2F2"/>
+            <LinearLayout
+                android:id="@+id/layout_qun"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="#F00"
+
+                    android:src="@mipmap/nav_icon_addgroup"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:text="群组"/>
+            </LinearLayout>
+            <ExpandableListView
+                android:id="@+id/ex_pandable_listview"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_height="wrap_content"></ExpandableListView>
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>>
 
 </LinearLayout>
