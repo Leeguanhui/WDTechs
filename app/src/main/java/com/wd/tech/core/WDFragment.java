@@ -17,7 +17,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.greendao.DaoMaster;
+import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.LoginUserInfoBeanDao;
 
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -35,7 +41,6 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
     public Gson mGson = new Gson();
     public Dialog mLoadDialog;
     private Unbinder unbinder;
-    //public UserInfo LOGIN_USER;
 
     private ConnectivityManager connectivityManager;
 
@@ -59,7 +64,29 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
         initView();
         return view;
     }
+    /**
+     * 数据库
+     */
+    public LoginUserInfoBean getUserInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginUserInfoBeanDao.TABLENAME);
+        LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
+        List<LoginUserInfoBean> list = loginUserInfoBeanDao.queryBuilder().where(LoginUserInfoBeanDao.Properties.Statu.eq("1"))
+                .build().list();
+        if (list.size() > 0) {
+            LoginUserInfoBean loginUserInfoBean = list.get(0);
+            return loginUserInfoBean;
+        }
+        return null;
+    }
 
+    /**
+     * 清空数据库
+     */
+    public void deleteUserInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginUserInfoBeanDao.TABLENAME);
+        LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
+        loginUserInfoBeanDao.deleteAll();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
