@@ -2,19 +2,26 @@ package com.wd.tech.core;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+
+import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.greendao.DaoMaster;
+import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.LoginUserInfoBeanDao;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
-import me.jessyan.autosize.internal.CustomAdapt;
 
 public abstract class WDActivity extends SwipeBackActivity {
     private static String addr;
@@ -72,6 +79,30 @@ public abstract class WDActivity extends SwipeBackActivity {
     }
 
     /**
+     * 数据库
+     */
+    public LoginUserInfoBean getUserInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginUserInfoBeanDao.TABLENAME);
+        LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
+        List<LoginUserInfoBean> list = loginUserInfoBeanDao.queryBuilder().where(LoginUserInfoBeanDao.Properties.Statu.eq("1"))
+                .build().list();
+        if (list.size() > 0) {
+            LoginUserInfoBean loginUserInfoBean = list.get(0);
+            return loginUserInfoBean;
+        }
+        return null;
+    }
+
+    /**
+     * 清空数据库
+     */
+    public void deleteUserInfo(Context context) {
+        DaoSession daoSession = DaoMaster.newDevSession(context, LoginUserInfoBeanDao.TABLENAME);
+        LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
+        loginUserInfoBeanDao.deleteAll();
+    }
+
+    /**
      * 初始化加载框
      */
     private void initLoad() {
@@ -88,6 +119,23 @@ public abstract class WDActivity extends SwipeBackActivity {
                 return false;
             }
         });
+    }
+
+    /**
+     * 初始化Aler弹框
+     */
+    public void initAler(final Context context, final Class mActivity) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle("提示");
+        alert.setMessage("当前未登录是否去登陆");
+        alert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(context, mActivity));
+            }
+        });
+        alert.setNegativeButton("取消", null);
+        alert.show();
     }
 
     @Override
@@ -127,6 +175,7 @@ public abstract class WDActivity extends SwipeBackActivity {
     public static String getdz() {
         return addr;
     }
+
     /**
      * 初始化右滑退出
      */
