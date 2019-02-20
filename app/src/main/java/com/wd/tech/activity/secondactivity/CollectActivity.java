@@ -2,8 +2,14 @@ package com.wd.tech.activity.secondactivity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.CollectRecycleAdapter;
 import com.wd.tech.bean.FindCollectBean;
@@ -27,6 +33,9 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
     private int mPage = 1;
     private int mCount = 10000;
     private LoginUserInfoBean userInfo;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+
 
     @Override
     protected int getLayoutId() {
@@ -44,8 +53,18 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
         findAllCollectionPresenter = new FindAllCollectionPresenter(new FindColleResult());
         userInfo = getUserInfo(this);
         findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
-
-
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                Toast.makeText(CollectActivity.this, "刷新", Toast.LENGTH_SHORT).show();
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                Toast.makeText(CollectActivity.this, "加载", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

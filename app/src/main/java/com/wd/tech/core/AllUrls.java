@@ -39,7 +39,7 @@ public interface AllUrls {
      * 社区列表
      */
     @GET("community/v1/findCommunityList")
-    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
+    Observable<Result<List<CommunityListBean>>> communityList(
             @Query("page") int page, @Query("count") int count);
 
     /**
@@ -97,7 +97,7 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsDetails(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("id")int id
+            @Query("id") int id
     );
     /**
      * 添加好友
@@ -118,4 +118,10 @@ public interface AllUrls {
             @Query("page")int page,
             @Query("count")int count
     );
+    @GET("user/verify/v1/findUserByPhone")
+    Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
+                                                   @Header("sessionId") String sessionId,
+                                                   @Query("phone") String phone,
+                                                   @Field("friendUid") int friendUid,
+                                                   @Field("remark") String remark);
 }

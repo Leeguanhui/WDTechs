@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.wd.tech.R;
+import com.wd.tech.core.WDActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends WDActivity {
     int timecount = 2;
     Handler handler = new Handler(Looper.myLooper()) {
         @Override
@@ -27,14 +26,22 @@ public class WelcomeActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+    protected int getLayoutId() {
+        return R.layout.activity_welcome;
+    }
+
+    @Override
+    protected void initView() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 handler.sendEmptyMessageDelayed(1, 1000);
             }
         }).start();
+    }
+
+    @Override
+    protected void destoryData() {
+
     }
 }

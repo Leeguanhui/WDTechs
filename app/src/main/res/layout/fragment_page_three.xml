@@ -15,12 +15,14 @@
         android:layout_marginTop="16dp"></com.jcodecraeer.xrecyclerview.XRecyclerView>
 
     <ImageView
-        android:id="@+id/add_circle"
-        android:layout_width="39dp"
-        android:layout_height="39dp"
+        android:id="@+id/add_community"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_add_community"
+        android:padding="5dp"
         android:src="@drawable/community_btn" />
 
 </RelativeLayout>
