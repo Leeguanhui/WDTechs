@@ -99,12 +99,14 @@ public interface AllUrls {
             @Query("id") int id
     );
 
+
     /**
      * 添加好友
      */
-    @POST("verify/v1/addFriend")
-    Observable<Result> addFriend(@Header("userId") int userId,
-                                 @Header("sessionId") String sessionId,
-                                 @Field("friendUid") int friendUid,
-                                 @Field("remark") String remark);
+    @GET("user/verify/v1/findUserByPhone")
+    Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
+                                                   @Header("sessionId") String sessionId,
+                                                   @Query("phone") String phone,
+                                                   @Field("friendUid") int friendUid,
+                                                   @Field("remark") String remark);
 }

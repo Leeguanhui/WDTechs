@@ -6,6 +6,7 @@ import android.widget.ScrollView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wd.tech.R;
 import com.wd.tech.core.WDFragment;
 
@@ -25,7 +26,7 @@ public class MessageFragment extends WDFragment {
     @BindView(R.id.search_image)
     ImageView searchImage;
     @BindView(R.id.x_recyclerview)
-    PullToRefreshScrollView pullToRefreshScrollView;
+    SmartRefreshLayout pullToRefreshScrollView;
 
     @Override
     public String getPageName() {
@@ -39,13 +40,6 @@ public class MessageFragment extends WDFragment {
 
     @Override
     protected void initView() {
-        pullToRefreshScrollView.setMode(PullToRefreshBase.Mode.BOTH);
-        pullToRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-         @Override
-         public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-             pullToRefreshScrollView.onRefreshComplete();
-         }
-     });
-    }
 
+    }
 }

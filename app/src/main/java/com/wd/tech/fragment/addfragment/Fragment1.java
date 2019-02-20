@@ -6,10 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.bean.ByIdUserInfoBean;
+import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.bean.Result;
+import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
+import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.FindUserByPhonePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +35,20 @@ public class Fragment1 extends WDFragment {
     EditText fragment1SearchEdit;
     @BindView(R.id.search_image)
     ImageView searchImage;
-    @BindView(R.id.list_view)
-    ListView listView;
+    @BindView(R.id.image)
+    SimpleDraweeView image;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.wu)
+    TextView wu;
     Unbinder unbinder;
+    @BindView(R.id.back)
+    ImageView back;
+    private FindUserByPhonePresenter presenter;
+    private String sessionId;
+    private int userId;
+
+    private String s;
 
     @Override
     public String getPageName() {
@@ -43,12 +62,49 @@ public class Fragment1 extends WDFragment {
 
     @Override
     protected void initView() {
+        LoginUserInfoBean bean = getUserInfo(getContext());
+        if (bean != null) {
+            sessionId = bean.getSessionId();
+            userId = bean.getUserId();
+        }
+
+        presenter = new FindUserByPhonePresenter(new ADDF());
+    }
+
+
+    @OnClick({R.id.search_image, R.id.back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.search_image:
+                s = fragment1SearchEdit.getText().toString();
+
+                presenter.request(userId, sessionId, s);
+                break;
+            case R.id.back:
+                break;
+        }
 
     }
 
 
-    @OnClick(R.id.search_image)
-    public void onViewClicked() {
 
+    private class ADDF implements ICoreInfe<Result<ByIdUserInfoBean>> {
+
+
+        @Override
+        public void success(Result<ByIdUserInfoBean> data) {
+            if (data.getStatus().equals("0000")) {
+                ByIdUserInfoBean result = data.getResult();
+                wu.setText("");
+                back.setVisibility(View.VISIBLE);
+                image.setImageURI(result.getHeadPic());
+                name.setText(result.getNickName());
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }
