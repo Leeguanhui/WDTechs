@@ -1,9 +1,14 @@
 package com.wd.tech.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * 作者：古祥坤 on 2019/2/19 13:36
  * 邮箱：1724959985@qq.com
  */
+@Entity
 public class LoginUserInfoBean {
     /**
      * nickName : 徐云杰
@@ -15,7 +20,8 @@ public class LoginUserInfoBean {
      * whetherVip : 2
      * whetherFaceId : 1
      */
-
+    @Id(autoincrement = true)
+    private long gid;
     private String nickName;
     private String phone;
     private String pwd;
@@ -24,68 +30,82 @@ public class LoginUserInfoBean {
     private String userName;
     private int whetherVip;
     private int whetherFaceId;
-
-    public String getNickName() {
-        return nickName;
+    private int statu;
+    @Generated(hash = 1933919439)
+    public LoginUserInfoBean(long gid, String nickName, String phone, String pwd, String sessionId, int userId, String userName, int whetherVip, int whetherFaceId, int statu) {
+        this.gid = gid;
+        this.nickName = nickName;
+        this.phone = phone;
+        this.pwd = pwd;
+        this.sessionId = sessionId;
+        this.userId = userId;
+        this.userName = userName;
+        this.whetherVip = whetherVip;
+        this.whetherFaceId = whetherFaceId;
+        this.statu = statu;
     }
-
+    @Generated(hash = 1943470081)
+    public LoginUserInfoBean() {
+    }
+    public long getGid() {
+        return this.gid;
+    }
+    public void setGid(long gid) {
+        this.gid = gid;
+    }
+    public String getNickName() {
+        return this.nickName;
+    }
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public String getPwd() {
-        return pwd;
+        return this.pwd;
     }
-
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
-
     public String getSessionId() {
-        return sessionId;
+        return this.sessionId;
     }
-
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
-
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
-
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
     public int getWhetherVip() {
-        return whetherVip;
+        return this.whetherVip;
     }
-
     public void setWhetherVip(int whetherVip) {
         this.whetherVip = whetherVip;
     }
-
     public int getWhetherFaceId() {
-        return whetherFaceId;
+        return this.whetherFaceId;
     }
-
     public void setWhetherFaceId(int whetherFaceId) {
         this.whetherFaceId = whetherFaceId;
     }
+    public int getStatu() {
+        return this.statu;
+    }
+    public void setStatu(int statu) {
+        this.statu = statu;
+    }
+
 }

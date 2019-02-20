@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbg"
+    tools:context=".activity.WelcomeActivity">
+
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="154dp"
+        android:layout_marginBottom="236dp"
+        android:src="@drawable/reg_image" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text2"
+        android:gravity="center"
+        android:text="维度科技"
+        android:textColor="#ffffff"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text"
+        android:layout_marginBottom="46dp"
+        android:gravity="center"
+        android:text="WEIDU KEJI"
+        android:textColor="#ffffff"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="八维移动通信学院作品"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

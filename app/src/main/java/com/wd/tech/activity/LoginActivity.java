@@ -7,12 +7,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wd.tech.R;
+import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.RsaCoder;
+import com.wd.tech.greendao.DaoMaster;
+import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,6 +84,15 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         @Override
         public void success(Result data) {
             Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                DaoSession daoSession = DaoMaster.newDevSession(LoginActivity.this, LoginUserInfoBeanDao.TABLENAME);
+                LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
+                loginUserInfoBeanDao.deleteAll();
+                LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
+                loginUserInfoBean.setStatu(1);
+                loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
+                finish();
+            }
         }
 
         @Override

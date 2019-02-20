@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.secondactivity.CollectActivity;
+import com.wd.tech.bean.FindCollectBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +21,15 @@ import java.util.List;
  */
 // TODO: 2019/2/19 穿数据 
 public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAdapter.Vh> {
-    List<String> list = new ArrayList<>();
+    List<FindCollectBean> list = new ArrayList<>();
 
-    public void addAll(List<String> list) {
+    public void addAll(List<FindCollectBean> list) {
         this.list.addAll(list);
+    }
+
+    public void deleteAll() {
+        list.clear();
+        notifyDataSetChanged();
     }
 
     class Vh extends RecyclerView.ViewHolder {
@@ -47,11 +54,14 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
+        FindCollectBean findCollectBean = list.get(i);
+        vh.qiandao.setImageURI(findCollectBean.getThumbnail());
+        vh.date.setText(findCollectBean.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
 

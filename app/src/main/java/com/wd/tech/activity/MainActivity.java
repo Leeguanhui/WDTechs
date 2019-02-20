@@ -11,7 +11,11 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.MyListViewAdapter;
 import com.wd.tech.activity.fragment.Fragment_Page_one;
@@ -24,8 +28,14 @@ import com.wd.tech.activity.secondactivity.InvitActivity;
 import com.wd.tech.activity.secondactivity.NotificaActivity;
 import com.wd.tech.activity.secondactivity.SettingActivity;
 import com.wd.tech.activity.secondactivity.TaskActivity;
+import com.wd.tech.bean.ByIdUserInfoBean;
+import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.PersonallistBean;
+import com.wd.tech.bean.Result;
+import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
+import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +59,19 @@ public class MainActivity extends WDActivity {
     LinearLayout right;
     @BindView(R.id.login_bnt)
     LinearLayout login_bnt;
+    @BindView(R.id.relat_one)
+    RelativeLayout relat_one;
+    @BindView(R.id.text_one)
+    TextView text_one;
+    @BindView(R.id.myheader)
+    SimpleDraweeView myheader;
+    @BindView(R.id.myname)
+    TextView myname;
+    @BindView(R.id.mysign)
+    TextView mysign;
     private MyListViewAdapter myListViewAdapter;
     List<PersonallistBean> personallistBeanList = new ArrayList<>();
+    private ByIdUserInfoPresenter byIdUserInfoPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -61,6 +82,7 @@ public class MainActivity extends WDActivity {
     protected void initView() {
         closeSwipeBack();
         myListViewAdapter = new MyListViewAdapter(this);
+        byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         fragment_page_one = new Fragment_Page_one();
         fragment_page_two = new Fragment_Page_two();
@@ -196,5 +218,49 @@ public class MainActivity extends WDActivity {
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LoginUserInfoBean userInfo = getUserInfo(this);
+        if (userInfo != null) {
+            relat_one.setVisibility(View.VISIBLE);
+            text_one.setVisibility(View.VISIBLE);
+            listview.setVisibility(View.VISIBLE);
+            login_bnt.setVisibility(View.GONE);
+            byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
+        } else {
+            relat_one.setVisibility(View.GONE);
+            text_one.setVisibility(View.GONE);
+            listview.setVisibility(View.GONE);
+            login_bnt.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 根据Id查询用户信息
+     */
+    private class ByIdUserResult implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                ByIdUserInfoBean userInfoBean = (ByIdUserInfoBean) data.getResult();
+                myheader.setImageURI(userInfoBean.getHeadPic());
+                if (userInfoBean.getSignature() == null) {
+                    mysign.setText("编辑个性签名");
+                } else {
+                    mysign.setText(userInfoBean.getSignature());
+                }
+                myname.setText(userInfoBean.getNickName());
+            } else {
+                Toast.makeText(MainActivity.this, "用户信息请求失败,请稍后重试。", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginbg"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@drawable/loginbg"
     tools:context=".activity.RegActivity">
+
     <ImageView
         android:id="@+id/mIv_Head_Reg"
         android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
             android:layout_toRightOf="@+id/ICON_Name"
             android:background="@null"
             android:hint="昵称"
-            android:textColorHint="#fff"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -82,7 +84,10 @@
             android:layout_toRightOf="@+id/ICON_Phone"
             android:background="@null"
             android:hint="手机号"
-            android:textColorHint="#fff"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -123,7 +128,8 @@
             android:layout_toRightOf="@+id/ICON_Lock"
             android:background="@null"
             android:hint="登录密码"
-            android:textColorHint="#fff"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -159,8 +165,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="96dp"
-        android:text="注册"
         android:background="@drawable/shape_login"
+        android:text="注册"
         android:textColor="#fff"
         android:textSize="16sp" />
 

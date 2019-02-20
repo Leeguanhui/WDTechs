@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,10 +35,12 @@
         <activity android:name=".activity.secondactivity.IntegActivity" />
         <activity android:name=".activity.secondactivity.CollectActivity" />
         <activity android:name=".activity.secondactivity.NotificaActivity" />
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.secondactivity.InvitActivity" />
         android:value="640" />
         <activity android:name=".activity.AddFriendsActivity" />
         <activity android:name=".activity.view.NewsDetails"></activity>
+        <activity android:name=".activity.FlockActivity"></activity>
     </application>
 
 </manifest>
