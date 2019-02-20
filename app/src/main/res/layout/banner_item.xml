@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:roundedCornerRadius="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/simple"
         />
     <TextView
@@ -17,7 +19,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:text="1111111"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:lines="1"
+        android:ellipsize="end"
         />
 </RelativeLayout>

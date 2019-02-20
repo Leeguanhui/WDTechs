@@ -1,8 +1,10 @@
 package com.wd.tech.core;
 
+import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
+import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
 
 import java.util.List;
@@ -27,6 +29,13 @@ public interface AllUrls {
     Observable<Result<List<NewsBannder>>> Bannder(
     );
 
+    /**
+     * 社区列表
+     */
+    @GET("community/v1/findCommunityList")
+    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
+                                                              @Query("page") int page, @Query("count") int count);
+
     //用户登录
     @FormUrlEncoded
     @POST("user/v1/login")
@@ -41,6 +50,15 @@ public interface AllUrls {
             @Query("plateId")int plateId,
             @Query("page")int page,
             @Query("count")int count
+    );
+    /**
+     * 咨询详情
+     */
+    @GET("information/v1/findInformationDetails")
+    Observable<Result<NewsDetailsBean>> NewsDetails(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("id")int id
     );
     /**
      * 添加好友
