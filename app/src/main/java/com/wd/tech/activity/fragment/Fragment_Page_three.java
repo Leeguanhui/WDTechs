@@ -9,6 +9,7 @@ import com.wd.tech.R;
 import com.wd.tech.activity.ReleasePostActivity;
 import com.wd.tech.activity.adapter.CommunityListAdapter;
 import com.wd.tech.bean.CommunityListBean;
+import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
@@ -31,6 +32,9 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
     XRecyclerView recyclerView;
     private CommunityListAdapter communityListAdapter;
     private int page = 1;
+    private String sessionId;
+    private int userId;
+    private LoginUserInfoBean userInfo;
 
     @Override
     public String getPageName() {
@@ -44,8 +48,17 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
 
     @Override
     protected void initView() {
+
+        if (userInfo == null) {
+            userId = 0;
+            sessionId = "0";
+        } else {
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }
+
         communityListPresenter = new CommunityListPresenter(new CommunityList());
-        communityListPresenter.request(1, 5);
+        communityListPresenter.request(userId, sessionId, 1, 5);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         communityListAdapter = new CommunityListAdapter(getContext());
@@ -57,6 +70,12 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
         recyclerView.setPullRefreshEnabled(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        userInfo = getUserInfo(getContext());
+    }
+
     /**
      * 上下拉
      */
@@ -66,13 +85,13 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
         communityListAdapter.removeAll();
 
         communityListAdapter.notifyDataSetChanged();
-        communityListPresenter.request(page, 5);
+        communityListPresenter.request(userId, sessionId, page, 5);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        communityListPresenter.request(page, 5);
+        communityListPresenter.request(userId, sessionId, page, 5);
     }
 
     private class CommunityList implements ICoreInfe<Result> {
@@ -97,6 +116,10 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
      */
     @OnClick(R.id.add_community)
     public void add_community() {
-        startActivity(new Intent(getContext(), ReleasePostActivity.class));
+        if (userInfo != null) {
+            startActivity(new Intent(getContext(), ReleasePostActivity.class));
+        } else {
+            Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+        }
     }
 }

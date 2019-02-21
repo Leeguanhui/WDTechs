@@ -2,6 +2,7 @@ package com.wd.tech.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
@@ -72,6 +73,8 @@ public class MainActivity extends WDActivity {
     private MyListViewAdapter myListViewAdapter;
     List<PersonallistBean> personallistBeanList = new ArrayList<>();
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected int getLayoutId() {
@@ -81,6 +84,8 @@ public class MainActivity extends WDActivity {
     @Override
     protected void initView() {
         closeSwipeBack();
+        sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
+        edit = sharedPreferences.edit();
         myListViewAdapter = new MyListViewAdapter(this);
         byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -134,6 +139,7 @@ public class MainActivity extends WDActivity {
             }
 
             @Override
+
             public void onDrawerClosed(View drawerView) {
                 isDrawer = false;
             }
@@ -204,6 +210,7 @@ public class MainActivity extends WDActivity {
                         startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
+                main_drawer_layout.closeDrawers();
             }
         });
         //跳转到登录注册
@@ -251,11 +258,14 @@ public class MainActivity extends WDActivity {
                     mysign.setText("编辑个性签名");
                 } else {
                     mysign.setText(userInfoBean.getSignature());
+                    edit.putString("mysign", userInfoBean.getSignature());
+                    edit.commit();
                 }
                 myname.setText(userInfoBean.getNickName());
             } else {
                 Toast.makeText(MainActivity.this, "用户信息请求失败,请稍后重试。", Toast.LENGTH_SHORT).show();
             }
+
         }
 
         @Override

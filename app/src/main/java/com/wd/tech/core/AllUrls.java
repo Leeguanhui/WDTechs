@@ -19,6 +19,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -35,12 +36,11 @@ public interface AllUrls {
     Observable<Result<List<NewsBannder>>> Bannder(
     );
 
-
     /**
      * 社区列表
      */
     @GET("community/v1/findCommunityList")
-    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
+    Observable<Result<List<CommunityListBean>>> communityList(@Header("userId") int userId, @Header("sessionId") String sessionId,
             @Query("page") int page, @Query("count") int count);
 
     /**
@@ -51,7 +51,6 @@ public interface AllUrls {
     Observable<Result<LoginUserInfoBean>> login(
             @Field("phone") String phone,
             @Field("pwd") String pwd);
-
 
     /**
      * 查询咨询首页Bander图
@@ -126,4 +125,19 @@ public interface AllUrls {
             @Header("userId") int userId,
             @Header("sessionId") String sessionId
     );
+
+    /**
+     * 修改个性签名
+     */
+    @PUT("user/verify/v1/modifySignature")
+    Observable<Result> modifySignature(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("signature") String signature);
+    /**
+     * 发布帖子
+     */
+    @POST("community/verify/v1/releasePost")
+    Observable<Result> releasePost(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Body MultipartBody body);
 }

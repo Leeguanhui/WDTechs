@@ -43,7 +43,10 @@ public class DetailsTypeAdapter extends RecyclerView.Adapter<DetailsTypeAdapter.
 
     @Override
     public int getItemCount() {
-        return this.list.size();
+        if (this.list!=null){
+            return this.list.size();
+        }
+        return 0;
     }
 
     public void setList(List<NewsDetailsBean.PlateBean> plate) {

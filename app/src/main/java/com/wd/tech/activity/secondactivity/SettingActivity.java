@@ -1,13 +1,17 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -27,15 +31,15 @@ public class SettingActivity extends WDActivity {
     @BindView(R.id.my_header)
     SimpleDraweeView my_header;
     @BindView(R.id.my_name)
-    TextView my_name;
+    EditText my_name;
     @BindView(R.id.my_sex)
     TextView my_sex;
     @BindView(R.id.my_brith)
     TextView my_brith;
     @BindView(R.id.my_phone)
-    TextView my_phone;
+    EditText my_phone;
     @BindView(R.id.my_mail)
-    TextView my_mail;
+    EditText my_mail;
     @BindView(R.id.my_jifen)
     TextView my_jifen;
     @BindView(R.id.my_vip)
@@ -43,7 +47,8 @@ public class SettingActivity extends WDActivity {
     @BindView(R.id.my_face)
     TextView my_face;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor edit;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;
@@ -51,6 +56,8 @@ public class SettingActivity extends WDActivity {
 
     @Override
     protected void initView() {
+        sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
+        edit = sharedPreferences.edit();
         LoginUserInfoBean userInfo = getUserInfo(this);
         byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
         byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
@@ -65,6 +72,8 @@ public class SettingActivity extends WDActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteUserInfo(SettingActivity.this);
+                edit.putString("mysign", "");
+                edit.commit();
                 finish();
             }
         });
@@ -75,6 +84,11 @@ public class SettingActivity extends WDActivity {
     @OnClick(R.id.back_bnt)
     public void back_bnt() {
         finish();
+    }
+
+    @OnClick(R.id.line1)
+    public void line1() {
+        startActivity(new Intent(SettingActivity.this, SignatureActivity.class));
     }
 
     @Override
