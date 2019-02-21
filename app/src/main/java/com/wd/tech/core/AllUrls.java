@@ -3,7 +3,9 @@ package com.wd.tech.core;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
+import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
+import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
@@ -96,8 +98,9 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsDetails(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("id")int id
+            @Query("id") int id
     );
+
     /**
      * 添加好友
      */
@@ -105,6 +108,7 @@ public interface AllUrls {
     Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId,
                                                    @Query("phone") String phone);
+
     /**
      * 详情评论
      */
@@ -112,9 +116,14 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("infoId")int infoId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Query("infoId") int infoId,
+            @Query("page") int page,
+            @Query("count") int count
     );
-
+    //初始化好友分组
+    @GET("chat/verify/v1/initFriendList")
+    Observable<Result<List<InitFriendlist>>> initFriendList(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId
+    );
 }
