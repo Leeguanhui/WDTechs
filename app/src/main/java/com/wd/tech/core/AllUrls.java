@@ -41,7 +41,7 @@ public interface AllUrls {
      */
     @GET("community/v1/findCommunityList")
     Observable<Result<List<CommunityListBean>>> communityList(@Header("userId") int userId, @Header("sessionId") String sessionId,
-            @Query("page") int page, @Query("count") int count);
+                                                              @Query("page") int page, @Query("count") int count);
 
     /**
      * 用户登录
@@ -98,8 +98,9 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsDetails(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("id")int id
+            @Query("id") int id
     );
+
     /**
      * 添加好友
      */
@@ -107,6 +108,7 @@ public interface AllUrls {
     Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId,
                                                    @Query("phone") String phone);
+
     /**
      * 详情评论
      */
@@ -114,9 +116,9 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("infoId")int infoId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Query("infoId") int infoId,
+            @Query("page") int page,
+            @Query("count") int count
     );
 
     /**

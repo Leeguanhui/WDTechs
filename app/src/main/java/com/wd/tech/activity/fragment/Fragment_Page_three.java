@@ -74,6 +74,7 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
     public void onResume() {
         super.onResume();
         userInfo = getUserInfo(getContext());
+        communityListPresenter.request(userId, sessionId, 1, 5);
     }
 
     /**

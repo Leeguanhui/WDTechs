@@ -22,13 +22,12 @@ public class ReleasePostPresenter extends BasePresenter {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
 
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builder.addFormDataPart("content", (String) args[3]);
-        builder.addFormDataPart("commodityId", "1");
-        List<Object> list = (List<Object>) args[4];
+        builder.addFormDataPart("content", (String) args[2]);
+        List<Object> list = (List<Object>) args[3];
         if (list.size() > 1) {
             for (int i = 1; i < list.size(); i++) {
                 File file = new File((String) list.get(i));
-                builder.addFormDataPart("image", file.getName(),
+                builder.addFormDataPart("file", file.getName(),
                         RequestBody.create(MediaType.parse("multipart/octet-stream"),
                                 file));
             }

@@ -81,7 +81,7 @@ public class ReleasePostActivity extends WDActivity {
 
     @OnClick(R.id.textview2)
     public void textview2() {
-        releasePostPresenter.request(userId, sessionId, 1, mText.getText().toString(), addCircleAdapter.getList());
+        releasePostPresenter.request(userId, sessionId, mText.getText().toString(), addCircleAdapter.getList());
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ReleasePostActivity extends WDActivity {
     private class ReleasePost implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-
+            finish();
         }
 
         @Override
