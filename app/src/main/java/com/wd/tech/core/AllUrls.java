@@ -17,6 +17,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -33,7 +34,6 @@ public interface AllUrls {
     Observable<Result<List<NewsBannder>>> Bannder(
     );
 
-
     /**
      * 社区列表
      */
@@ -49,7 +49,6 @@ public interface AllUrls {
     Observable<Result<LoginUserInfoBean>> login(
             @Field("phone") String phone,
             @Field("pwd") String pwd);
-
 
     /**
      * 查询咨询首页Bander图
@@ -96,8 +95,9 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsDetails(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("id")int id
+            @Query("id") int id
     );
+
     /**
      * 添加好友
      */
@@ -105,6 +105,7 @@ public interface AllUrls {
     Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId,
                                                    @Query("phone") String phone);
+
     /**
      * 详情评论
      */
@@ -112,9 +113,16 @@ public interface AllUrls {
     Observable<Result<NewsDetailsBean>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Query("infoId")int infoId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Query("infoId") int infoId,
+            @Query("page") int page,
+            @Query("count") int count
     );
 
+    /**
+     * 修改个性签名
+     */
+    @PUT("user/verify/v1/modifySignature")
+    Observable<Result> modifySignature(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("signature") String signature);
 }
