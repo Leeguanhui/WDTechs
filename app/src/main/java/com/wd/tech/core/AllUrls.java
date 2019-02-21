@@ -3,7 +3,9 @@ package com.wd.tech.core;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
+import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
+import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
@@ -12,13 +14,12 @@ import com.wd.tech.bean.Result;
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -35,7 +36,6 @@ public interface AllUrls {
     Observable<Result<List<NewsBannder>>> Bannder(
     );
 
-
     /**
      * 社区列表
      */
@@ -51,7 +51,6 @@ public interface AllUrls {
     Observable<Result<LoginUserInfoBean>> login(
             @Field("phone") String phone,
             @Field("pwd") String pwd);
-
 
     /**
      * 查询咨询首页Bander图
@@ -120,7 +119,20 @@ public interface AllUrls {
             @Query("page") int page,
             @Query("count") int count
     );
+    //初始化好友分组
+    @GET("chat/verify/v1/initFriendList")
+    Observable<Result<List<InitFriendlist>>> initFriendList(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId
+    );
 
+    /**
+     * 修改个性签名
+     */
+    @PUT("user/verify/v1/modifySignature")
+    Observable<Result> modifySignature(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("signature") String signature);
     /**
      * 发布帖子
      */
