@@ -44,11 +44,18 @@ public class DetailsMoreAdapter extends RecyclerView.Adapter<DetailsMoreAdapter.
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (this.list!=null){
+            return this.list.size();
+        }
+        return 0;
     }
 
     public void setList(List<NewsDetailsBean.InformationListBean> informationList) {
-        this.list=informationList;
+        if (informationList!=null){
+            this.list.size();
+            this.list=informationList;
+            notifyDataSetChanged();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

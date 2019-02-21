@@ -18,6 +18,7 @@ import com.wd.tech.R;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.bean.InfoRecommecndListBean;
+import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
@@ -57,6 +58,10 @@ public class Fragment_Page_one extends WDFragment {
     private MZBannerView banner;
     private SimpleDraweeView mImageView;
     private TextView title;
+    private LoginUserInfoBean userInfo;
+    private int userId;
+    private String sessionId;
+
     @Override
     public String getPageName() {
         return null;
@@ -69,12 +74,17 @@ public class Fragment_Page_one extends WDFragment {
 
     @Override
     protected void initView() {
+        userInfo = getUserInfo(getActivity());
+        if (userInfo!=null){
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }
         initJK();
         View inflate = View.inflate(getActivity(), R.layout.zx_xrecyclerbanner, null);
         banner = inflate.findViewById(R.id.banner);
         xrecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        xrecy.addHeaderView(inflate);
         xrecy.setAdapter(zxxRecyAdapter);
+        xrecy.addHeaderView(inflate);
         zxxRecyAdapter.notifyDataSetChanged();
         xrecy.setPullRefreshEnabled(true);
         xrecy.setLoadingMoreEnabled(true);
@@ -84,7 +94,7 @@ public class Fragment_Page_one extends WDFragment {
             public void onRefresh() {
                 newsBannderPresenter.request();
                 num=num+5;
-                zxInformationPresenter.request(1, "1",1,1,num);
+                zxInformationPresenter.request(userId, sessionId,12,1,num);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.refreshComplete();
             }
@@ -93,7 +103,7 @@ public class Fragment_Page_one extends WDFragment {
             public void onLoadMore() {
                 newsBannderPresenter.request();
                 num=num+5;
-                zxInformationPresenter.request(1, "1",1,1,num);
+                zxInformationPresenter.request(userId, sessionId,1,1,num);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.loadMoreComplete();
             }
@@ -104,14 +114,15 @@ public class Fragment_Page_one extends WDFragment {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         zxInformationPresenter = new ZxInformationPresenter(new InforMationList());
-        newsBannderPresenter.request();
-        zxInformationPresenter.request(1, "1",1,1,num);
+        zxInformationPresenter.request(userId, sessionId,1,1,num);
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        zxInformationPresenter.request(1, "1",1,1,num);
+        zxInformationPresenter.request(userId, sessionId,1,1,num);
+        banner.start();
     }
 
     private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
@@ -159,6 +170,7 @@ public class Fragment_Page_one extends WDFragment {
     private class InforMationList implements ICoreInfe<Result<List<InfoRecommecndListBean>>> {
         @Override
         public void success(Result<List<InfoRecommecndListBean>> data) {
+            newsBannderPresenter.request();
             List<InfoRecommecndListBean> result = data.getResult();
             zxxRecyAdapter.setList(result);
             Log.e("aaaa", data.getResult()+"");

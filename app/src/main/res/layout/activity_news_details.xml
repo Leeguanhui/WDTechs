@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.view.NewsDetails"
+    android:orientation="vertical"
     >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="9">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -55,15 +57,44 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         />
-    <com.wd.tech.activity.view.NoScrollWebView
+    <WebView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/simple"
         android:id="@+id/coment"
         android:scrollbars="none"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
         />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/simple"
+            android:visibility="invisible"
+            android:id="@+id/ralt"
+            >
+           <ImageView
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:src="@drawable/wu"
+               android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:layout_marginTop="70dp"
+               android:id="@+id/wu"
+               />
+            <Button
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/wu"
+                android:text="尚未购买，付费再来阅读吧"
+                android:background="@drawable/fufei_shape"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/fufei"
+                />
+        </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,6 +139,7 @@
             android:layout_marginTop="10dp"
             android:background="#ffffff"
             android:layout_below="@id/a"
+            android:id="@+id/b"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -129,4 +161,98 @@
         </LinearLayout>
     </RelativeLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/common_icon_back_n"
+            android:id="@+id/back"
+            />
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="24dp"
+            android:id="@+id/comment"
+            android:layout_marginLeft="8dp"
+            android:text="既然来了，就留下点什么吧"
+            android:background="@drawable/comment_shape"
+            android:textSize="14sp"
+            android:gravity="center"
+            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/huifu"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:src="@drawable/common_icon_comment"
+                android:layout_marginLeft="12dp"
+
+                android:paddingRight="5dp"
+                />
+            <TextView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:text="11"
+                android:maxLength="2"
+                android:textSize="8sp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_gravity="top|right"
+                android:background="@drawable/red_top_right_shape"
+                android:id="@+id/commentsnum"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/great"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="25dp"
+                android:src="@drawable/common_icon"
+                android:layout_marginLeft="15dp"
+                android:paddingRight="7dp"
+                />
+            <TextView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:text="2111"
+                android:maxLength="2"
+                android:textSize="8sp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_gravity="top|right"
+                android:background="@drawable/red_top_right_shape"
+                android:id="@+id/likenum"
+                />
+        </FrameLayout>
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/collect_s"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/like"
+            />
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/collect"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/shape"
+            />
+    </LinearLayout>
 </LinearLayout>
