@@ -15,6 +15,6 @@ public class CommunityListPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.communityList((int) args[0], (int) args[1]);
+        return allUrls.communityList((int) args[0], (String) args[1], (int) args[2], (int) args[3]);
     }
 }
