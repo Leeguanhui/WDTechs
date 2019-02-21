@@ -12,6 +12,8 @@ import com.wd.tech.bean.Result;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -38,7 +40,7 @@ public interface AllUrls {
      * 社区列表
      */
     @GET("community/v1/findCommunityList")
-    Observable<Result<List<CommunityListBean>>> communityList(/*@Header("userId") int userId, @Header("sessionId") String sessionId,*/
+    Observable<Result<List<CommunityListBean>>> communityList(@Header("userId") int userId, @Header("sessionId") String sessionId,
             @Query("page") int page, @Query("count") int count);
 
     /**
@@ -125,4 +127,11 @@ public interface AllUrls {
     Observable<Result> modifySignature(@Header("userId") int userId,
                                        @Header("sessionId") String sessionId,
                                        @Query("signature") String signature);
+    /**
+     * 发布帖子
+     */
+    @POST("community/verify/v1/releasePost")
+    Observable<Result> releasePost(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Body MultipartBody body);
 }

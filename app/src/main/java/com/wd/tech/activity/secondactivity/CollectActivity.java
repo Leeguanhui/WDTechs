@@ -1,7 +1,6 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;

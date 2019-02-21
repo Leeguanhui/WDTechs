@@ -67,7 +67,7 @@
         android:text="1111"
         android:layout_alignParentRight="true"
         android:layout_below="@id/content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:textColor="#666666"
         android:textSize="10sp"
         android:paddingRight="12dp"
@@ -89,11 +89,10 @@
         android:text="1111"
         android:layout_toLeftOf="@id/sharewith"
         android:layout_below="@id/content"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"
         android:textColor="#666666"
-        android:textSize="10sp"
-        android:paddingRight="12dp" />
+        android:textSize="10sp" />
     <ImageView
         android:layout_width="12dp"
         android:layout_height="11dp"
@@ -102,7 +101,7 @@
         android:layout_toLeftOf="@id/likenum"
         android:layout_below="@id/content"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="6dp"
+        android:layout_marginRight="10dp"
         />
     <View
         android:layout_width="match_parent"
