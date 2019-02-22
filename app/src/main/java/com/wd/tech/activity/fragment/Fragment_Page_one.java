@@ -1,6 +1,7 @@
 package com.wd.tech.activity.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
+import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
@@ -54,13 +56,14 @@ public class Fragment_Page_one extends WDFragment {
     private List<String> mItitles;
     private ZXXRecyAdapter zxxRecyAdapter;
     private ZxInformationPresenter zxInformationPresenter;
-    private int num=10;
+    private int num=1;
     private MZBannerView banner;
     private SimpleDraweeView mImageView;
     private TextView title;
     private LoginUserInfoBean userInfo;
     private int userId;
     private String sessionId;
+    private List<NewsBannder> result;
 
     @Override
     public String getPageName() {
@@ -93,8 +96,8 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onRefresh() {
                 newsBannderPresenter.request();
-                num=num+5;
-                zxInformationPresenter.request(userId, sessionId,12,1,num);
+                num++;
+                zxInformationPresenter.request(userId, sessionId,0,num,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.refreshComplete();
             }
@@ -102,33 +105,40 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onLoadMore() {
                 newsBannderPresenter.request();
-                num=num+5;
-                zxInformationPresenter.request(userId, sessionId,1,1,num);
+                num++;
+                zxInformationPresenter.request(userId, sessionId,0,num,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.loadMoreComplete();
             }
         });
-
+        banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
+            @Override
+            public void onPageClick(View view, int i) {
+                Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
+                intent.putExtra("id",result.get(i).getJumpUrl());
+                startActivity(intent);
+            }
+        });
     }
     private void initJK() {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         zxInformationPresenter = new ZxInformationPresenter(new InforMationList());
-        zxInformationPresenter.request(userId, sessionId,1,1,num);
+        zxInformationPresenter.request(userId, sessionId,0,num,10);
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        zxInformationPresenter.request(userId, sessionId,1,1,num);
+        zxInformationPresenter.request(userId, sessionId,0,num,10);
         banner.start();
     }
 
     private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
         @Override
-        public void success(Result<List<NewsBannder>> data) {
-            List<NewsBannder> result = data.getResult();
+        public void success(final Result<List<NewsBannder>> data) {
+            result = data.getResult();
             mImages = new ArrayList<>();
             mItitles = new ArrayList<>();
             for (int i = 0; i < result.size(); i++) {
