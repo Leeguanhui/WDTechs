@@ -152,4 +152,12 @@ public interface AllUrls {
     Observable<Result> addCommunityGreat(@Header("userId") int userId,
                                          @Header("sessionId") String sessionId,
                                          @Query("communityId") int communityId);
+
+    /**
+     * 修改用户名称
+     */
+    @PUT("user/verify/v1/modifyNickName")
+    Observable<Result> modifyNickName(@Header("userId") int userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("nickName") String nickName);
 }
