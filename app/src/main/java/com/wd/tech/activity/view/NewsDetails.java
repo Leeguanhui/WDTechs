@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -110,6 +111,7 @@ public class NewsDetails extends WDActivity {
         detailsCommentsPresenter = new DetailsCommentsPresenter(new Comments());
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
+        Log.e("qwer",id+"");
         newsDetails_presenter = new NewsDetails_Presenter(new DetailsBack());
         newsDetails_presenter.request(userId, sessionId, id);
         detailsCommentsPresenter.request(userId, sessionId, id, 1, 10);
@@ -132,6 +134,7 @@ public class NewsDetails extends WDActivity {
     private class DetailsBack implements ICoreInfe<Result<NewsDetailsBean>> {
         @Override
         public void success(Result<NewsDetailsBean> data) {
+            Log.e("qwerr",data.getMessage()+"");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             NewsDetailsBean result = data.getResult();
             title.setText(result.getTitle());
@@ -168,6 +171,7 @@ public class NewsDetails extends WDActivity {
     private class Comments implements ICoreInfe<Result<List<DetailsCommentsBean>>> {
         @Override
         public void success(Result<List<DetailsCommentsBean>> data) {
+            Log.e("qwerrr",data.getMessage()+"");
             detailsCommentAdapter.setList(data.getResult());
         }
 

@@ -1,7 +1,6 @@
 package com.wd.tech.activity;
 
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,7 +19,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddFriendsActivity extends WDActivity {
@@ -31,7 +29,6 @@ public class AddFriendsActivity extends WDActivity {
     TabLayout courseSearchTablayout;
     @BindView(R.id.search_pager)
     ViewPager searchPager;
-
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private ArrayList<String> list = new ArrayList<>();
 

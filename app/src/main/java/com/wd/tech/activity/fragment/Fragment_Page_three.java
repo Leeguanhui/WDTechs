@@ -14,6 +14,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.CommunityListPresenter;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
     private String sessionId;
     private int userId;
     private LoginUserInfoBean userInfo;
+    private AddCommunityGreatPresenter addCommunityGreatPresenter;
 
     @Override
     public String getPageName() {
@@ -58,11 +60,14 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
         }
 
         communityListPresenter = new CommunityListPresenter(new CommunityList());
-        communityListPresenter.request(userId, sessionId, 1, 5);
+        communityListPresenter.request(userId, sessionId, page, 5);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         communityListAdapter = new CommunityListAdapter(getContext());
         recyclerView.setAdapter(communityListAdapter);
+
+        //点赞
+        addCommunityGreatPresenter = new AddCommunityGreatPresenter(new AddCommunityGreat());
 
         //上下拉
         recyclerView.setLoadingListener(this);
@@ -74,7 +79,8 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
     public void onResume() {
         super.onResume();
         userInfo = getUserInfo(getContext());
-        communityListPresenter.request(userId, sessionId, 1, 5);
+        communityListAdapter.removeAll();
+        communityListPresenter.request(userId, sessionId, page, 5);
     }
 
     /**
@@ -98,7 +104,6 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
     private class CommunityList implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             List<CommunityListBean> circleBeans = (List<CommunityListBean>) data.getResult();
             communityListAdapter.addItem(circleBeans);
             communityListAdapter.notifyDataSetChanged();
@@ -121,6 +126,18 @@ public class Fragment_Page_three extends WDFragment implements XRecyclerView.Loa
             startActivity(new Intent(getContext(), ReleasePostActivity.class));
         } else {
             Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class AddCommunityGreat implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }

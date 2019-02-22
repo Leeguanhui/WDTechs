@@ -146,6 +146,14 @@ public interface AllUrls {
                                    @Body MultipartBody body);
 
     /**
+     * 社区点赞
+     */
+    @POST("community/verify/v1/addCommunityGreat")
+    Observable<Result> addCommunityGreat(@Header("userId") int userId,
+                                         @Header("sessionId") String sessionId,
+                                         @Query("communityId") int communityId);
+
+    /**
      * 修改用户名称
      */
     @PUT("user/verify/v1/modifyNickName")

@@ -7,10 +7,19 @@
     android:background="#000"
     tools:context=".activity.ImageActivity">
 
-    <ImageView
+    <com.wd.tech.activity.view.PhotoViewPager
         android:id="@+id/iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_image_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textColor="#ffffff"/>
 
 </RelativeLayout>
