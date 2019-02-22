@@ -3,6 +3,9 @@ package com.wd.tech.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
@@ -29,6 +32,7 @@ import com.wd.tech.activity.secondactivity.InvitActivity;
 import com.wd.tech.activity.secondactivity.NotificaActivity;
 import com.wd.tech.activity.secondactivity.SettingActivity;
 import com.wd.tech.activity.secondactivity.TaskActivity;
+import com.wd.tech.activity.secondactivity.UpdateMessageActivity;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.PersonallistBean;
@@ -42,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends WDActivity {
     @BindView(R.id.radio)
@@ -75,6 +80,14 @@ public class MainActivity extends WDActivity {
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
+
+    Handler handler = new Handler(Looper.myLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            main_drawer_layout.closeDrawers();
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -210,7 +223,13 @@ public class MainActivity extends WDActivity {
                         startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
-                main_drawer_layout.closeDrawers();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = handler.obtainMessage();
+                        handler.sendMessageAtTime(message, 3000);
+                    }
+                }).start();
             }
         });
         //跳转到登录注册
@@ -218,8 +237,21 @@ public class MainActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = handler.obtainMessage();
+                        handler.sendMessageAtTime(message, 3000);
+                    }
+                }).start();
             }
         });
+        //点击头像跳转
+    }
+
+    @OnClick({R.id.myheader, R.id.myname})
+    public void myheader() {
+        startActivity(new Intent(this, UpdateMessageActivity.class));
     }
 
     @Override

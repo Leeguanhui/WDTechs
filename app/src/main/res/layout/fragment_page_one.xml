@@ -7,43 +7,42 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/titletouying"
-        >
+        android:background="@drawable/titletouying">
+
         <ImageView
+            android:id="@+id/menu"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/menu"
-            android:src="@mipmap/homemenu"
             android:layout_alignParentLeft="true"
-            android:paddingLeft="12dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="14dp"
-            />
+            android:paddingLeft="12dp"
+            android:src="@mipmap/homemenu" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:text="咨询"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="14dp"
-            android:layout_alignParentBottom="true"
-            />
+            android:text="咨询"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <ImageView
+            android:id="@+id/search"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/search"
-            android:id="@+id/search"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="14dp"
             android:paddingRight="12dp"
-            />
+            android:src="@mipmap/search" />
     </RelativeLayout>
+
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/xrecy"
-        ></com.jcodecraeer.xrecyclerview.XRecyclerView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

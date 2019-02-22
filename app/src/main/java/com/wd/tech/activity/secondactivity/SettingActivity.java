@@ -3,8 +3,13 @@ package com.wd.tech.activity.secondactivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.math.BigDecimal;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,15 +36,15 @@ public class SettingActivity extends WDActivity {
     @BindView(R.id.my_header)
     SimpleDraweeView my_header;
     @BindView(R.id.my_name)
-    EditText my_name;
+    TextView my_name;
     @BindView(R.id.my_sex)
     TextView my_sex;
     @BindView(R.id.my_brith)
     TextView my_brith;
     @BindView(R.id.my_phone)
-    EditText my_phone;
+    TextView my_phone;
     @BindView(R.id.my_mail)
-    EditText my_mail;
+    TextView my_mail;
     @BindView(R.id.my_jifen)
     TextView my_jifen;
     @BindView(R.id.my_vip)
@@ -49,6 +54,7 @@ public class SettingActivity extends WDActivity {
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;
