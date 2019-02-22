@@ -80,7 +80,7 @@ public class MainActivity extends WDActivity {
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
-
+    private String nickName;
     Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -251,7 +251,9 @@ public class MainActivity extends WDActivity {
 
     @OnClick({R.id.myheader, R.id.myname})
     public void myheader() {
-        startActivity(new Intent(this, UpdateMessageActivity.class));
+        Intent intent = new Intent(this, UpdateMessageActivity.class);
+        intent.putExtra("name", nickName);
+        startActivity(intent);
     }
 
     @Override
@@ -281,6 +283,8 @@ public class MainActivity extends WDActivity {
      * 根据Id查询用户信息
      */
     private class ByIdUserResult implements ICoreInfe<Result> {
+
+
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
@@ -293,6 +297,7 @@ public class MainActivity extends WDActivity {
                     edit.putString("mysign", userInfoBean.getSignature());
                     edit.commit();
                 }
+                nickName = userInfoBean.getNickName();
                 myname.setText(userInfoBean.getNickName());
             } else {
                 Toast.makeText(MainActivity.this, "用户信息请求失败,请稍后重试。", Toast.LENGTH_SHORT).show();
