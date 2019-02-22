@@ -121,6 +121,7 @@ public interface AllUrls {
             @Query("page") int page,
             @Query("count") int count
     );
+
     //初始化好友分组
     @GET("chat/verify/v1/initFriendList")
     Observable<Result<List<InitFriendlist>>> initFriendList(
@@ -135,6 +136,7 @@ public interface AllUrls {
     Observable<Result> modifySignature(@Header("userId") int userId,
                                        @Header("sessionId") String sessionId,
                                        @Query("signature") String signature);
+
     /**
      * 发布帖子
      */
@@ -142,4 +144,12 @@ public interface AllUrls {
     Observable<Result> releasePost(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Body MultipartBody body);
+
+    /**
+     * 修改用户名称
+     */
+    @PUT("user/verify/v1/modifyNickName")
+    Observable<Result> modifyNickName(@Header("userId") int userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Query("nickName") String nickName);
 }

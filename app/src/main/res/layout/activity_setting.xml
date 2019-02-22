@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".activity.secondactivity.SettingActivity">
 
@@ -90,13 +92,13 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/my_name"
-                    android:background="@null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view1"
                     android:layout_alignParentRight="true"
+                    android:background="@null"
                     android:text="烤面筋"
                     android:textColor="#999999"
                     android:textSize="12sp" />
@@ -218,7 +220,7 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/my_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -247,14 +249,14 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/my_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view5"
                     android:layout_alignParentRight="true"
-                    android:text="1724959985@qq.com"
                     android:background="@null"
+                    android:text="1724959985@qq.com"
                     android:textColor="#999999"
                     android:textSize="12sp" />
             </RelativeLayout>

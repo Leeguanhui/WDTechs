@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/mybackground"
         android:gravity="center"
-        android:layout_gravity="start"
+        android:layout_gravity="left"
         android:orientation="vertical">
 
         <LinearLayout
@@ -109,9 +109,11 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:listSelector="@android:color/transparent"
             android:layout_weight="1"
             android:background="@drawable/melinear_shape"
             android:divider="@null"
+            android:fadingEdge="none"
             android:visibility="gone" />
 
         <TextView
