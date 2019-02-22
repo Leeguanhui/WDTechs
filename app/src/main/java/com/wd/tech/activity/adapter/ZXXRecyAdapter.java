@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
+import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -86,6 +87,15 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             //Log.e("aa",list.get(i).getInfoAdvertisingVo().getTitle());
             ((AdvertisingViewHolder) viewHolder).connect.setText(list.get(i).getInfoAdvertisingVo().getContent());
             ((AdvertisingViewHolder) viewHolder).simole.setImageURI(list.get(i).getInfoAdvertisingVo().getPic());
+            ((AdvertisingViewHolder) viewHolder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,InfoAdvertisingVo.class);
+                    intent.putExtra("id",list.get(i).getInfoAdvertisingVo().getUrl());
+                    context.startActivity(intent);
+                }
+            });
+
         }
        }
 
@@ -105,7 +115,9 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     }
 
     public void setList(List<InfoRecommecndListBean> result) {
-        this.list=result;
+        if (result!=null){
+            this.list.addAll(result);
+        }
     }
 
     private class ListViewHolder extends XRecyclerView.ViewHolder {
