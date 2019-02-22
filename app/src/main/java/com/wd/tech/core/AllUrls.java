@@ -14,6 +14,8 @@ import com.wd.tech.bean.Result;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -119,6 +121,7 @@ public interface AllUrls {
             @Query("page") int page,
             @Query("count") int count
     );
+
     //初始化好友分组
     @GET("chat/verify/v1/initFriendList")
     Observable<Result<List<InitFriendlist>>> initFriendList(
@@ -133,6 +136,7 @@ public interface AllUrls {
     Observable<Result> modifySignature(@Header("userId") int userId,
                                        @Header("sessionId") String sessionId,
                                        @Query("signature") String signature);
+
     /**
      * 发布帖子
      */
@@ -140,4 +144,12 @@ public interface AllUrls {
     Observable<Result> releasePost(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Body MultipartBody body);
+
+    /**
+     * 社区点赞
+     */
+    @POST("community/verify/v1/addCommunityGreat")
+    Observable<Result> addCommunityGreat(@Header("userId") int userId,
+                                         @Header("sessionId") String sessionId,
+                                         @Query("communityId") int communityId);
 }
