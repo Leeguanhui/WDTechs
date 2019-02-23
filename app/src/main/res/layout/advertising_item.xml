@@ -30,7 +30,7 @@
         android:src="@mipmap/group"
         android:layout_below="@id/connect"
         android:layout_marginTop="18dp"
-       android:layout_marginLeft="10dp"
+       android:layout_marginLeft="8dp"
         />
     <View
         android:layout_width="match_parent"
