@@ -19,6 +19,7 @@ import com.wd.tech.R;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
+import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
@@ -117,6 +118,12 @@ public class Fragment_Page_one extends WDFragment {
                 Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
                 intent.putExtra("id",result.get(i).getJumpUrl());
                 startActivity(intent);
+            }
+        });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),Type.class));
             }
         });
     }

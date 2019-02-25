@@ -1,5 +1,6 @@
 package com.wd.tech.core;
 
+import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
@@ -11,6 +12,7 @@ import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
+import com.wd.tech.bean.TypeBean;
 
 import java.util.List;
 
@@ -177,4 +179,10 @@ public interface AllUrls {
                                    @Field("name")String name,
                                    @Field("description")String description
                                    );
+    /**
+     * 查询所有版块
+     */
+    @GET("information/v1/findAllInfoPlate")
+    Observable<Result<List<TypeBean>>> Type(
+    );
 }

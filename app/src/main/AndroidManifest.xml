@@ -3,8 +3,8 @@
     package="com.wd.tech">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".core.WDApplication"
@@ -46,9 +46,12 @@
         <activity android:name=".activity.ImageActivity" />
         <activity android:name=".activity.ReleasePostActivity" />
         <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
-        <activity android:name=".activity.view.InfoAdvertisingVo"></activity>
+        <activity android:name=".activity.view.InfoAdvertisingVo" />
         <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
-        <activity android:name=".activity.secondactivity.UpdateMessageActivity"></activity>
+        <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
+        <activity android:name=".activity.view.Type" />
+        <activity android:name=".activity.view.SearchType" />
+        <activity android:name=".activity.view.SearchActivity"></activity>
     </application>
 
 </manifest>
