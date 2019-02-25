@@ -2,6 +2,7 @@ package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.ByIdUserInfoBean;
+import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FriendInfoList;
@@ -162,10 +163,30 @@ public interface AllUrls {
     Observable<Result> modifyNickName(@Header("userId") int userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("nickName") String nickName);
+
     /**
      * 查询所有版块
      */
     @GET("information/v1/findAllInfoPlate")
     Observable<Result<List<TypeBean>>> Type(
+
     );
+
+    /**
+     * 根据标题模糊查询
+     */
+    @GET("information/v1/findInformationByTitle")
+    Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
+                                                                 @Query("count") int count);
+
+    /**
+     * 完善用户信息
+     */
+    @FormUrlEncoded
+    @POST("user/verify/v1/perfectUserInfo")
+    Observable<Result> perfectUserInfo(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Field("nickName") String nickName, @Field("sex") int sex,
+                                       @Field("signature") String signature, @Field("birthday") String birthday,
+                                       @Field("email") String email);
 }

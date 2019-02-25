@@ -1,5 +1,6 @@
 package com.wd.tech.activity.thirdlyactivity;
 
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -23,9 +24,12 @@ public class SignatureActivity extends WDActivity {
     EditText editext_sign;
     @BindView(R.id.text_num)
     TextView text_num;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor edit;
     private ModiftSignaturePresenter modiftSignaturePresenter;
     private LoginUserInfoBean userInfo;
     private String mysign;
+    private String content;
 
     @Override
     protected int getLayoutId() {
@@ -41,6 +45,8 @@ public class SignatureActivity extends WDActivity {
         if (!(mysign.equals("") && mysign == null)) {
             editext_sign.setText(mysign);
         }
+        sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
+        edit = sharedPreferences.edit();
     }
 
     @Override
@@ -68,7 +74,7 @@ public class SignatureActivity extends WDActivity {
 
     @OnClick(R.id.send_btn)
     public void send_btn() {
-        String content = editext_sign.getText().toString();
+        content = editext_sign.getText().toString();
         if (content.equals("") || content == null) {
             Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -83,6 +89,8 @@ public class SignatureActivity extends WDActivity {
         @Override
         public void success(Result result) {
             if (result.getStatus().equals("0000")) {
+                edit.putString("mysign", content);
+                edit.commit();
                 finish();
             }
         }
