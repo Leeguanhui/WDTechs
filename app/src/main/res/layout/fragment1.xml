@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
+        android:id="@+id/aaaaa"
         android:layout_marginTop="10dp"
+        android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="52dp">
         <EditText
@@ -30,44 +32,54 @@
             android:padding="5dp"
             android:src="@mipmap/search" />
     </RelativeLayout>
-
-    <LinearLayout
-        android:background="@drawable/melinear_shape"
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/ccc"
+        android:layout_below="@id/aaaaa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#20affa"
+            android:text="搜索无结果"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/bbb"
+        android:visibility="gone"
+        android:background="#FFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aaaaa"
+        android:layout_marginTop="4dp"
         android:padding="5dp"
-        android:orientation="horizontal">
+        >
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/image"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginLeft="12dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/icon" />
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/you_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_toRightOf="@id/image"
             android:layout_marginLeft="10dp"
-            android:text=""/>
-        <TextView
-            android:id="@+id/wu"
-            android:layout_width="wrap_content"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginRight="48dp"
-            android:textColor="#20affa"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="搜索无结果"/>
+            android:layout_margin="10dp"
+            android:text="xiaohong"/>
+         <ImageView
+             android:id="@+id/next"
+             android:layout_width="24dp"
+             android:layout_height="24dp"
+             android:layout_marginRight="12dp"
+             android:layout_margin="8dp"
+             android:layout_alignParentRight="true"
+             android:src="@mipmap/my_icon_next"/>
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="20dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="12dp"
-            android:visibility="gone"
-            android:src="@mipmap/my_icon_next" />
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

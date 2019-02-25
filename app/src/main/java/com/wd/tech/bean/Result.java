@@ -12,6 +12,15 @@ public class Result <T> {
     String status;
     String message;
     T result;
+    int groupId;
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 
     public String getStatus() {
         return status;
