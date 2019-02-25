@@ -3,6 +3,7 @@ package com.wd.tech.core;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
+import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -103,12 +104,18 @@ public interface AllUrls {
     );
 
     /**
-     * 添加好友
+     * 查找好友
      */
-    @GET("usererify1/findUserByPhone")
+    @GET("user/verify/v1/findUserByPhone")
     Observable<Result<ByIdUserInfoBean>> addFriend(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId,
-                                                   @Query("phone") String phone);
+                                                   @Query("phone") String phone);/**
+     * 查找群
+     */
+    @GET("group/verify/v1/findGroupInfo")
+    Observable<Result<FindGroupInfo>> findGroupInfo(@Header("userId") int userId,
+                                                    @Header("sessionId") String sessionId,
+                                                    @Query("groupId")int groupId);
 
     /**
      * 详情评论
@@ -160,4 +167,14 @@ public interface AllUrls {
     Observable<Result> modifyNickName(@Header("userId") int userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("nickName") String nickName);
+    /**
+     * 创建群
+     */
+    @FormUrlEncoded
+    @POST("group/verify/v1/createGroup")
+    Observable<Result> createGroup(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Field("name")String name,
+                                   @Field("description")String description
+                                   );
 }
