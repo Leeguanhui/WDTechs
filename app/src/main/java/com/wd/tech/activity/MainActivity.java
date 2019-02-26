@@ -3,6 +3,7 @@ package com.wd.tech.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -82,13 +83,6 @@ public class MainActivity extends WDActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
     private String nickName;
-    Handler handler = new Handler(Looper.myLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            main_drawer_layout.closeDrawers();
-        }
-    };
 
     @Override
     protected int getLayoutId() {
@@ -137,15 +131,18 @@ public class MainActivity extends WDActivity {
                 trans.commit();
             }
         });
-        main_drawer_layout.setDrawerListener(new DrawerLayout.DrawerListener() {
+        left = (LinearLayout) findViewById(R.id.main_left_drawer_layout);
+        right = (LinearLayout) findViewById(R.id.right_layout);
+        main_drawer_layout.setScrimColor(Color.TRANSPARENT);//去除阴影
+        left.measure(0, 0);
+        final float width = left.getMeasuredWidth() * 0.2f;//获取布局宽度，并获得左移大小
+        left.setTranslationX(-width);                 //底布局左移
+        main_drawer_layout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 isDrawer = true;
-                //获取屏幕的宽高
-                WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                Display display = manager.getDefaultDisplay();
-                //设置右面的布局位置  根据左面菜单的right作为右面布局的left   左面的right+屏幕的宽度（或者right的宽度这里是相等的）为右面布局的right
-                right.layout(left.getRight(), 0, left.getRight() + display.getWidth(), display.getHeight());
+                left.setTranslationX(-width + width * slideOffset);               //底布局跟着移动
+                right.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);   //主界面布局移动，移动长度等于抽屉的移动长度
             }
 
             @Override
@@ -224,13 +221,7 @@ public class MainActivity extends WDActivity {
                         startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Message message = handler.obtainMessage();
-                        handler.sendMessageAtTime(message, 3000);
-                    }
-                }).start();
+
             }
         });
         //跳转到登录注册
@@ -238,25 +229,22 @@ public class MainActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Message message = handler.obtainMessage();
-                        handler.sendMessageAtTime(message, 3000);
-                    }
-                }).start();
+
             }
         });
         //点击头像跳转
     }
+
     //签到
     @OnClick(R.id.sign_imag)
     public void sign_imag() {
         startActivity(new Intent(MainActivity.this, SignCalendarActivity.class));
+
     }
 
     @OnClick({R.id.myheader, R.id.myname})
     public void myheader() {
+
         Intent intent = new Intent(this, UpdateMessageActivity.class);
         intent.putExtra("name", nickName);
         startActivity(intent);

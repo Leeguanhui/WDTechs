@@ -109,11 +109,6 @@ public class UpdateMessageActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                if (sex == 1) {
-                    my_sex.setText("男");
-                } else {
-                    my_sex.setText("女");
-                }
             }
         });
     }
@@ -137,6 +132,7 @@ public class UpdateMessageActivity extends WDActivity {
         }
         String mysign = sharedPreferences.getString("mysign", "");
         perfectUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), name, sexnum, mysign, brith, mail);
+        dialog = CircularLoading.showLoadDialog(UpdateMessageActivity.this, "加载中...", true);
     }
 
     @OnClick(R.id.line2)
@@ -192,7 +188,7 @@ public class UpdateMessageActivity extends WDActivity {
         @Override
         public void success(Result result) {
             if (result.getStatus().equals("0000")) {
-
+                CircularLoading.closeDialog(dialog);
                 finish();
             }
         }
