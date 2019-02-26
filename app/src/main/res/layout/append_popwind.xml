@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#666666"
+    android:background="#FFF"
      >
      <ImageView
          android:id="@+id/you"
@@ -11,7 +11,7 @@
          android:layout_marginTop="10dp"
          android:layout_height="24dp"
          android:layout_marginLeft="10dp"
-         android:src="@mipmap/nav_icon_addfriend"/>
+         android:src="@drawable/addfriends"/>
     <ImageView
         android:id="@+id/qun"
         android:layout_below="@id/you"
@@ -20,7 +20,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@mipmap/nav_icon_addgroup"/>
+        android:src="@drawable/creategroup"/>
     <TextView
         android:id="@+id/text_you"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="13dp"
-        android:textColor="#ffffff"/>
+        android:textColor="#333333"/>
 
     <TextView
         android:id="@+id/text_qun"
@@ -44,5 +44,5 @@
         android:layout_toRightOf="@id/qun"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
-        android:textColor="#ffffff"/>
+        android:textColor="#333333"/>
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
+import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -10,6 +11,7 @@ import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
 import com.wd.tech.bean.FindGroupsByUserId;
+import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -131,7 +133,7 @@ public interface AllUrls {
      * 详情评论
      */
     @GET("information/v1/findAllInfoCommentList")
-    Observable<Result<NewsDetailsBean>> NewsComments(
+    Observable<Result<List<AllCommentBean>>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("infoId") int infoId,
@@ -204,6 +206,12 @@ public interface AllUrls {
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
                                                                  @Query("count") int count);
+    /**
+     * 根据作者名模糊查询
+     */
+    @GET("information/v1/findInformationBySource")
+    Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
+                                                                 @Query("count") int count);
 
     /**
      * 完善用户信息
@@ -251,7 +259,7 @@ public interface AllUrls {
     @FormUrlEncoded
     @POST("user/v1/weChatLogin")
     Observable<Result<LoginUserInfoBean>> weChatLogin(@Header("ak") String ak,
-                                             @Field("code") String code);
+                                                      @Field("code") String code);
 
     /**
      * 添加好友
@@ -326,8 +334,35 @@ public interface AllUrls {
      */
     @GET("community/verify/v1/findUserPostById")
     Observable<Result<List<CommunityListBean>>> findUserPostById(@Header("userId") int userId,
+                                                                 @Header("sessionId") String sessionId,
+                                                                 @Query("fromUid") int fromUid,
+                                                                 @Query("page") int page,
+                                                                 @Query("count") int count);
+
+    /**
+     * 做任务
+     */
+    @FormUrlEncoded
+    @POST("user/verify/v1/doTheTask")
+    Observable<Result> doTheTask(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                 @Field("taskId") int taskId);
+
+    /**
+     * 查看任务
+     */
+    @GET("user/verify/v1/findUserTaskList")
+    Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
+                                                                    @Header("sessionId") String sessionId);
                                         @Header("sessionId") String sessionId,
                                         @Query("fromUid") int fromUid,
                                         @Query("page") int page,
                                         @Query("count") int count);
+    /**
+     * 咨询评论
+     */
+    @POST("information/verify/v1/addInfoComment")
+    Observable<Result> AddComments(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("content") String content,
+                                   @Query("infoId") String infoId);
 }

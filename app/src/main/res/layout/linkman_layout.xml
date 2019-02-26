@@ -60,8 +60,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#F00"
-                    android:src="@mipmap/nav_icon_addfriend"/>
+                    android:src="@drawable/newfriendone"/>
                 <TextView
                     android:id="@+id/news_peng"
                     android:layout_width="wrap_content"
@@ -85,8 +84,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#F00"
-                    android:src="@mipmap/nav_icon_addfriend"/>
+                    android:src="@drawable/newtongzhisan"/>
                 <TextView
                     android:id="@+id/qun_tong"
                     android:layout_width="wrap_content"
@@ -95,11 +93,12 @@
                     android:layout_marginLeft="10dp"
                     android:textSize="14sp"
                     android:text="群通知"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#F2F2F2"/>
+
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F2F2F2"/>
             <LinearLayout
                 android:id="@+id/layout_qun"
                 android:layout_width="match_parent"
@@ -110,17 +109,16 @@
                     android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#F00"
+                    android:src="@drawable/newqunliaotwo"/>
 
-                    android:src="@mipmap/nav_icon_addgroup"/>
                 <TextView
                     android:id="@+id/group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:textSize="14sp"
-                    android:text="群组"/>
+                    android:text="群组"
+                    android:textSize="14sp" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -130,8 +128,6 @@
                 android:id="@+id/ex_pandable_listview"
                 android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
                 android:layout_height="wrap_content"></ExpandableListView>
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>>

@@ -67,6 +67,10 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     public void onBindViewHolder(@NonNull XRecyclerView.ViewHolder viewHolder, final int i) {
         //int itemViewType = getItemViewType(i);
         if (viewHolder instanceof ListViewHolder){
+            int whetherCollection = list.get(i).getWhetherCollection();
+            if (whetherCollection==2){
+                ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_n);
+            }
             ((ListViewHolder) viewHolder).simple.setImageURI(list.get(i).getThumbnail());
             ((ListViewHolder) viewHolder).title.setText(list.get(i).getTitle());
             ((ListViewHolder) viewHolder).content.setText(list.get(i).getSummary());
@@ -123,6 +127,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     private class ListViewHolder extends XRecyclerView.ViewHolder {
         SimpleDraweeView simple;
         TextView title,content,writer,data,share,likenum;
+        ImageView like;
         public ListViewHolder(View view) {
             super(view);
             simple=view.findViewById(R.id.simple);
@@ -132,6 +137,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             data=view.findViewById(R.id.data);
             share=view.findViewById(R.id.share);
             likenum=view.findViewById(R.id.likenum);
+            like=view.findViewById(R.id.like);
         }
     }
 
