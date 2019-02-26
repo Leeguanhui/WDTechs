@@ -110,6 +110,11 @@ public class UpdateMessageActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
+                if (sex == 1) {
+                    my_sex.setText("男");
+                } else {
+                    my_sex.setText("女");
+                }
             }
         });
     }

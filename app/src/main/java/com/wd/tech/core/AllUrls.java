@@ -238,5 +238,13 @@ public interface AllUrls {
      */
     @GET("user/verify/v1/findUserSignRecording")
     Observable<Result> findUserSignRecording(@Header("userId") int userId,
-                                          @Header("sessionId") String sessionId);
+                                             @Header("sessionId") String sessionId);
+
+    /**
+     * 微信登录
+     */
+    @FormUrlEncoded
+    @POST("user/v1/weChatLogin")
+    Observable<Result<LoginUserInfoBean>> weChatLogin(@Header("ak") String ak,
+                                             @Field("code") String code);
 }
