@@ -47,11 +47,17 @@
         <activity android:name=".activity.ReleasePostActivity" />
         <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
         <activity android:name=".activity.view.InfoAdvertisingVo" />
-        <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
         <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
         <activity android:name=".activity.view.Type" />
+        <activity android:name="com.wd.tech.activity.NewFriendsActivity"/>
         <activity android:name=".activity.view.SearchType" />
-        <activity android:name=".activity.view.SearchActivity"></activity>
+        <activity android:name=".activity.view.SearchActivity" />
+        <activity android:name=".activity.AddFriendlyActivity" />
+        <activity android:name=".activity.FriendRequestActivity" />
+        <activity android:name=".activity.AddGroupActivity" />
+        <activity android:name=".activity.ApplyForActivity" />
+        <activity android:name="com.wd.tech.activity.GroupChatActivity"/>
+        <activity android:name=".activity.ClusterActivity"></activity>
     </application>
 
 </manifest>

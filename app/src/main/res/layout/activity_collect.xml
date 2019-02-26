@@ -14,7 +14,8 @@
         android:layout_marginRight="25dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="20dp">
+        android:paddingBottom="20dp"
+        android:layout_marginEnd="25dp">
 
         <ImageView
             android:layout_width="8dp"

@@ -1,5 +1,6 @@
 package com.wd.tech.fragment.addfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.AddFriendlyActivity;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -52,12 +54,20 @@ public class Fragment1 extends WDFragment {
     ImageView next;
     @BindView(R.id.bbb)
     RelativeLayout bbb;
-    Unbinder unbinder;
     private FindUserByPhonePresenter presenter;
     private String sessionId;
     private int userId;
-
+    private String phone;
+    private String email;
+    private String nickName;
+    private int sex;
+    private String headPic;
+    private int integral;
+    private String signature;
     private String s;
+    private int userId1;
+    private long birthday;
+    private int whetherVip;
 
     @Override
     public String getPageName() {
@@ -110,14 +120,35 @@ public class Fragment1 extends WDFragment {
         switch (view.getId()) {
             case R.id.search_image:
                 s = fragment1SearchEdit.getText().toString();
-
                 presenter.request(userId, sessionId, s);
                 break;
             case R.id.next:
-
+                IntentXiang();
                 break;
         }
 
+    }
+
+
+    public void IntentXiang(){
+        Intent intent = new Intent(getActivity(), AddFriendlyActivity.class);
+        intent.putExtra("userid1", userId1);
+        intent.putExtra("phone", phone);
+        intent.putExtra("email", email);
+        intent.putExtra("nickName", nickName);
+        intent.putExtra("sex", sex);
+        intent.putExtra("headPic", headPic);
+        intent.putExtra("integral", integral);
+        intent.putExtra("signature", signature);
+        intent.putExtra("birthday", birthday);
+        intent.putExtra("whetherVip", whetherVip);
+        intent.putExtra("s", s);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.bbb)
+    public void onViewClicked() {
+        IntentXiang();
     }
 
     private class ADDF implements ICoreInfe<Result<ByIdUserInfoBean>> {
@@ -127,7 +158,17 @@ public class Fragment1 extends WDFragment {
         public void success(Result<ByIdUserInfoBean> data) {
             if (data.getStatus().equals("0000")) {
                 ByIdUserInfoBean result = data.getResult();
+                userId1 = result.getUserId();
+                phone = result.getPhone();
+                email = result.getEmail();
+                nickName = result.getNickName();
+                sex = result.getSex();
+                headPic = result.getHeadPic();
+                integral = result.getIntegral();
+                signature = result.getSignature();
                 image.setImageURI(result.getHeadPic());
+                birthday = result.getBirthday();
+                whetherVip = result.getWhetherVip();
                 name.setText(result.getNickName());
                 bbb.setVisibility(View.VISIBLE);
                 ccc.setVisibility(View.GONE);

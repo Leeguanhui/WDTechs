@@ -1,6 +1,8 @@
 package com.wd.tech.fragment;
 
-import android.util.Log;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wd.tech.R;
+import com.wd.tech.activity.ClusterActivity;
+import com.wd.tech.activity.GroupChatActivity;
+import com.wd.tech.activity.NewFriendsActivity;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -25,7 +30,9 @@ import com.wd.tech.presenter.InitFriendListPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by zxk
@@ -47,6 +54,15 @@ public class LinkmanFragment extends WDFragment {
     LinearLayout layoutQun;
     @BindView(R.id.ex_pandable_listview)
     ExpandableListView exPandableListview;
+    @BindView(R.id.news_peng)
+    TextView newsPeng;
+    @BindView(R.id.qun_tong)
+    TextView qunTong;
+    @BindView(R.id.qun_layout)
+    LinearLayout qunLayout;
+    @BindView(R.id.group)
+    TextView group;
+    Unbinder unbinder;
     //Model：定义的数据
     private List<InitFriendlist> groups;
     private List<FriendInfoList> childs;
@@ -73,7 +89,7 @@ public class LinkmanFragment extends WDFragment {
         if (bean != null) {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
-            listPresenter.request(userId,sessionId);
+            listPresenter.request(userId, sessionId);
 
         }
     }
@@ -84,7 +100,7 @@ public class LinkmanFragment extends WDFragment {
         if (bean != null) {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
-            listPresenter.request(userId,sessionId);
+            listPresenter.request(userId, sessionId);
 
         }
     }
@@ -93,12 +109,25 @@ public class LinkmanFragment extends WDFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_newsyou:
+                Intent intent1 = new Intent(getActivity(), NewFriendsActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.layout_qun:
+                Intent intent = new Intent(getActivity(), ClusterActivity.class);
+                startActivity(intent);
                 break;
         }
     }
 
+
+
+
+
+    @OnClick(R.id.qun_layout)
+    public void onViewClicked() {
+        Intent intent = new Intent(getActivity(), GroupChatActivity.class);
+        startActivity(intent);
+    }
 
 
     class MyExpandableListView extends BaseExpandableListAdapter {
@@ -143,17 +172,18 @@ public class LinkmanFragment extends WDFragment {
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;
         }
+
         //父布局
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             GroupHodler hodler;
-            if (convertView == null){
-                convertView = View.inflate(parent.getContext(),R.layout.expandablelistview_one_item,null);
+            if (convertView == null) {
+                convertView = View.inflate(parent.getContext(), R.layout.expandablelistview_one_item, null);
                 hodler = new GroupHodler();
                 hodler.groupname = convertView.findViewById(R.id.tv_group);
                 convertView.setTag(hodler);
-            }else{
-                hodler = (GroupHodler)convertView.getTag();
+            } else {
+                hodler = (GroupHodler) convertView.getTag();
             }
             InitFriendlist initFriendlist = groups.get(groupPosition);
 
@@ -161,19 +191,20 @@ public class LinkmanFragment extends WDFragment {
 
             return convertView;
         }
+
         //子布局
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             MyHolder holder;
-            if (convertView == null){
-                convertView = View.inflate(parent.getContext(),R.layout.expandablelistview_two_item,null);
+            if (convertView == null) {
+                convertView = View.inflate(parent.getContext(), R.layout.expandablelistview_two_item, null);
                 holder = new MyHolder();
                 holder.headric = convertView.findViewById(R.id.iv_child);
                 holder.qianming = convertView.findViewById(R.id.tv_child);
                 holder.name = convertView.findViewById(R.id.tv_qian);
 
                 convertView.setTag(holder);
-            }else{
+            } else {
                 holder = (MyHolder) convertView.getTag();
             }
             FriendInfoList friendInfoList = groups.get(groupPosition).getFriendInfoList().get(childPosition);
@@ -188,8 +219,9 @@ public class LinkmanFragment extends WDFragment {
         class GroupHodler {
             TextView groupname;
         }
+
         //子框件 (一个复选框 ,, 文字 ,, 价格 ,, 图片 ,, 还有自定义一个类)
-        class MyHolder{
+        class MyHolder {
             SimpleDraweeView headric;
             TextView qianming;
             TextView name;
@@ -200,7 +232,7 @@ public class LinkmanFragment extends WDFragment {
     private class InitFr implements ICoreInfe<Result<List<InitFriendlist>>> {
         @Override
         public void success(Result<List<InitFriendlist>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 groups = data.getResult();
                 exPandableListview.setAdapter(new MyExpandableListView());
             }

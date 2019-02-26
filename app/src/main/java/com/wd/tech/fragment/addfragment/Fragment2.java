@@ -1,5 +1,6 @@
 package com.wd.tech.fragment.addfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.AddGroupActivity;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -53,6 +55,13 @@ public class Fragment2 extends WDFragment {
     private String s;
     private String sessionId;
     private int userId;
+    private int groupId;
+    private String groupName;
+    private String groupImage;
+    private int currentCount;
+    private int maxCount;
+    private int ownerUid;
+    private String description;
 
     @Override
     public String getPageName() {
@@ -75,32 +84,56 @@ public class Fragment2 extends WDFragment {
         }
     }
 
-    @OnClick({R.id.search2_image, R.id.next})
+    @OnClick({R.id.search2_image, R.id.next, R.id.bbb})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search2_image:
                 String s = fragment2SearchEdit.getText().toString();
                 Integer integer = Integer.valueOf(s);
-                presenter.request(userId,sessionId,integer);
+                presenter.request(userId, sessionId, integer);
                 break;
             case R.id.next:
+                AddQun();
+                break;
+            case R.id.bbb:
+                AddQun();
                 break;
         }
     }
 
+    public void AddQun() {
+        Intent intent = new Intent(getContext(), AddGroupActivity.class);
+        intent.putExtra("groupId", groupId);
+        intent.putExtra("groupName", groupName);
+        intent.putExtra("groupImage", groupImage);
+        intent.putExtra("currentCount", currentCount);
+        intent.putExtra("maxCount", maxCount);
+        intent.putExtra("ownerUid", ownerUid);
+        intent.putExtra("description", description);
+        startActivity(intent);
+    }
 
     private class FindGroup implements ICoreInfe<Result<FindGroupInfo>> {
+
+
         @Override
         public void success(Result<FindGroupInfo> data) {
             if (data.getStatus().equals("0000")) {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
                 FindGroupInfo result = data.getResult();
+                groupId = result.getGroupId();
+                groupName = result.getGroupName();
+                groupImage = result.getGroupImage();
+                currentCount = result.getCurrentCount();
+                maxCount = result.getMaxCount();
+                ownerUid = result.getOwnerUid();
+                description = result.getDescription();
                 image.setImageURI(result.getGroupImage());
                 youText.setText(result.getGroupName());
                 bbb.setVisibility(View.VISIBLE);
                 ccc.setVisibility(View.GONE);
             }
-            if (data.getStatus().equals("1001")){
+            if (data.getStatus().equals("1001")) {
                 ccc.setVisibility(View.VISIBLE);
                 bbb.setVisibility(View.GONE);
             }

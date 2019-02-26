@@ -39,7 +39,7 @@
             android:textSize="16sp"
             android:autofillHints=""
             android:inputType=""
-            android:layout_marginStart="20dp" tools:targetApi="o"/>
+            android:layout_marginStart="20dp" />
 
     </RelativeLayout>
 
