@@ -13,6 +13,15 @@ public class Result <T> {
     String message;
     T result;
     int groupId;
+    int flag;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 
     public int getGroupId() {
         return groupId;

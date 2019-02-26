@@ -63,6 +63,7 @@
         <activity android:name=".activity.view.InfoAdvertisingVo" />
         <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
         <activity android:name=".activity.view.Type" />
+        <activity android:name="com.wd.tech.activity.NewFriendsActivity"/>
         <activity android:name=".activity.view.SearchType" />
         <activity android:name=".activity.thirdlyactivity.SearchActivity" />
         <activity android:name=".activity.secondactivity.SignCalendarActivity" />
@@ -70,6 +71,13 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+        <activity android:name=".activity.view.SearchActivity" />
+        <activity android:name=".activity.AddFriendlyActivity" />
+        <activity android:name=".activity.FriendRequestActivity" />
+        <activity android:name=".activity.AddGroupActivity" />
+        <activity android:name=".activity.ApplyForActivity" />
+        <activity android:name="com.wd.tech.activity.GroupChatActivity"/>
+        <activity android:name=".activity.ClusterActivity"></activity>
     </application>
 
 </manifest>

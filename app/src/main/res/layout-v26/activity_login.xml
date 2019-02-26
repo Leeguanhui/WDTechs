@@ -39,7 +39,7 @@
             android:textSize="16sp"
             android:autofillHints=""
             android:inputType=""
-            android:layout_marginStart="20dp" tools:targetApi="o"/>
+            android:layout_marginStart="20dp" />
 
     </RelativeLayout>
 
@@ -120,7 +120,6 @@
         android:textSize="14sp" />
 
     <Button
-
         android:id="@+id/mBt_Login"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -167,7 +166,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/mIv_WeChat"
+        android:id="@+id/mIv_Wx_Login"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentBottom="true"

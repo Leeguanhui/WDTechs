@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/back"
@@ -26,16 +25,25 @@
             android:gravity="center"
             android:text="添加"/>
     </LinearLayout>
-    <android.support.design.widget.TabLayout
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/course_search_tablayout"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabTextColor="#666666"
-        app:tabSelectedTextColor="#0414f6"
-        app:tabIndicatorColor="#0414f6"/>
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TabLayout
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/course_search_tablayout"
+            app:tabGravity="fill"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            app:tabMode="fixed"
+            app:tabTextColor="#333333"
+            app:tabSelectedTextColor="#333333"
+            app:tabIndicatorColor="#20affa"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

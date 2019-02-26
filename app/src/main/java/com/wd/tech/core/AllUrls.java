@@ -5,7 +5,10 @@ import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
+import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
+import com.wd.tech.bean.FindGroupNoticePageList;
+import com.wd.tech.bean.FindGroupsByUserId;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -247,4 +250,62 @@ public interface AllUrls {
     @POST("user/v1/weChatLogin")
     Observable<Result<LoginUserInfoBean>> weChatLogin(@Header("ak") String ak,
                                              @Field("code") String code);
+
+    /**
+     * 添加好友
+     */
+    @FormUrlEncoded
+    @POST("chat/verify/v1/addFriend")
+    Observable<Result> addFriendUser(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Field("friendUid") int friendUid,
+                                     @Field("remark") String remark);
+
+    /**
+     * 申请加群
+     */
+    @FormUrlEncoded
+    @POST("group/verify/v1/applyAddGroup")
+    Observable<Result> applyAddGroup(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Field("groupId") int groupId,
+                                     @Field("remark") String remark);
+
+    /**
+     * 查询我创建的群组
+     */
+    @GET("group/verify/v1/findUserJoinedGroup")
+    Observable<Result<List<FindGroupsByUserId>>> findGroupsByUserId(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId
+    );
+
+    /**
+     * https://172.17.8.100/techApi/chat/verify/v1/findFriendNoticePageList
+     * 查询新朋友的界面
+     */
+    @GET("chat/verify/v1/findFriendNoticePageList")
+    Observable<Result<List<FindFriendNoticePageList>>> findFriendNoticePageList(@Header("userId") int userId,
+                                                                                @Header("sessionId") String sessionId,
+                                                                                @Query("page") int page, @Query("count") int count);
+
+    /**
+     * https://172.17.8.100/techApi/group/verify/v1/findGroupNoticePageList
+     * 查询群聊界面findgroupnoticepagelist
+     */
+    @GET("group/verify/v1/findGroupNoticePageList")
+    Observable<Result<List<FindGroupNoticePageList>>> findGroupNoticePageList(@Header("userId") int userId,
+                                                                              @Header("sessionId") String sessionId,
+                                                                              @Query("page") int page, @Query("count") int count);
+
+    /**
+     * https://172.17.8.100/techApi/chat/verify/v1/checkMyFriend
+     * .检测是否为我的好友
+     */
+    @GET("chat/verify/v1/checkMyFriend")
+    Observable<Result> checkMyFriend(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Query("friendUid") int friendUid
+
+    );
 }
