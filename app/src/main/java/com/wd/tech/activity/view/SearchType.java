@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
+import com.wd.tech.activity.thirdlyactivity.SearchActivity;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -87,6 +88,12 @@ public class SearchType extends WDActivity {
                 zxInformationPresenter.request(userId, sessionId,id,num,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.loadMoreComplete();
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SearchType.this,SearchActivity.class));
             }
         });
     }

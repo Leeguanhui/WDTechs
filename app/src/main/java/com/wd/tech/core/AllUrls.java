@@ -204,6 +204,12 @@ public interface AllUrls {
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
                                                                  @Query("count") int count);
+    /**
+     * 根据作者名模糊查询
+     */
+    @GET("information/v1/findInformationBySource")
+    Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
+                                                                 @Query("count") int count);
 
     /**
      * 完善用户信息

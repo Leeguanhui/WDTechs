@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wd.tech.R;
+import com.wd.tech.activity.thirdlyactivity.SearchActivity;
+import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.bean.ByTitleBean;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +28,12 @@ import java.util.List;
  * Describe:
  */
 public class SearchRecycleAdapter extends RecyclerView.Adapter<SearchRecycleAdapter.Vh> {
+    private final SearchActivity context;
     List<ByTitleBean> list = new ArrayList<>();
+
+    public SearchRecycleAdapter(SearchActivity searchActivity) {
+        this.context=searchActivity;
+    }
 
     public void addAll(List<ByTitleBean> list) {
         this.list.addAll(list);
@@ -57,7 +65,7 @@ public class SearchRecycleAdapter extends RecyclerView.Adapter<SearchRecycleAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Vh vh, int i) {
+    public void onBindViewHolder(@NonNull Vh vh, final int i) {
         ByTitleBean byTitleBean = list.get(i);
         vh.name.setText(byTitleBean.getSource());
         vh.title.setText(byTitleBean.getTitle());
@@ -66,6 +74,14 @@ public class SearchRecycleAdapter extends RecyclerView.Adapter<SearchRecycleAdap
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String format = sdf.format(date);
         vh.time.setText(format);
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,NewsDetails.class);
+                intent.putExtra("id",list.get(i).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
