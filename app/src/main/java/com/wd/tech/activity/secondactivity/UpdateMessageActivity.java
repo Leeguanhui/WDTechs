@@ -1,5 +1,6 @@
 package com.wd.tech.activity.secondactivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.wd.tech.R;
+import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
+import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.activity.view.MyDialog;
 import com.wd.tech.activity.view.PickView;
 import com.wd.tech.bean.ByIdUserInfoBean;
@@ -61,6 +64,7 @@ public class UpdateMessageActivity extends WDActivity {
     private int sex;
     @BindView(R.id.line2)
     LinearLayout line2;
+    private Dialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -99,22 +103,12 @@ public class UpdateMessageActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                if (sex == 1) {
-                    my_sex.setText("男");
-                } else {
-                    my_sex.setText("女");
-                }
             }
         });
         tv_sexdialog_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                if (sex == 1) {
-                    my_sex.setText("男");
-                } else {
-                    my_sex.setText("女");
-                }
             }
         });
     }
@@ -138,6 +132,7 @@ public class UpdateMessageActivity extends WDActivity {
         }
         String mysign = sharedPreferences.getString("mysign", "");
         perfectUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), name, sexnum, mysign, brith, mail);
+        dialog = CircularLoading.showLoadDialog(UpdateMessageActivity.this, "加载中...", true);
     }
 
     @OnClick(R.id.line2)
@@ -187,12 +182,13 @@ public class UpdateMessageActivity extends WDActivity {
 
 
     /**
-     * 修改用户名
+     * 完善个人资料
      */
     private class ModifyNameResult implements ICoreInfe<Result> {
         @Override
         public void success(Result result) {
             if (result.getStatus().equals("0000")) {
+                CircularLoading.closeDialog(dialog);
                 finish();
             }
         }

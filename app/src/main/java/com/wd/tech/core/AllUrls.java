@@ -4,6 +4,7 @@ import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
+import com.wd.tech.bean.CommunityUserCommentListBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
@@ -188,6 +189,7 @@ public interface AllUrls {
                                    @Field("description") String description
     );
 
+
     /**
      * 查询所有版块
      */
@@ -201,6 +203,12 @@ public interface AllUrls {
      */
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
+                                                                 @Query("count") int count);
+    /**
+     * 根据作者名模糊查询
+     */
+    @GET("information/v1/findInformationBySource")
+    Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
                                                                  @Query("count") int count);
 
     /**
@@ -308,4 +316,24 @@ public interface AllUrls {
                                      @Query("friendUid") int friendUid
 
     );
+
+    /**
+     * .社区用户评论列表
+     */
+    @GET("community/v1/findCommunityUserCommentList")
+    Observable<Result<List<CommunityUserCommentListBean>>> findCommunityUserCommentList(@Header("userId") int userId,
+                                                                                        @Header("sessionId") String sessionId,
+                                                                                        @Query("communityId") int communityId,
+                                                                                        @Query("page") int page,
+                                                                                        @Query("count") int count);
+
+    /**
+     * 查询用户发布的帖子
+     */
+    @GET("community/verify/v1/findUserPostById")
+    Observable<Result<List<CommunityListBean>>> findUserPostById(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("fromUid") int fromUid,
+                                        @Query("page") int page,
+                                        @Query("count") int count);
 }

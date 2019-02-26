@@ -29,23 +29,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/community_nickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textColor="#666"
+                    android:textColor="#000000"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/community_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="#666"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#999999"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -53,7 +52,9 @@
                 android:id="@+id/community_signature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp" />
+                android:layout_marginTop="14dp"
+                android:textColor="#999999"
+                android:textSize="10sp" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -74,7 +75,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:layout_gravity="center_vertical">
 
         <ImageView
             android:id="@+id/community_iv1"
@@ -91,11 +92,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/community_iv2"
+            android:layout_toLeftOf="@id/addCommunityGreat"
             android:text="123" />
 
         <ImageView
-            android:id="@+id/community_iv2"
+            android:id="@+id/addCommunityGreat"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_centerVertical="true"
@@ -110,6 +111,40 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="123" />
+
+        <ImageView
+            android:id="@+id/xiaosanjiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/community_iv1"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="-16dp"
+            android:layout_toLeftOf="@id/community_iv1"
+            android:src="@drawable/xiaosanjiao" />
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/xiaosanjiao"
+        android:layout_marginTop="-3dp"
+        android:background="@drawable/shape_linear"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/pl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="快来评论呀~" />
+    </LinearLayout>
 
 </LinearLayout>
