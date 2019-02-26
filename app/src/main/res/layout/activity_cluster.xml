@@ -6,42 +6,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.ClusterActivity">
+
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
         <ImageView
             android:id="@+id/back"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@mipmap/common_icon_back"/>
+            android:src="@mipmap/common_icon_back" />
+
         <TextView
             android:layout_width="0dp"
-            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginRight="24dp"
-            android:layout_height="wrap_content"
-            android:text="群组"/>
+            android:text="群组"
+            android:textSize="20sp" />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/aaaaa"
-        android:background="#FFF"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:background="#FFF"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
         <EditText
             android:id="@+id/fragment1_search_edit"
             android:layout_width="match_parent"
             android:layout_height="32dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
-            android:paddingLeft="44dp"
-            android:textSize="12sp"
+            android:background="@drawable/edtext_selector"
             android:hint="Search"
-            android:layout_marginLeft="12dp"
-            android:background="@drawable/edtext_selector"/>
+            android:paddingLeft="44dp"
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/search_image"
@@ -54,19 +61,20 @@
             android:padding="5dp"
             android:src="@mipmap/search" />
     </RelativeLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart"
-        android:background="#FFF"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFF">
+
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-         <android.support.v7.widget.RecyclerView
-             android:id="@+id/receylview"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
 
-         </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/receylview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>
