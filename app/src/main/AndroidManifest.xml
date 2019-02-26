@@ -47,11 +47,11 @@
         <activity android:name=".activity.ReleasePostActivity" />
         <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
         <activity android:name=".activity.view.InfoAdvertisingVo" />
-        <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
         <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
         <activity android:name=".activity.view.Type" />
         <activity android:name=".activity.view.SearchType" />
-        <activity android:name=".activity.thirdlyactivity.SearchActivity"></activity>
+        <activity android:name=".activity.thirdlyactivity.SearchActivity" />
+        <activity android:name=".activity.secondactivity.SignCalendarActivity" />
     </application>
 
 </manifest>

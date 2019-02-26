@@ -70,13 +70,12 @@
             <EditText
                 android:id="@+id/my_name"
                 android:layout_width="0dp"
-                android:gravity="right"
-                android:textColor="#666666"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_weight="1"
                 android:background="@null"
-                android:text="年"
+                android:gravity="right"
+                android:textColor="#666666"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -112,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view1"
                 android:background="@null"
-                android:text="男"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
@@ -182,7 +180,6 @@
                 android:id="@+id/my_brith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018-01-06"
                 android:textColor="#666666"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -204,18 +201,19 @@
 
             <TextView
                 android:id="@+id/mail_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="邮箱"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/my_mali"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1724959985@qq.com"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
                 android:textColor="#666666"
                 android:textSize="14sp" />
         </LinearLayout>

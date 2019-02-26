@@ -1,6 +1,9 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -21,6 +24,7 @@ import com.wd.tech.presenter.FindAllCollectionPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CollectActivity extends WDActivity implements XRecyclerView.LoadingListener {
 
@@ -33,7 +37,10 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
     private LoginUserInfoBean userInfo;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    @BindView(R.id.delete_image)
+    ImageView delete_image;
+    @BindView(R.id.ok_btn)
+    TextView ok_btn;
 
     @Override
     protected int getLayoutId() {
@@ -70,6 +77,19 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
 
     }
 
+    //删除按钮
+    @OnClick(R.id.delete_image)
+    public void delete_image() {
+        collectRecycleAdapter.showRadio();
+        ok_btn.setVisibility(View.VISIBLE);
+        delete_image.setVisibility(View.INVISIBLE);
+    }
+    @OnClick(R.id.ok_btn)
+    public void ok_btn(){
+        collectRecycleAdapter.hideRadio();
+        delete_image.setVisibility(View.VISIBLE);
+        ok_btn.setVisibility(View.GONE);
+    }
     @Override
     public void onRefresh() {
         mPage = 1;

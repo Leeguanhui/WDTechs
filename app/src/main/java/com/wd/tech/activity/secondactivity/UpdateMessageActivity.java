@@ -2,11 +2,14 @@ package com.wd.tech.activity.secondactivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.wd.tech.R;
 import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
 import com.wd.tech.activity.view.MyDialog;
@@ -46,7 +50,8 @@ public class UpdateMessageActivity extends WDActivity {
     @BindView(R.id.my_brith)
     TextView my_brith;
     @BindView(R.id.my_mali)
-    TextView my_mali;
+    EditText my_mali;
+
     PickView pickView;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     MyDialog mDialog;
@@ -132,6 +137,33 @@ public class UpdateMessageActivity extends WDActivity {
 
     @OnClick(R.id.line2)
     public void line2() {
+        TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                my_brith.setText(formatter.format(date));
+            }
+        }).setType(TimePickerView.Type.YEAR_MONTH_DAY)// 默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+//                //.setTitleText("Title")//标题文字
+                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(true)//是否循环滚动
+//                //.setTitleColor(Color.BLACK)//标题文字颜色
+//                .setSubmitColor(Color.BLUE)//确定按钮文字颜色
+//                .setCancelColor(Color.BLUE)//取消按钮文字颜色
+//                //.setTitleBgColor(0xFF666666)//标题背景颜色 Night mode
+//                .setBgColor(0xFF333333)//滚轮背景颜色 Night mode
+////                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+////                .setRangDate(startDate,endDate)//起始终止年月日设定
+//                //.setLabel("年","月","日","时","分","秒")//默认设置为年月日时分秒
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(true)//是否显示为对话框样式
+                .build();
+
+        pvTime.show();
     }
 
     @OnClick(R.id.line1)
@@ -141,6 +173,10 @@ public class UpdateMessageActivity extends WDActivity {
 
     @OnClick(R.id.my_lin)
     public void my_lin() {
+        mDialog.getWindow().setGravity(Gravity.BOTTOM);
+        Window window = mDialog.getWindow();
+        //设置显示动画
+        window.setWindowAnimations(R.style.mystyle);  //添加动画
         mDialog.show();
     }
 
