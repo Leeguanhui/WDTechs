@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.view.NewsDetails;
+import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.DetailsCommentsBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,8 @@ import java.util.List;
  */
 public class DetailsCommentAdapter  extends RecyclerView.Adapter<DetailsCommentAdapter.ViewHolder> {
     private final NewsDetails activity;
-    private List<DetailsCommentsBean> list;
+    private List<AllCommentBean> list;
+
 
     public DetailsCommentAdapter(NewsDetails newsDetails) {
         this.activity=newsDetails;
@@ -39,9 +42,12 @@ public class DetailsCommentAdapter  extends RecyclerView.Adapter<DetailsCommentA
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String format = formatter.format(list.get(i).getCommentTime());
             viewHolder.headimage.setImageURI(list.get(i).getHeadPic());
             viewHolder.name.setText(list.get(i).getNickName());
             viewHolder.content.setText(list.get(i).getContent());
+            viewHolder.time.setText(format);
     }
 
     @Override
@@ -49,13 +55,21 @@ public class DetailsCommentAdapter  extends RecyclerView.Adapter<DetailsCommentA
         return this.list.size();
     }
 
-    public void setList(List<DetailsCommentsBean> result) {
+    public void setList(List<AllCommentBean> result) {
         if (result!=null){
             this.list.clear();
             this.list=result;
             notifyDataSetChanged();
         }
     }
+
+    /*public void setList(List<DetailsCommentsBean> result) {
+        if (result!=null){
+            this.list.clear();
+            this.list=result;
+            notifyDataSetChanged();
+        }
+    }*/
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView headimage;

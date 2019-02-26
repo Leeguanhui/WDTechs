@@ -1,6 +1,7 @@
 package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
+import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -131,7 +132,7 @@ public interface AllUrls {
      * 详情评论
      */
     @GET("information/v1/findAllInfoCommentList")
-    Observable<Result<NewsDetailsBean>> NewsComments(
+    Observable<Result<List<AllCommentBean>>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("infoId") int infoId,
@@ -336,4 +337,12 @@ public interface AllUrls {
                                         @Query("fromUid") int fromUid,
                                         @Query("page") int page,
                                         @Query("count") int count);
+    /**
+     * 咨询评论
+     */
+    @POST("information/verify/v1/addInfoComment")
+    Observable<Result> AddComments(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("content") String content,
+                                   @Query("infoId") String infoId);
 }
