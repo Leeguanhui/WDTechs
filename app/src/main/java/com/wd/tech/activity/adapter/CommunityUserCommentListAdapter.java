@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wd.tech.R;
-import com.wd.tech.bean.CommunityUserCommentListBean;
+import com.wd.tech.bean.CommunityCommentVoListBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityUserCommentListAdapter extends RecyclerView.Adapter<CommunityUserCommentListAdapter.ViewHolder> {
     Context context;
-    List<CommunityUserCommentListBean> list;
+    List<CommunityCommentVoListBean> list;
 
     public CommunityUserCommentListAdapter(Context context) {
         this.list = new ArrayList<>();
@@ -41,14 +41,14 @@ public class CommunityUserCommentListAdapter extends RecyclerView.Adapter<Commun
         return list.size();
     }
 
-    public void addItem(List<CommunityUserCommentListBean> lists) {
-        if (lists != null) {
-            list.addAll(lists);
-        }
-    }
-
     public void clean() {
         list.clear();
+    }
+
+    public void addItem(List<CommunityCommentVoListBean> communityUserPostVoList) {
+        if (communityUserPostVoList != null) {
+            list.addAll(communityUserPostVoList);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
