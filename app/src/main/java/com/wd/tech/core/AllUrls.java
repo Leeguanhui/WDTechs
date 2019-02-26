@@ -10,6 +10,7 @@ import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
 import com.wd.tech.bean.FindGroupsByUserId;
+import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -251,7 +252,7 @@ public interface AllUrls {
     @FormUrlEncoded
     @POST("user/v1/weChatLogin")
     Observable<Result<LoginUserInfoBean>> weChatLogin(@Header("ak") String ak,
-                                             @Field("code") String code);
+                                                      @Field("code") String code);
 
     /**
      * 添加好友
@@ -326,8 +327,23 @@ public interface AllUrls {
      */
     @GET("community/verify/v1/findUserPostById")
     Observable<Result<List<CommunityListBean>>> findUserPostById(@Header("userId") int userId,
-                                        @Header("sessionId") String sessionId,
-                                        @Query("fromUid") int fromUid,
-                                        @Query("page") int page,
-                                        @Query("count") int count);
+                                                                 @Header("sessionId") String sessionId,
+                                                                 @Query("fromUid") int fromUid,
+                                                                 @Query("page") int page,
+                                                                 @Query("count") int count);
+
+    /**
+     * 做任务
+     */
+    @FormUrlEncoded
+    @POST("user/verify/v1/doTheTask")
+    Observable<Result> doTheTask(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                 @Field("taskId") int taskId);
+
+    /**
+     * 查看任务
+     */
+    @GET("user/verify/v1/findUserTaskList")
+    Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
+                                                                    @Header("sessionId") String sessionId);
 }

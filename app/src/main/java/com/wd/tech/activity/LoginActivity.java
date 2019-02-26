@@ -1,9 +1,14 @@
 package com.wd.tech.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +28,6 @@ import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
@@ -39,7 +42,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
     private Dialog dialog;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -55,6 +57,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 startActivity(new Intent(LoginActivity.this, RegActivity.class));
             }
         });
+
     }
 
     @Override
@@ -62,6 +65,26 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     }
 
+//    @OnClick(R.id.wechat_btn)
+//    public void wechat_btn() {
+//        mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
+//        mWechatApi.registerApp("wx4c96b6b8da494224");
+//        final SendAuth.Req req = new SendAuth.Req();
+//        req.scope = "snsapi_userinfo";
+//        req.state = "wechat_sdk_demo";
+//        mWechatApi.sendReq(req);
+//        finish();
+//    }
+    @OnClick(R.id.wechat_btn)
+    public void mWechatBtn(){
+        mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
+        mWechatApi.registerApp("wx4c96b6b8da494224");
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo";
+        mWechatApi.sendReq(req);
+        finish();
+    }
     @OnClick(R.id.mBt_Login)
     public void mBt_Login() {
         String phone = mEt_Phone_Login.getText().toString();
@@ -73,21 +96,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 点击微信登录
-     */
-    @OnClick(R.id.mIv_WeChat)
-    public void mIv_WeChat() {
-//初始化微信
-        mWechatApi = WXAPIFactory.createWXAPI(this, "wx4c96b6b8da494224", false);
-        mWechatApi.registerApp("wx4c96b6b8da494224");
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_demo";
-        mWechatApi.sendReq(req);
-        finish();
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.FindUserSignPresenter;
 import com.wd.tech.presenter.FindUserSignRecordingPresenter;
 import com.wd.tech.presenter.UserSignPresenter;
@@ -46,6 +47,7 @@ public class SignCalendarActivity extends WDActivity {
     private FindUserSignPresenter findUserSignPresenter;
     private Double resultInt;
     private FindUserSignRecordingPresenter findUserSignRecordingPresenter;
+    private DoTheTaskPresenter doTheTaskPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -58,7 +60,8 @@ public class SignCalendarActivity extends WDActivity {
         userInfo = getUserInfo(this);
         //接收传递过来的初始化数据
 //        SignCalendarReq signCalendarReq = (SignCalendarReq) getIntent().getSerializableExtra("userInfos");
-
+        //做任务
+        doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
         //用户签到
         userSignPresenter = new UserSignPresenter(new UserSignResult());
         month = Calendar.getInstance().get(Calendar.MONTH);
@@ -134,6 +137,7 @@ public class SignCalendarActivity extends WDActivity {
                 calendar.textColor();
                 rlBtnSign.setText("已签到");
                 rlBtnSign.setClickable(false);
+                doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1001);
             }
         }
 
@@ -157,7 +161,8 @@ public class SignCalendarActivity extends WDActivity {
                 calendar.textColor();
                 rlBtnSign.setText("已签到");
                 rlBtnSign.setClickable(false);
-            }else{
+                doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1001);
+            } else {
                 calendar.textColor();
             }
         }
@@ -179,6 +184,21 @@ public class SignCalendarActivity extends WDActivity {
                 calendar.setCalendarDayBgColor(SignCalendList.get(i), R.drawable.yiqiandao);
             }
             calendar.textColor();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 做任务
+     */
+    private class TheTaskResult implements ICoreInfe<Result> {
+        @Override
+        public void success(Result result) {
+            Toast.makeText(SignCalendarActivity.this, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
