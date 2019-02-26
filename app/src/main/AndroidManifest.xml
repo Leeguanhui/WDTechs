@@ -51,7 +51,8 @@
         <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
         <activity android:name=".activity.view.Type" />
         <activity android:name=".activity.view.SearchType" />
-        <activity android:name=".activity.view.SearchActivity"></activity>
+        <activity android:name=".activity.view.SearchActivity" />
+        <activity android:name=".activity.UserPostByIdActivity"></activity>
     </application>
 
 </manifest>

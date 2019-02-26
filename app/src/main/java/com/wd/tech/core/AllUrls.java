@@ -3,6 +3,7 @@ package com.wd.tech.core;
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.CommunityListBean;
+import com.wd.tech.bean.CommunityUserCommentListBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
@@ -162,10 +163,31 @@ public interface AllUrls {
     Observable<Result> modifyNickName(@Header("userId") int userId,
                                       @Header("sessionId") String sessionId,
                                       @Query("nickName") String nickName);
+
     /**
      * 查询所有版块
      */
     @GET("information/v1/findAllInfoPlate")
     Observable<Result<List<TypeBean>>> Type(
     );
+
+    /**
+     * .社区用户评论列表
+     */
+    @GET("community/v1/findCommunityUserCommentList")
+    Observable<Result<List<CommunityUserCommentListBean>>> findCommunityUserCommentList(@Header("userId") int userId,
+                                                                                        @Header("sessionId") String sessionId,
+                                                                                        @Query("communityId") int communityId,
+                                                                                        @Query("page") int page,
+                                                                                        @Query("count") int count);
+
+    /**
+     * 查询用户发布的帖子
+     */
+    @GET("community/verify/v1/findUserPostById")
+    Observable<Result<List<CommunityListBean>>> findUserPostById(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("fromUid") int fromUid,
+                                        @Query("page") int page,
+                                        @Query("count") int count);
 }

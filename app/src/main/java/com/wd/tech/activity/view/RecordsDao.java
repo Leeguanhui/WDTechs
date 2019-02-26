@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import scut.carson_ho.searchview.RecordSQLiteOpenHelper;
 
 /**
  * 作者：夏洪武
@@ -17,7 +16,7 @@ import scut.carson_ho.searchview.RecordSQLiteOpenHelper;
  * 说明：
  */
 public class RecordsDao {
-    RecordSQLiteOpenHelper recordHelper;
+/*    RecordSQLiteOpenHelper recordHelper;
 
     SQLiteDatabase recordsDb;
 
@@ -91,5 +90,5 @@ public class RecordsDao {
         recordsDb.execSQL("delete from records");
 
         recordsDb.close();
-    }
+    }*/
 }

@@ -33,14 +33,23 @@ public class CommunityListBean<T> {
     private int whetherGreat;
     private int whetherVip;
     private String signature;
-    private T communityCommentVoList;
+    private List<CommunityCommentVoListBean> communityUserPostVoList;
+    private CommunityUserVoBean communityUserVo;
 
-    public T getCommunityCommentVoList() {
-        return communityCommentVoList;
+    public List<CommunityCommentVoListBean> getCommunityUserPostVoList() {
+        return communityUserPostVoList;
     }
 
-    public void setCommunityCommentVoList(T communityCommentVoList) {
-        this.communityCommentVoList = communityCommentVoList;
+    public void setCommunityUserPostVoList(List<CommunityCommentVoListBean> communityUserPostVoList) {
+        this.communityUserPostVoList = communityUserPostVoList;
+    }
+
+    public CommunityUserVoBean getCommunityUserVo() {
+        return communityUserVo;
+    }
+
+    public void setCommunityUserVo(CommunityUserVoBean communityUserVo) {
+        this.communityUserVo = communityUserVo;
     }
 
     public int getComment() {
