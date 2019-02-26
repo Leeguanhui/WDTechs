@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.wd.tech.R;
 import com.wd.tech.activity.view.NewsDetails;
+import com.wd.tech.activity.view.SearchType;
 import com.wd.tech.bean.NewsDetailsBean;
 
 import java.util.ArrayList;
@@ -36,9 +38,17 @@ public class DetailsTypeAdapter extends RecyclerView.Adapter<DetailsTypeAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.text.setText(list.get(i).getName());
-
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity,SearchType.class);
+                intent.putExtra("id",list.get(i).getId());
+                intent.putExtra("name",list.get(i).getName());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -34,7 +34,16 @@ public class CommunityListBean<T> {
     private int whetherVip;
     private String signature;
     private List<CommunityCommentVoListBean> communityUserPostVoList;
+    private List<CommunityCommentVoListBean> communityCommentVoList;
     private CommunityUserVoBean communityUserVo;
+
+    public List<CommunityCommentVoListBean> getCommunityCommentVoList() {
+        return communityCommentVoList;
+    }
+
+    public void setCommunityCommentVoList(List<CommunityCommentVoListBean> communityCommentVoList) {
+        this.communityCommentVoList = communityCommentVoList;
+    }
 
     public List<CommunityCommentVoListBean> getCommunityUserPostVoList() {
         return communityUserPostVoList;

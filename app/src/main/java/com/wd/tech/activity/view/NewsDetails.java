@@ -1,11 +1,14 @@
 package com.wd.tech.activity.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -14,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.DetailsCommentAdapter;
 import com.wd.tech.activity.adapter.DetailsMoreAdapter;
 import com.wd.tech.activity.adapter.DetailsTypeAdapter;
+import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.DetailsCommentsBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsDetailsBean;
@@ -29,6 +34,8 @@ import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.DetailsCommentsPresenter;
 import com.wd.tech.presenter.NewsDetails_Presenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -94,7 +101,14 @@ public class NewsDetails extends WDActivity {
 
     @Override
     protected void initView() {
-        LoginUserInfoBean userInfo = getUserInfo(this);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        final LoginUserInfoBean userInfo = getUserInfo(this);
         if (userInfo != null) {
             userId = userInfo.getUserId();
             sessionId = userInfo.getSessionId();
@@ -110,35 +124,59 @@ public class NewsDetails extends WDActivity {
         detailsCommentAdapter = new DetailsCommentAdapter(this);
         detailsCommentsPresenter = new DetailsCommentsPresenter(new Comments());
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
+        final int id = intent.getIntExtra("id", 0);
         Log.e("qwer",id+"");
         newsDetails_presenter = new NewsDetails_Presenter(new DetailsBack());
         newsDetails_presenter.request(userId, sessionId, id);
         detailsCommentsPresenter.request(userId, sessionId, id, 1, 10);
         comments.setLayoutManager(new LinearLayoutManager(NewsDetails.this, LinearLayoutManager.VERTICAL, false));
         comments.setAdapter(detailsCommentAdapter);
+
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().postSticky(String.valueOf(id));
+                ZxComments zxComments = new ZxComments(NewsDetails.this);
+                Window window = zxComments.getWindow();
+                WindowManager.LayoutParams params = window.getAttributes();
+                //设置软键盘通常是可见的
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                zxComments.show();
+
+                if (userInfo!=null){
+                    zxComments.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            detailsCommentsPresenter.request(userId, sessionId, id, 1, 10);
+                        }
+                    });
+                }else {
+                    Toast.makeText(NewsDetails.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 
     @Override
     protected void destoryData() {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     private class DetailsBack implements ICoreInfe<Result<NewsDetailsBean>> {
         @Override
         public void success(Result<NewsDetailsBean> data) {
-            Log.e("qwerr",data.getMessage()+"");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             NewsDetailsBean result = data.getResult();
+            int whetherCollection = data.getResult().getWhetherCollection();
+            if (whetherCollection==2){
+                like.setImageResource(R.mipmap.collect_n);
+            }
             title.setText(result.getTitle());
             simple.setImageURI(result.getThumbnail());
+            commentsnum.setText(data.getResult().getComment()+"");
+            likenum.setText(data.getResult().getPraise()+"");
             String format = formatter.format(result.getReleaseTime());
             time.setText(format + "");
             writer.setText(result.getSource());
@@ -168,10 +206,15 @@ public class NewsDetails extends WDActivity {
         }
     }
 
-    private class Comments implements ICoreInfe<Result<List<DetailsCommentsBean>>> {
+    private class Comments implements ICoreInfe<Result<List<AllCommentBean>>> {
+
         @Override
-        public void success(Result<List<DetailsCommentsBean>> data) {
-            Log.e("qwerrr",data.getMessage()+"");
+        public void success(Result<List<AllCommentBean>> data) {
+            Log.e("qwerrr",data.getResult().size()+"");
+            if (data.getResult().size()==0){
+                b.setVisibility(View.GONE);
+                return;
+            }
             detailsCommentAdapter.setList(data.getResult());
         }
 

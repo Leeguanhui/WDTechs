@@ -17,14 +17,8 @@ import com.wd.tech.R;
 import com.wd.tech.activity.UserPostByIdActivity;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
-import com.wd.tech.bean.CommunityUserCommentListBean;
-import com.wd.tech.bean.CommunityUserVoBean;
-import com.wd.tech.bean.Result;
-import com.wd.tech.core.ICoreInfe;
-import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.SpacingItemDecoration;
 import com.wd.tech.core.utils.StringUtils;
-import com.wd.tech.presenter.CommunityUserCommentListPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +31,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     private Context context;
     private List<CommunityListBean> list;
     private CommunityListBean communityListBean;
-    private String sessionId;
-    private int userId;
 
     public CommunityListAdapter(Context context) {
         this.context = context;
@@ -55,11 +47,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
     }
 
-    public void add(int userIds, String sessionIds) {
-        userId = userIds;
-        sessionId = sessionIds;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -69,9 +56,13 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        viewHolder.communityUserCommentListPresenter.request(userId, sessionId, list.get(i).getId(), 1, 3);
         communityListBean = list.get(i);
-        List<CommunityCommentVoListBean> communityUserPostVoList = communityListBean.getCommunityUserPostVoList();
+        //评论列表
+        List<CommunityCommentVoListBean> communityUserPostVoList = communityListBean.getCommunityCommentVoList();
+        viewHolder.communityUserCommentListAdapter.clean();
+        viewHolder.communityUserCommentListAdapter.addItem(communityUserPostVoList);
+        viewHolder.communityUserCommentListAdapter.notifyDataSetChanged();
+
         viewHolder.community_nickName.setText(communityListBean.getNickName());
         Date date = new Date();
         date.setTime(communityListBean.getPublishTime());
@@ -115,7 +106,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             viewHolder.gridView.setVisibility(View.VISIBLE);
             String[] images = communityListBean.getFile().split(",");
 
-//            int imageCount = (int) (Math.random() * 9) + 1;
             int imageCount = images.length;
 
             int colNum;//列数
@@ -168,7 +158,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         RecyclerView recyclerView;
         LinearLayoutManager linearLayoutManager;
         CommunityUserCommentListAdapter communityUserCommentListAdapter;
-        CommunityUserCommentListPresenter communityUserCommentListPresenter;
         TextView pl;
 
         public ViewHolder(@NonNull View itemView) {
@@ -191,30 +180,13 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             gridView.addItemDecoration(new SpacingItemDecoration(space));
             gridView.setLayoutManager(gridLayoutManager);
             gridView.setAdapter(imageAdapter);
-
+            //评论列表
             recyclerView = itemView.findViewById(R.id.recycler);
             linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
 
             communityUserCommentListAdapter = new CommunityUserCommentListAdapter(context);
             recyclerView.setAdapter(communityUserCommentListAdapter);
-            //查看用户评论
-            communityUserCommentListPresenter = new CommunityUserCommentListPresenter(new CommunityUserCommentList());
-        }
-
-        private class CommunityUserCommentList implements ICoreInfe<Result> {
-            @Override
-            public void success(Result data) {
-                List<CommunityUserCommentListBean> result = (List<CommunityUserCommentListBean>) data.getResult();
-                communityUserCommentListAdapter.clean();
-                communityUserCommentListAdapter.addItem(result);
-                communityUserCommentListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void fail(ApiException e) {
-
-            }
         }
     }
 
