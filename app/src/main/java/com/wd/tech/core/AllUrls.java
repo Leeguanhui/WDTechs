@@ -2,6 +2,7 @@ package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.ByIdUserInfoBean;
+import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FindFriendNoticePageList;
@@ -17,6 +18,7 @@ import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -191,7 +193,63 @@ public interface AllUrls {
      */
     @GET("information/v1/findAllInfoPlate")
     Observable<Result<List<TypeBean>>> Type(
+
     );
+
+    /**
+     * 根据标题模糊查询
+     */
+    @GET("information/v1/findInformationByTitle")
+    Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
+                                                                 @Query("count") int count);
+
+    /**
+     * 完善用户信息
+     */
+    @FormUrlEncoded
+    @POST("user/verify/v1/perfectUserInfo")
+    Observable<Result> perfectUserInfo(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Field("nickName") String nickName, @Field("sex") int sex,
+                                       @Field("signature") String signature, @Field("birthday") String birthday,
+                                       @Field("email") String email);
+
+    /**
+     * 用户签到
+     */
+    @POST("user/verify/v1/userSign")
+    Observable<Result> userSign(@Header("userId") int userId,
+                                @Header("sessionId") String sessionId);
+
+    /**
+     * 查看用户当天签到状态
+     */
+    @GET("user/verify/v1/findUserSignStatus")
+    Observable<Result> findUserSignStatus(@Header("userId") int userId,
+                                          @Header("sessionId") String sessionId);
+
+    /**
+     * 修改用户头像
+     */
+    @POST("user/verify/v1/modifyHeadPic")
+    Observable<Result> modifyHeadPic(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Body MultipartBody body);
+
+    /**
+     * 查询用户当月所有签到的日期
+     */
+    @GET("user/verify/v1/findUserSignRecording")
+    Observable<Result> findUserSignRecording(@Header("userId") int userId,
+                                             @Header("sessionId") String sessionId);
+
+    /**
+     * 微信登录
+     */
+    @FormUrlEncoded
+    @POST("user/v1/weChatLogin")
+    Observable<Result<LoginUserInfoBean>> weChatLogin(@Header("ak") String ak,
+                                             @Field("code") String code);
 
     /**
      * 添加好友

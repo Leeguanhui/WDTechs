@@ -31,6 +31,7 @@ import com.wd.tech.activity.secondactivity.IntegActivity;
 import com.wd.tech.activity.secondactivity.InvitActivity;
 import com.wd.tech.activity.secondactivity.NotificaActivity;
 import com.wd.tech.activity.secondactivity.SettingActivity;
+import com.wd.tech.activity.secondactivity.SignCalendarActivity;
 import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.activity.secondactivity.UpdateMessageActivity;
 import com.wd.tech.bean.ByIdUserInfoBean;
@@ -247,6 +248,11 @@ public class MainActivity extends WDActivity {
             }
         });
         //点击头像跳转
+    }
+    //签到
+    @OnClick(R.id.sign_imag)
+    public void sign_imag() {
+        startActivity(new Intent(MainActivity.this, SignCalendarActivity.class));
     }
 
     @OnClick({R.id.myheader, R.id.myname})

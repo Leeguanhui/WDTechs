@@ -4,37 +4,183 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.view.SearchActivity"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    >
-    <RelativeLayout
+    tools:context=".activity.thirdlyactivity.SearchActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        >
-        <EditText
-            android:id="@+id/search_edit"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/edtext_selector"
+                android:hint="搜索文章"
+                android:paddingLeft="44dp"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/search_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dp"
+                android:src="@mipmap/search" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/call_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
-            android:paddingLeft="44dp"
-            android:textSize="12sp"
-            android:hint="搜索"
+            android:text="取消"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrecycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:background="@drawable/edtext_selector"/>
+            android:layout_marginTop="20dp"
+            android:text="热搜词" />
+
+        <com.wd.tech.activity.view.FlowLayout
+            android:id="@+id/flow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp">
+
+            <TextView
+                android:id="@+id/one"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="区块链" />
+
+            <TextView
+                android:id="@+id/two"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="中年危机" />
+
+            <TextView
+                android:id="@+id/three"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="锤子科技" />
+
+            <TextView
+                android:id="@+id/four"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="子弹短信" />
+
+            <TextView
+                android:id="@+id/five"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="民营企业" />
+
+            <TextView
+                android:id="@+id/sex"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="特斯拉" />
+
+            <TextView
+                android:id="@+id/seven"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="支付宝" />
+
+            <TextView
+                android:id="@+id/eigth"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="资本市场" />
+
+            <TextView
+                android:id="@+id/night"
+                android:layout_width="88dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edtext_selector"
+                android:gravity="center"
+                android:text="电视剧" />
+        </com.wd.tech.activity.view.FlowLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/search_image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="21dp"
-            android:layout_toRightOf="@+id/search_edit"
-            android:padding="5dp"
-            android:src="@mipmap/search" />
-    </RelativeLayout>
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/notfind" />
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="没有找到相似文章"
+            android:textSize="18sp" />
+    </LinearLayout>
 </LinearLayout>
