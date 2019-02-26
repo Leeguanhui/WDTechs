@@ -161,7 +161,6 @@ public class SignCalendarActivity extends WDActivity {
                 calendar.textColor();
                 rlBtnSign.setText("已签到");
                 rlBtnSign.setClickable(false);
-                doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1001);
             } else {
                 calendar.textColor();
             }
@@ -198,7 +197,7 @@ public class SignCalendarActivity extends WDActivity {
     private class TheTaskResult implements ICoreInfe<Result> {
         @Override
         public void success(Result result) {
-            Toast.makeText(SignCalendarActivity.this, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
 
         @Override

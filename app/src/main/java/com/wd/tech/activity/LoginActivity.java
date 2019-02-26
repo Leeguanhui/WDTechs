@@ -23,6 +23,7 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.RsaCoder;
+import com.wd.tech.face.FaceLoginActivity;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
@@ -42,6 +43,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
     private Dialog dialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -65,7 +67,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     }
 
-//    @OnClick(R.id.wechat_btn)
+    //    @OnClick(R.id.wechat_btn)
 //    public void wechat_btn() {
 //        mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
 //        mWechatApi.registerApp("wx4c96b6b8da494224");
@@ -76,7 +78,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 //        finish();
 //    }
     @OnClick(R.id.wechat_btn)
-    public void mWechatBtn(){
+    public void mWechatBtn() {
         mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
         mWechatApi.registerApp("wx4c96b6b8da494224");
         final SendAuth.Req req = new SendAuth.Req();
@@ -85,6 +87,12 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         mWechatApi.sendReq(req);
         finish();
     }
+
+    @OnClick(R.id.face_btn)
+    public void mFaceBtn() {
+        startActivity(new Intent(this, FaceLoginActivity.class));
+    }
+
     @OnClick(R.id.mBt_Login)
     public void mBt_Login() {
         String phone = mEt_Phone_Login.getText().toString();
