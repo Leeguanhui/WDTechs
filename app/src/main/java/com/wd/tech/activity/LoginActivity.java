@@ -1,5 +1,6 @@
 package com.wd.tech.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
+import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
@@ -36,6 +38,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     EditText mEd_Pwd_Login;
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
+    private Dialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -66,6 +69,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         try {
             String RSAPwd = RsaCoder.encryptByPublicKey(pwd);
             loginUserInfoPresenter.request(phone, RSAPwd);
+            dialog = CircularLoading.showLoadDialog(LoginActivity.this, "加载中...", true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,6 +114,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
+                CircularLoading.closeDialog(dialog);
                 finish();
             }
         }
