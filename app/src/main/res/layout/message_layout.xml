@@ -37,6 +37,7 @@
                 android:padding="5dp"
                 android:src="@mipmap/search" />
         </RelativeLayout>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

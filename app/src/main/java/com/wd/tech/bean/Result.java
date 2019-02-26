@@ -12,6 +12,24 @@ public class Result <T> {
     String status;
     String message;
     T result;
+    int groupId;
+    int flag;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 
     public String getStatus() {
         return status;

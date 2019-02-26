@@ -18,6 +18,15 @@ public class FindCollectBean {
     private int infoId;
     private String thumbnail;
     private String title;
+    private boolean click;
+
+    public boolean isClick() {
+        return click;
+    }
+
+    public void setClick(boolean click) {
+        this.click = click;
+    }
 
     public long getCreateTime() {
         return createTime;

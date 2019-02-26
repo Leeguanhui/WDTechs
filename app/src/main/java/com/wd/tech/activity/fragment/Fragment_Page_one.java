@@ -2,23 +2,19 @@ package com.wd.tech.activity.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
+import com.wd.tech.activity.thirdlyactivity.SearchActivity;
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -37,8 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
 /**
  * 作者：古祥坤 on 2019/2/18 15:50
@@ -48,8 +43,6 @@ public class Fragment_Page_one extends WDFragment {
 
     @BindView(R.id.menu)
     ImageView menu;
-    @BindView(R.id.search)
-    ImageView search;
     @BindView(R.id.xrecy)
     XRecyclerView xrecy;
     private NewsBannderPresenter newsBannderPresenter;
@@ -135,6 +128,13 @@ public class Fragment_Page_one extends WDFragment {
 
     }
 
+    /**
+     * 搜索
+     */
+    @OnClick(R.id.search)
+    public void search(){
+        startActivity(new Intent(getContext(),SearchActivity.class));
+    }
     @Override
     public void onResume() {
         super.onResume();

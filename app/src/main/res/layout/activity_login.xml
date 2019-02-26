@@ -22,7 +22,8 @@
             android:layout_width="17dp"
             android:layout_height="27dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/login_icon_phone_n" />
+            android:src="@drawable/login_icon_phone_n"
+            android:contentDescription="TODO" />
 
         <EditText
             android:id="@+id/mEt_Phone_Login"
@@ -35,7 +36,10 @@
             android:hint="手机号"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:autofillHints=""
+            android:inputType=""
+            android:layout_marginStart="20dp" tools:targetApi="o"/>
 
     </RelativeLayout>
 
@@ -78,7 +82,8 @@
             android:inputType="textPassword"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginStart="20dp" />
 
         <ImageView
             android:id="@+id/mI"
@@ -115,6 +120,7 @@
         android:textSize="14sp" />
 
     <Button
+
         android:id="@+id/mBt_Login"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -161,7 +167,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/mIv_Wx_Login"
+        android:id="@+id/mIv_WeChat"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentBottom="true"

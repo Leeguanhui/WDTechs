@@ -30,5 +30,5 @@ public class Constant {
         // imm.showSoftInput(editText, 0);
     }
 
-    public static final String APP_ID = "wxb3852e6a6b7d9516";
+    public static final String APP_ID = "wx4c96b6b8da494224";
 }
