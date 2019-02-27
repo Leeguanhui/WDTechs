@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.bean.AttUserListBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,16 @@ import java.util.List;
  */
 // TODO: 2019/2/19 穿数据 
 public class AttenRecycleAdapter extends RecyclerView.Adapter<AttenRecycleAdapter.Vh> {
-    List<String> list = new ArrayList<>();
+    List<AttUserListBean> list = new ArrayList<>();
 
-    public void addAll(List<String> list) {
+    public void addAll(List<AttUserListBean> list) {
         this.list.addAll(list);
+        notifyDataSetChanged();
     }
-
+    public void deleteAll(){
+        list.clear();
+        notifyDataSetChanged();
+    }
     class Vh extends RecyclerView.ViewHolder {
         SimpleDraweeView simpleDraweeView;
         TextView textView;
@@ -47,11 +53,15 @@ public class AttenRecycleAdapter extends RecyclerView.Adapter<AttenRecycleAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
+        AttUserListBean attUserListBean = list.get(i);
+        vh.simpleDraweeView.setImageURI(Uri.parse(attUserListBean.getHeadPic()));
+        vh.textView.setText(attUserListBean.getNickName());
+        vh.content.setText(attUserListBean.getSignature());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
 
