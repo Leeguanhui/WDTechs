@@ -27,6 +27,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -353,10 +354,6 @@ public interface AllUrls {
     @GET("user/verify/v1/findUserTaskList")
     Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
                                                                     @Header("sessionId") String sessionId);
-                                        @Header("sessionId") String sessionId,
-                                        @Query("fromUid") int fromUid,
-                                        @Query("page") int page,
-                                        @Query("count") int count);
     /**
      * 咨询评论
      */
@@ -365,4 +362,18 @@ public interface AllUrls {
                                        @Header("sessionId") String sessionId,
                                        @Query("content") String content,
                                    @Query("infoId") String infoId);
+    /**
+     * 咨询点赞
+     */
+    @POST("information/verify/v1/addGreatRecord")
+    Observable<Result> AddGreat(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("infoId") int infoId);
+    /**
+     * 取消点赞
+     */
+    @DELETE("information/verify/v1/cancelGreat")
+    Observable<Result> CancelGreat(@Header("userId") int userId,
+                                @Header("sessionId") String sessionId,
+                                @Query("infoId") int infoId);
 }

@@ -66,6 +66,7 @@
         <activity android:name="com.wd.tech.activity.NewFriendsActivity" />
         <activity android:name=".activity.view.SearchType" />
         <activity android:name=".activity.UserPostByIdActivity"></activity>
+        <activity android:name=".activity.view.SearchActivity" />
         <activity android:name=".activity.thirdlyactivity.SearchActivity" />
         <activity android:name=".activity.secondactivity.SignCalendarActivity" />
         <activity
@@ -83,6 +84,7 @@
         <activity android:name=".face.FaceLoginActivity"></activity>
         <activity android:name=".face.LoginActivity"></activity>
         <activity android:name=".face.PermissionAcitivity" />
+        <activity android:name=".activity.IntergralExchange"></activity>
     </application>
 
 </manifest>

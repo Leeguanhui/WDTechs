@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,9 +38,17 @@ public class DetailsMoreAdapter extends RecyclerView.Adapter<DetailsMoreAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
           viewHolder.text.setText(list.get(i).getTitle());
           viewHolder.simple.setImageURI(list.get(i).getThumbnail());
+          viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(activity,NewsDetails.class);
+                  intent.putExtra("id",list.get(i).getId());
+                  activity.startActivity(intent);
+              }
+          });
     }
 
     @Override
