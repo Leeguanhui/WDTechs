@@ -80,7 +80,8 @@
         <activity android:name=".activity.ApplyForActivity" />
         <activity android:name=".activity.GroupChatActivity" />
         <activity android:name=".activity.ClusterActivity" />
-        <activity android:name=".activity.IntergralExchange"></activity>
+        <activity android:name=".activity.IntergralExchange" />
+        <activity android:name=".activity.DredgeVip"></activity>
     </application>
 
 </manifest>

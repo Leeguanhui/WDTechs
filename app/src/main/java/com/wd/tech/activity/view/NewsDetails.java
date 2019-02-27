@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.DredgeVip;
 import com.wd.tech.activity.IntergralExchange;
 import com.wd.tech.activity.adapter.DetailsCommentAdapter;
 import com.wd.tech.activity.adapter.DetailsMoreAdapter;
@@ -48,6 +49,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,6 +114,7 @@ public class NewsDetails extends WDActivity {
     private CancelGreat cancelGreat;
     private int comment1;
     private NewsDetailsBean result;
+    private Dialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -120,6 +124,7 @@ public class NewsDetails extends WDActivity {
 
     @Override
     protected void initView() {
+        dialog = new Dialog(this);
        initP();
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +194,7 @@ public class NewsDetails extends WDActivity {
     @OnClick(R.id.fufei)
     public void Pay(){
         if (userInfo !=null){
-            Dialog dialog = new Dialog(this);
+
             dialog.setCanceledOnTouchOutside(true);
             final View inflate = View.inflate(this, R.layout.dia_pay_type, null);
             dialog.setContentView(inflate);
@@ -223,13 +228,16 @@ public class NewsDetails extends WDActivity {
                     intent.putExtra("source",source);
                     intent.putExtra("releaseTime",releaseTime);
                     intent.putExtra("praise",praise);
+                    intent.putExtra("summary",result.getSummary());
                     startActivity(intent);
                 }
             });
+
+
             mVip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    startActivity(new Intent(NewsDetails.this,DredgeVip.class));
                 }
             });
             dialog.show();
@@ -242,24 +250,29 @@ public class NewsDetails extends WDActivity {
         int height = wm.getDefaultDisplay().getHeight();
         return height;
     }
-    /*@OnClick(R.id.like)
+    @OnClick(R.id.like)
     public void Like(){
         if (userInfo != null) {
             if (whetherGreat==1){
-                cancelGreat.request(userId,sessionId,id);
+                //cancelGreat.request(userId,sessionId,id);
             }else{
-                addGreat.request(userId,sessionId,id);
+                //addGreat.request(userId,sessionId,id);
             }
         }else{
             Toast.makeText(this,"请先登录",Toast.LENGTH_LONG).show();
         }
 
-    }*/
+    }
     @Override
     protected void destoryData() {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dialog.dismiss();
+    }
 
     private class DetailsBack implements ICoreInfe<Result<NewsDetailsBean>> {
 

@@ -20,6 +20,7 @@ import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
+import com.wd.tech.bean.UserIntegralBean;
 
 import java.io.File;
 import java.util.List;
@@ -376,4 +377,20 @@ public interface AllUrls {
     Observable<Result> CancelGreat(@Header("userId") int userId,
                                 @Header("sessionId") String sessionId,
                                 @Query("infoId") int infoId);
+    /**
+     * 用户积分
+     */
+    @GET("user/verify/v1/findUserIntegral")
+    Observable<Result<UserIntegralBean>> UserJf(@Header("userId") int userId,
+                                                      @Header("sessionId") String sessionId
+                              );
+    /**
+     * 积分兑换资讯
+     */
+    @POST("information/verify/v1/infoPayByIntegral")
+    Observable<Result> UserExchange(@Header("userId") int userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Query("infoId")int infoId,
+                                    @Query("integralCost")int integralCost
+    );
 }
