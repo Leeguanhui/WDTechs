@@ -43,7 +43,7 @@ public class Fragment_Page_three extends WDFragment {
     private int userId;
     private LoginUserInfoBean userInfo;
     private AddCommunityGreatPresenter addCommunityGreatPresenter;
-    @BindView(R.id.SmartRefreshLayout)
+    @BindView(R.id.smartrefresh)
     SmartRefreshLayout refreshLayout;
 
     @Override

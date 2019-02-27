@@ -2,6 +2,7 @@ package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.AllCommentBean;
+import com.wd.tech.bean.AttUserListBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -10,6 +11,7 @@ import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
+import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
@@ -18,9 +20,12 @@ import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
+import com.wd.tech.bean.NotifiListBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
 import com.wd.tech.bean.UserIntegralBean;
+import com.wd.tech.bean.UserIntegralBean;
+import com.wd.tech.bean.UserIntegralListBean;
 
 import java.io.File;
 import java.util.List;
@@ -355,6 +360,7 @@ public interface AllUrls {
     @GET("user/verify/v1/findUserTaskList")
     Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
                                                                     @Header("sessionId") String sessionId);
+
     /**
      * 咨询评论
      */
@@ -408,5 +414,107 @@ public interface AllUrls {
                                     @Header("sessionId") String sessionId,
                                     @Query("infoId")int infoId,
                                     @Query("integralCost")int integralCost
+    );
+
+    /**
+     * 关注列表
+     */
+    @GET("user/verify/v1/findFollowUserList")
+    Observable<Result<List<AttUserListBean>>> findFollowUserList(@Header("userId") int userId,
+                                                                 @Header("sessionId") String sessionId,
+                                                                 @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 系统通知
+     */
+    @GET("tool/verify/v1/findSysNoticeList")
+    Observable<Result<List<NotifiListBean>>> findSysNoticeList(@Header("userId") int userId,
+                                                               @Header("sessionId") String sessionId,
+                                                               @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 用户积分
+     */
+    @GET("user/verify/v1/findUserIntegral")
+    Observable<Result<UserIntegralBean>> findUserIntegral(@Header("userId") int userId,
+                                                          @Header("sessionId") String sessionId);
+
+    /**
+     * 用户积分明细列表
+     */
+    @GET("user/verify/v1/findUserIntegralRecord")
+    Observable<Result<List<UserIntegralListBean>>> findUserIntegralRecord(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                                                    @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 审核群申请
+     */
+    @PUT("group/verify/v1/reviewGroupApply")
+    Observable<Result> reviewGroupApply(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("noticeId") int noticeId,
+            @Query("flag") int flag
+    );
+
+    /**
+     * 审核好友申请
+     */
+    @PUT("chat/verify/v1/reviewFriendApply")
+    Observable<Result> reviewFriendApply(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("noticeId") int noticeId,
+            @Query("flag") int flag
+    );
+
+    /**
+     * 删除好友
+     *
+     * @param userId
+     * @param sessionId
+     * @param friendUid
+     * @return
+     */
+    @DELETE("chat/verify/v1/deleteFriendRelation")
+    Observable<Result> deleteFriendRelation(@Header("userId") int userId,
+                                            @Header("sessionId") String sessionId,
+                                            @Query("friendUid") int friendUid);
+
+    /**
+     * 转移好友到其他分组
+     *
+     * @param userId
+     * @param sessionId
+     * @param newGroupId
+     * @param friendUid
+     * @return
+     */
+    @PUT("chat/verify/v1/transferFriendGroup")
+    @FormUrlEncoded
+    Observable<Result> transferFriendGroup(@Header("userId") int userId,
+                                           @Header("sessionId") String sessionId,
+                                           @Field("newGroupId") int newGroupId,
+                                           @Field("friendUid") int friendUid);
+
+    //判断用户是否已经在群内
+    @GET("group/verify/v1/whetherInGroup")
+    Observable<Result> whetherInGroup(@Header("userid") int userid,
+                                      @Header("sessionid") String sessionid,
+                                      @Query("groupId") int groupId);
+
+    //查询我创建的群组
+    @GET("group/verify/v1/findGroupsByUserId")
+    Observable<Result<List<FindGroupsByCreate>>> findGroupsByCreate(@Header("userid") int userid,
+                                                                    @Header("sessionid") String sessionid);
+
+    /**
+     * 退群
+     */
+    @DELETE("group/verify/v1/retreat")
+    Observable<Result> retreat(
+            @Header("userid") int userid,
+            @Header("sessionid") String sessionid,
+            @Query("groupId") int groupId
     );
 }

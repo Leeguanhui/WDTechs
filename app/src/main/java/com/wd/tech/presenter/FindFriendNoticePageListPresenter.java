@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 
 public class FindFriendNoticePageListPresenter extends BasePresenter {
 
-    private int page = 1;
+//    private int page = 1;
 
     public FindFriendNoticePageListPresenter(ICoreInfe dataCall) {
         super(dataCall);
@@ -18,13 +18,13 @@ public class FindFriendNoticePageListPresenter extends BasePresenter {
 
     @Override
     public Observable observable(Object... args) {
-        boolean isRefresh = (boolean)args[2];
-        if (isRefresh){
-            page=1;
-        }else{
-            page++;
-        }
+//        boolean isRefresh = (boolean)args[2];
+//        if (isRefresh){
+//            page=1;
+//        }else{
+//            page++;
+//        }
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.findFriendNoticePageList((int) args[0],(String)args[1],page,(int)args[3]);
+        return allUrls.findFriendNoticePageList((int) args[0],(String)args[1],(int)args[2],(int)args[3]);
     }
 }

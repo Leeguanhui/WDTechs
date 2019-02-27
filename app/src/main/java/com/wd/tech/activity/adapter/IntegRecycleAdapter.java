@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.bean.UserIntegralListBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +22,16 @@ import java.util.List;
  */
 // TODO: 2019/2/19 穿数据 
 public class IntegRecycleAdapter extends RecyclerView.Adapter<IntegRecycleAdapter.Vh> {
-    List<String> list = new ArrayList<>();
+    List<UserIntegralListBean> list = new ArrayList<>();
 
-    public void addAll(List<String> list) {
+    public void addAll(List<UserIntegralListBean> list) {
         this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void deleteAll() {
+        list.clear();
+        notifyDataSetChanged();
     }
 
     class Vh extends RecyclerView.ViewHolder {
@@ -47,11 +56,56 @@ public class IntegRecycleAdapter extends RecyclerView.Adapter<IntegRecycleAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
+        UserIntegralListBean userIntegralListBean = list.get(i);
+        int direction = userIntegralListBean.getDirection();
+        if (direction == 1) {
+            vh.jifen.setText("+" + userIntegralListBean.getAmount());
+        } else {
+            vh.jifen.setText("-" + userIntegralListBean.getAmount());
+        }
+        int type = userIntegralListBean.getType();
+        switch (type) {
+            case 1:
+                vh.qiandao.setText("签到");
+                break;
+            case 2:
+                vh.qiandao.setText("评论");
+                break;
+            case 3:
+                vh.qiandao.setText("分享");
+                break;
+            case 4:
+                vh.qiandao.setText("发帖");
+                break;
+            case 5:
+                vh.qiandao.setText("抽奖收入");
+                break;
+            case 6:
+                vh.qiandao.setText("付费咨询");
+                break;
+            case 7:
+                vh.qiandao.setText("抽奖支出");
+                break;
+            case 8:
+                vh.qiandao.setText("完善个人资信息");
+                break;
+            case 9:
+                vh.qiandao.setText("查看广告");
+                break;
+            case 10:
+                vh.qiandao.setText("绑定第三方");
+                break;
+        }
+        Date date = new Date();
+        date.setTime(userIntegralListBean.getCreateTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sdf.format(date);
+        vh.date.setText(format);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
 

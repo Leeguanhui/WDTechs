@@ -1,11 +1,24 @@
 package com.wd.tech.activity;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,15 +29,19 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.PhotoUtils;
 import com.wd.tech.core.utils.StringUtils;
 import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.ReleasePostPresenter;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
-public class ReleasePostActivity extends WDActivity {
+import static com.wd.tech.activity.secondactivity.SettingActivity.hasSdcard;
+
+public class ReleasePostActivity extends WDActivity implements View.OnClickListener {
 
     @BindView(R.id.id_editor_detail)
     EditText mText;
@@ -38,6 +55,15 @@ public class ReleasePostActivity extends WDActivity {
     private String sessionId;
     private int userId;
     private DoTheTaskPresenter doTheTaskPresenter;
+    private View contentView;
+    private Dialog bottomDialog;
+    private LinearLayout photo;
+    private LinearLayout pic;
+    private TextView cancel;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x03;
+    private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
+    private Uri imageUri;
 
     @Override
     protected int getLayoutId() {
@@ -79,6 +105,26 @@ public class ReleasePostActivity extends WDActivity {
                 }
             }
         });
+
+        //底部弹出dialog
+        bottomDialog = new Dialog(this, R.style.BottomDialog);
+
+        contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_normal, null);
+
+        addCircleAdapter.setOnClick(new ReleasePostAdapter.OnClick() {
+            @Override
+            public void onClick() {
+                show(contentView);
+            }
+        });
+
+        photo = contentView.findViewById(R.id.tv_take_photo);
+        pic = contentView.findViewById(R.id.tv_take_pic);
+        cancel = contentView.findViewById(R.id.tv_cancel);
+
+        photo.setOnClickListener(this);
+        pic.setOnClickListener(this);
+        cancel.setOnClickListener(this);
     }
 
     @OnClick(R.id.textview2)
@@ -95,13 +141,106 @@ public class ReleasePostActivity extends WDActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {//resultcode是setResult里面设置的code值
-            String filePath = getFilePath(null, requestCode, data);
-            if (!StringUtils.isEmpty(filePath)) {
-                addCircleAdapter.add(filePath);
-                addCircleAdapter.notifyDataSetChanged();
+            switch (requestCode) {
+                case PHOTO:
+                    String filePath = getFilePath(null, requestCode, data);
+                    if (!StringUtils.isEmpty(filePath)) {
+                        addCircleAdapter.add(filePath);
+                        addCircleAdapter.notifyDataSetChanged();
+                        bottomDialog.dismiss();
 //                Bitmap bitmap = UIUtils.decodeFile(new File(filePath),200);
 //                mImage.setImageBitmap(bitmap);
+                    }
+                    break;
+                //拍照完成回调
+                case CODE_CAMERA_REQUEST:
+                    String path = PhotoUtils.getPath(this, imageUri);
+                    if (!StringUtils.isEmpty(path)) {
+                        addCircleAdapter.add(path);
+                        addCircleAdapter.notifyDataSetChanged();
+                        bottomDialog.dismiss();
+                    }
+                    break;
             }
+
+//
+//            Uri uri = Uri.fromFile(file);
+//            Parcelable data1 = data.getParcelableExtra("data");
+        }
+    }
+
+    /**
+     * 自动获取相机权限
+     */
+    private void autoObtainCameraPermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                Toast.makeText(this, "您已经拒绝过一次", Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_PERMISSIONS_REQUEST_CODE);
+        } else {//有权限直接调用系统相机拍照
+            if (hasSdcard()) {
+                imageUri = Uri.fromFile(fileUri);
+                //通过FileProvider创建一个content类型的Uri
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);
+//                }
+                PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
+            } else {
+                Toast.makeText(this, "设备没有SD卡！", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            //调用系统相机申请拍照权限回调
+            case CAMERA_PERMISSIONS_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (hasSdcard()) {
+                        imageUri = Uri.fromFile(fileUri);
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+//                            imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                        PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
+                    } else {
+                        Toast.makeText(this, "设备没有SD卡！", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+
+                    Toast.makeText(this, "请允许打开相机！！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+
+            }
+            default:
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //相机
+            case R.id.tv_take_photo:
+                autoObtainCameraPermission();
+                break;
+            //相册
+            case R.id.tv_take_pic:
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                getForegroundActivity().startActivityForResult(intent, PHOTO);
+                break;
+            case R.id.tv_cancel:
+                bottomDialog.dismiss();
+                break;
         }
     }
 
@@ -132,5 +271,17 @@ public class ReleasePostActivity extends WDActivity {
         public void fail(ApiException e) {
 
         }
+    }
+
+    //Dialog
+    private void show(View contentViewss) {
+        bottomDialog.setContentView(contentViewss);
+        ViewGroup.LayoutParams layoutParams = contentViewss.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        contentViewss.setLayoutParams(layoutParams);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.setCanceledOnTouchOutside(true);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
     }
 }

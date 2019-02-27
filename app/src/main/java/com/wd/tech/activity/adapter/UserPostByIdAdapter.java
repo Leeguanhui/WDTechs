@@ -19,6 +19,8 @@ import com.wd.tech.core.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapter.ViewHolder> {
 
@@ -56,9 +58,9 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         CommunityCommentVoListBean communityCommentVoListBean = list.get(i);
-        viewHolder.community_content.setText(communityCommentVoListBean.getContent());
-        viewHolder.community_comment.setText(String.valueOf(communityCommentVoListBean.getComment()));
-        viewHolder.community_praise.setText(String.valueOf(communityCommentVoListBean.getPraise()));
+        viewHolder.content.setText(communityCommentVoListBean.getContent());
+        viewHolder.comment.setText(String.valueOf(communityCommentVoListBean.getComment()));
+        viewHolder.praise.setText(String.valueOf(communityCommentVoListBean.getPraise()));
 
         //判断是否点赞
         if (list.get(i).getWhetherGreat() == 1) {
@@ -72,8 +74,8 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
             @Override
             public void onClick(View v) {
                 list.get(i).setWhetherGreat(1);
-                String trim = viewHolder.community_praise.getText().toString().trim();
-                addCommunityGreat.addCommunityGreat(list.get(i).getId(), viewHolder.addCommunityGreat, trim, viewHolder.community_praise, list.get(i));
+                String trim = viewHolder.praise.getText().toString().trim();
+                addCommunityGreat.addCommunityGreat(list.get(i).getId(), viewHolder.addCommunityGreat, trim, viewHolder.praise, list.get(i));
             }
         });
 
@@ -113,20 +115,20 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
         RecyclerView gridView;
         GridLayoutManager gridLayoutManager;
         ImageAdapter imageAdapter;
-        ImageView community_iv1;
+        ImageView communityIv;
         ImageView addCommunityGreat;
-        TextView community_content;
-        TextView community_comment;
-        TextView community_praise;
+        TextView content;
+        TextView comment;
+        TextView praise;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             gridView = itemView.findViewById(R.id.community_recycler);
-            community_content = itemView.findViewById(R.id.community_content);
-            community_iv1 = itemView.findViewById(R.id.community_iv1);
-            addCommunityGreat = itemView.findViewById(R.id.addCommunityGreat);
-            community_comment = itemView.findViewById(R.id.community_comment);
-            community_praise = itemView.findViewById(R.id.community_praise);
+            content = itemView.findViewById(R.id.community_content);
+            communityIv = itemView.findViewById(R.id.community_iv1);
+            addCommunityGreat = itemView.findViewById(R.id.addcommunitygreat);
+            comment = itemView.findViewById(R.id.community_comment);
+            praise = itemView.findViewById(R.id.community_praise);
             imageAdapter = new ImageAdapter();
             int space = context.getResources().getDimensionPixelSize(R.dimen.dip_10);
             //图片间距

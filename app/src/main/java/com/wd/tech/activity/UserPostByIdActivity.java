@@ -39,7 +39,7 @@ public class UserPostByIdActivity extends WDActivity {
     @BindView(R.id.signature)
     TextView signature;
     @BindView(R.id.image_bg)
-    ImageView image_bg;
+    ImageView imageBg;
     private UserPostByIdAdapter userPostByIdAdapter;
     @BindView(R.id.xrecycler)
     RecyclerView recyclerView;
@@ -99,7 +99,7 @@ public class UserPostByIdActivity extends WDActivity {
                 pic.setImageURI(Uri.parse(communityUserVo.getHeadPic()));
                 name.setText(communityUserVo.getNickName());
                 signature.setText(communityUserVo.getSignature());
-                Glide.with(UserPostByIdActivity.this).load(communityUserVo.getHeadPic()).into(image_bg);
+                Glide.with(UserPostByIdActivity.this).load(communityUserVo.getHeadPic()).into(imageBg);
                 List<CommunityCommentVoListBean> communityUserPostVoList = result.get(i).getCommunityUserPostVoList();
                 userPostByIdAdapter.addItem(communityUserPostVoList);
                 userPostByIdAdapter.notifyDataSetChanged();
