@@ -205,4 +205,19 @@
             android:id="@+id/mean"
             />
     </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:text="立即兑换"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/exchange"
+        android:id="@+id/exchange"
+        />
+
 </RelativeLayout>
