@@ -83,6 +83,7 @@ public class MainActivity extends WDActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
     private String nickName;
+    private int comment;
 
     @Override
     protected int getLayoutId() {
@@ -92,6 +93,8 @@ public class MainActivity extends WDActivity {
     @Override
     protected void initView() {
         closeSwipeBack();
+        Intent intent = getIntent();
+        comment = intent.getIntExtra("comment", 0);
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
         edit = sharedPreferences.edit();
         myListViewAdapter = new MyListViewAdapter(this);
@@ -103,9 +106,15 @@ public class MainActivity extends WDActivity {
         transaction.add(R.id.fragment, fragment_page_one);
         transaction.add(R.id.fragment, fragment_page_two);
         transaction.add(R.id.fragment, fragment_page_three);
-        transaction.show(fragment_page_one);
-        transaction.hide(fragment_page_two);
-        transaction.hide(fragment_page_three);
+        if (comment == 1) {
+            transaction.show(fragment_page_three);
+            transaction.hide(fragment_page_two);
+            transaction.hide(fragment_page_one);
+        } else {
+            transaction.show(fragment_page_one);
+            transaction.hide(fragment_page_two);
+            transaction.hide(fragment_page_three);
+        }
         transaction.commit();
         mRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

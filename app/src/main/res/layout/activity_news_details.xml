@@ -197,13 +197,11 @@
                 android:layout_height="25dp"
                 android:src="@drawable/common_icon_comment"
                 android:layout_marginLeft="12dp"
-
                 android:paddingRight="5dp"
                 />
             <TextView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:text="11"
                 android:maxLength="2"
                 android:textSize="8sp"
                 android:textColor="#ffffff"
@@ -224,11 +222,11 @@
                 android:src="@drawable/common_icon"
                 android:layout_marginLeft="5dp"
                 android:paddingRight="7dp"
+                android:id="@+id/bang"
                 />
             <TextView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:text="2111"
                 android:maxLength="2"
                 android:textSize="8sp"
                 android:textColor="#ffffff"

@@ -1,6 +1,7 @@
 package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
+import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -11,6 +12,7 @@ import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
 import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
+import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -19,6 +21,7 @@ import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
+import com.wd.tech.bean.UserIntegralBean;
 
 import java.io.File;
 import java.util.List;
@@ -133,7 +136,7 @@ public interface AllUrls {
      * 详情评论
      */
     @GET("information/v1/findAllInfoCommentList")
-    Observable<Result<NewsDetailsBean>> NewsComments(
+    Observable<Result<List<AllCommentBean>>> NewsComments(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("infoId") int infoId,
@@ -335,6 +338,79 @@ public interface AllUrls {
      */
     @GET("community/verify/v1/findUserPostById")
     Observable<Result<List<CommunityListBean>>> findUserPostById(@Header("userId") int userId,
+                                                                 @Header("sessionId") String sessionId,
+                                                                 @Query("fromUid") int fromUid,
+                                                                 @Query("page") int page,
+                                                                 @Query("count") int count);
+
+    /**
+     * 做任务
+     */
+    @FormUrlEncoded
+    @POST("user/verify/v1/doTheTask")
+    Observable<Result> doTheTask(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                 @Field("taskId") int taskId);
+
+    /**
+     * 查看任务
+     */
+    @GET("user/verify/v1/findUserTaskList")
+    Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
+                                                                    @Header("sessionId") String sessionId);
+    /**
+     * 咨询评论
+     */
+    @POST("information/verify/v1/addInfoComment")
+    Observable<Result> AddComments(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("content") String content,
+                                   @Query("infoId") String infoId);
+    /**
+     * 咨询点赞
+     */
+    @POST("information/verify/v1/addGreatRecord")
+    Observable<Result> AddGreat(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("infoId") int infoId);
+    /**
+     * 取消点赞
+     */
+    @DELETE("information/verify/v1/cancelGreat")
+    Observable<Result> CancelGreat(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("infoId") int infoId);
+    /**
+     * 收藏
+     */
+    @POST("user/verify/v1/addCollection")
+    Observable<Result> AddCollection(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("infoId") int infoId);
+
+    /**
+     * 取消收藏
+     */
+    @DELETE("user/verify/v1/cancelCollection")
+    Observable<Result> cancelCollection(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("infoId") String infoId);
+
+    /**
+     * 用户积分
+     */
+    @GET("user/verify/v1/findUserIntegral")
+    Observable<Result<UserIntegralBean>> UserJf(@Header("userId") int userId,
+                                                      @Header("sessionId") String sessionId
+                              );
+    /**
+     * 积分兑换资讯
+     */
+    @POST("information/verify/v1/infoPayByIntegral")
+    Observable<Result> UserExchange(@Header("userId") int userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Query("infoId")int infoId,
+                                    @Query("integralCost")int integralCost
+    );
                                                                  @Header("sessionId") String sessionId,
                                                                  @Query("fromUid") int fromUid,
                                                                  @Query("page") int page,

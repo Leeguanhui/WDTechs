@@ -67,7 +67,7 @@
         android:text="1111"
         android:layout_alignParentRight="true"
         android:layout_below="@id/content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:textColor="#666666"
         android:textSize="10sp"
         android:paddingRight="12dp"
@@ -83,13 +83,15 @@
         android:layout_marginRight="6dp"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:id="@+id/likenum"
         android:text="1111"
+        android:maxLength="2"
+        android:layout_centerHorizontal="true"
         android:layout_toLeftOf="@id/sharewith"
         android:layout_below="@id/content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:paddingRight="10dp"
         android:textColor="#666666"
         android:textSize="10sp" />

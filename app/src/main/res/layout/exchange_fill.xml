@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pay_success_view"
+    >
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/delete"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="12dp"
+        android:id="@+id/back"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="兑换成功"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/back"
+        android:layout_marginTop="8dp"
+        android:background="#666666"
+        android:id="@+id/a"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="您以兑换该条咨讯的阅读权"
+        android:layout_below="@id/a"
+        android:layout_marginTop="14dp"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        android:id="@+id/b"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/b"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="继续阅读"
+        android:background="@drawable/pay_success"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:id="@+id/ok_btn"
+        />
+</RelativeLayout>

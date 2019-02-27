@@ -11,8 +11,8 @@ import butterknife.BindView;
 
 public class NotificaActivity extends WDActivity {
     @BindView(R.id.notifica_xrecycle)
-    XRecyclerView notifica_xrecycle;
-    private NofitiRecycleAdapter nofitiRecycleAdapter;
+    XRecyclerView mNotificaxrecycle;
+    private NofitiRecycleAdapter mNofitiRecycleAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -21,11 +21,11 @@ public class NotificaActivity extends WDActivity {
 
     @Override
     protected void initView() {
-        nofitiRecycleAdapter = new NofitiRecycleAdapter();
-        notifica_xrecycle.setLayoutManager(new LinearLayoutManager(this));
-        notifica_xrecycle.setAdapter(nofitiRecycleAdapter);
-        notifica_xrecycle.setPullRefreshEnabled(true);
-        notifica_xrecycle.setLoadingMoreEnabled(false);
+        mNofitiRecycleAdapter = new NofitiRecycleAdapter();
+        mNotificaxrecycle.setLayoutManager(new LinearLayoutManager(this));
+        mNotificaxrecycle.setAdapter(mNofitiRecycleAdapter);
+        mNotificaxrecycle.setPullRefreshEnabled(true);
+        mNotificaxrecycle.setLoadingMoreEnabled(false);
     }
 
     @Override

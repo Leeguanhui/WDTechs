@@ -50,7 +50,7 @@ public class Fragment_Page_one extends WDFragment {
     private List<String> mItitles;
     private ZXXRecyAdapter zxxRecyAdapter;
     private ZxInformationPresenter zxInformationPresenter;
-    private int num=1;
+    private int NUM=1;
     private MZBannerView banner;
     private SimpleDraweeView mImageView;
     private TextView title;
@@ -90,8 +90,8 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onRefresh() {
                 newsBannderPresenter.request();
-                num++;
-                zxInformationPresenter.request(userId, sessionId,0,num,10);
+                NUM++;
+                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.refreshComplete();
             }
@@ -99,8 +99,8 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onLoadMore() {
                 newsBannderPresenter.request();
-                num++;
-                zxInformationPresenter.request(userId, sessionId,0,num,10);
+                NUM++;
+                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.loadMoreComplete();
             }
@@ -124,7 +124,7 @@ public class Fragment_Page_one extends WDFragment {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         zxInformationPresenter = new ZxInformationPresenter(new InforMationList());
-        zxInformationPresenter.request(userId, sessionId,0,num,10);
+        zxInformationPresenter.request(userId, sessionId,0,NUM,10);
 
     }
 
@@ -138,7 +138,8 @@ public class Fragment_Page_one extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
-        zxInformationPresenter.request(userId, sessionId,0,num,10);
+        zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+        zxxRecyAdapter.notifyDataSetChanged();
         banner.start();
     }
 

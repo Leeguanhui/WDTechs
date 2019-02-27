@@ -72,7 +72,6 @@ public class Fragment_Page_three extends WDFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         communityListAdapter = new CommunityListAdapter(getContext());
-        communityListAdapter.add(userId, sessionId);
 
         recyclerView.setAdapter(communityListAdapter);
 

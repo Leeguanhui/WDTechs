@@ -1,20 +1,16 @@
 package com.wd.tech.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
-import com.wd.tech.activity.adapter.CommunityListAdapter;
 import com.wd.tech.activity.adapter.UserPostByIdAdapter;
-import com.wd.tech.activity.fragment.Fragment_Page_three;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserVoBean;
@@ -26,8 +22,6 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.UserPostByIdPresenter;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 import butterknife.BindView;

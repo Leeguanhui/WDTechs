@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0"
+    android:id="@+id/task_linear"
     android:orientation="vertical"
     tools:context=".activity.secondactivity.TaskActivity">
 
@@ -36,18 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="签到"
+                android:text="每日签到"
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toRightOf="@+id/guang"
-                android:text="签到"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -89,18 +82,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="首评"
+                android:text="每日首评"
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toRightOf="@+id/guang"
-                android:text="签到"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -119,7 +104,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/btn_shaperf"
-                android:text="去签到"
+                android:text="去评论"
                 android:textColor="#20affa"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -143,18 +128,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="发帖"
+                android:text="每日发帖"
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toRightOf="@+id/guang"
-                android:text="签到"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+
 
             <TextView
                 android:layout_width="0dp"
@@ -196,18 +174,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="分享"
+                android:text="每日分享"
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toRightOf="@+id/guang"
-                android:text="签到"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+
 
             <TextView
                 android:layout_width="0dp"

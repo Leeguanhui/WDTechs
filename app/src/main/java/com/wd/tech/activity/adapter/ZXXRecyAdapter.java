@@ -70,6 +70,8 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             int whetherCollection = list.get(i).getWhetherCollection();
             if (whetherCollection==2){
                 ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_n);
+            }else{
+                ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_s);
             }
             ((ListViewHolder) viewHolder).simple.setImageURI(list.get(i).getThumbnail());
             ((ListViewHolder) viewHolder).title.setText(list.get(i).getTitle());
