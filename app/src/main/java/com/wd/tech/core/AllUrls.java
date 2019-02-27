@@ -377,6 +377,13 @@ public interface AllUrls {
     Observable<Result> CancelGreat(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Query("infoId") int infoId);
+    /**
+     * 收藏
+     */
+    @POST("user/verify/v1/addCollection")
+    Observable<Result> AddCollection(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("infoId") int infoId);
 
     /**
      * 取消收藏
@@ -385,8 +392,7 @@ public interface AllUrls {
     Observable<Result> cancelCollection(@Header("userId") int userId,
                                         @Header("sessionId") String sessionId,
                                         @Query("infoId") String infoId);
-                                @Header("sessionId") String sessionId,
-                                @Query("infoId") int infoId);
+
     /**
      * 用户积分
      */

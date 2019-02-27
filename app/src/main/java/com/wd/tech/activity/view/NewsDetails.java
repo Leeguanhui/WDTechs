@@ -40,7 +40,9 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.AddCollectionPresenter;
 import com.wd.tech.presenter.AddGreat;
+import com.wd.tech.presenter.CancelCollectionPresenter;
 import com.wd.tech.presenter.CancelGreat;
 import com.wd.tech.presenter.DetailsCommentsPresenter;
 import com.wd.tech.presenter.NewsDetails_Presenter;
@@ -115,6 +117,9 @@ public class NewsDetails extends WDActivity {
     private int comment1;
     private NewsDetailsBean result;
     private Dialog dialog;
+    private CancelCollectionPresenter cancelCollectionPresenter;
+    private AddCollectionPresenter addCollectionPresenter;
+    private int whetherCollection;
 
     @Override
     protected int getLayoutId() {
@@ -124,6 +129,8 @@ public class NewsDetails extends WDActivity {
 
     @Override
     protected void initView() {
+        addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
+        cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         dialog = new Dialog(this);
        initP();
         back.setOnClickListener(new View.OnClickListener() {
@@ -251,12 +258,12 @@ public class NewsDetails extends WDActivity {
         return height;
     }
     @OnClick(R.id.like)
-    public void Like(){
+    public void userLike(){
         if (userInfo != null) {
-            if (whetherGreat==1){
-                //cancelGreat.request(userId,sessionId,id);
+            if (whetherCollection==2){
+                addCollectionPresenter.request(userId,sessionId,id);
             }else{
-                //addGreat.request(userId,sessionId,id);
+                cancelCollectionPresenter.request(userId,sessionId,String.valueOf(id));
             }
         }else{
             Toast.makeText(this,"请先登录",Toast.LENGTH_LONG).show();
@@ -282,8 +289,8 @@ public class NewsDetails extends WDActivity {
         public void success(Result<NewsDetailsBean> data) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             result = data.getResult();
-            int whetherCollection = data.getResult().getWhetherCollection();
-            if (whetherCollection==2){
+            whetherCollection = data.getResult().getWhetherCollection();
+            if (whetherCollection ==2){
                 like.setImageResource(R.mipmap.collect_n);
             }else{
                 like.setImageResource(R.mipmap.collect_s);
@@ -372,6 +379,37 @@ public class NewsDetails extends WDActivity {
                 newsDetails_presenter.request(userId, sessionId, id);
             }else{
                 Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CancelCollectionBack implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+
+                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+                newsDetails_presenter.request(userId, sessionId, id);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class AddCollection implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+                newsDetails_presenter.request(userId, sessionId, id);
             }
         }
 
