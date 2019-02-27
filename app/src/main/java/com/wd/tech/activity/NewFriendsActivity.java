@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.FindFriendNoticePageListAdapter;
+import com.wd.tech.activity.adapter.FindGroupNoticePageListAdapter;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -14,6 +15,7 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.FindFriendNoticePageListPresenter;
+import com.wd.tech.presenter.ReviewFriendApplyPresenter;
 
 import java.util.List;
 
@@ -28,8 +30,9 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
     @BindView(R.id.xrecyclerview)
     XRecyclerView xrecyclerviewFriend;
 
-    private FindFriendNoticePageListAdapter adapter;
-    FindFriendNoticePageListPresenter presenter = new FindFriendNoticePageListPresenter(new FriendData());
+    private FindFriendNoticePageListAdapter pageListAdapter;
+    FindFriendNoticePageListPresenter listPresenter = new FindFriendNoticePageListPresenter(new FriendData());
+    private ReviewFriendApplyPresenter reviewFriendApplyPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -38,17 +41,30 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
 
     @Override
     protected void initView() {
-        LoginUserInfoBean bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        reviewFriendApplyPresenter = new ReviewFriendApplyPresenter(new Review());
+        LoginUserInfoBean infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         xrecyclerviewFriend.setLayoutManager(linearLayoutManager);
-        adapter = new FindFriendNoticePageListAdapter(this);
-        xrecyclerviewFriend.setAdapter(adapter);
+        pageListAdapter = new FindFriendNoticePageListAdapter(this);
+        xrecyclerviewFriend.setAdapter(pageListAdapter);
         xrecyclerviewFriend.setLoadingListener(this);
-        presenter.request(userId,sessionId,true,5);
+        listPresenter.request(userId,sessionId,1,10);
+        pageListAdapter.setOnItemClickListener(new FindFriendNoticePageListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int noticeId) {
+                reviewFriendApplyPresenter.request(userId,sessionId,noticeId,2);
+            }
+        });
+        pageListAdapter.setOnItemClickListener1(new FindFriendNoticePageListAdapter.OnItemClickListener1() {
+            @Override
+            public void onItemClick1(int noticeId) {
+                reviewFriendApplyPresenter.request(userId,sessionId,noticeId,3);
+            }
+        });
     }
 
     @Override
@@ -64,21 +80,21 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
 
     @Override
     public void onRefresh() {
-        if (presenter.isRunning()){
+        if (listPresenter.isRunning()){
             xrecyclerviewFriend.refreshComplete();
             return;
         }
-        presenter.request(userId,sessionId,true,5);
+        listPresenter.request(userId,sessionId,1,10);
 
     }
 
     @Override
     public void onLoadMore() {
-        if (presenter.isRunning()){
+        if (listPresenter.isRunning()){
             xrecyclerviewFriend.loadMoreComplete();
             return;
         }
-        presenter.request(userId,sessionId,false,5);
+        listPresenter.request(userId,sessionId,1,10);
 
     }
 
@@ -87,10 +103,10 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
         public void success(Result<List<FindFriendNoticePageList>> result) {
             xrecyclerviewFriend.refreshComplete();
             xrecyclerviewFriend.loadMoreComplete();
-            adapter.clear();
+            pageListAdapter.clear();
             if (result.getStatus().equals("0000")){
-                adapter.addAll(result.getResult());
-                adapter.notifyDataSetChanged();
+                pageListAdapter.addAll(result.getResult());
+                pageListAdapter.notifyDataSetChanged();
             }
         }
 
@@ -104,6 +120,21 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
 
     protected void onDestroy() {
         super.onDestroy();
-        presenter.unBind();
+        listPresenter.unBind();
+    }
+
+    private class Review implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(NewFriendsActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                listPresenter.request(userId, sessionId, 1, 10);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

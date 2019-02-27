@@ -25,9 +25,9 @@ import butterknife.OnClick;
 public class FriendRequestActivity extends WDActivity {
 
     @BindView(R.id.back)
-    ImageView back;
+    ImageView backI;
     @BindView(R.id.send)
-    TextView send;
+    TextView senD;
     @BindView(R.id.user_heada)
     SimpleDraweeView userHeada;
     @BindView(R.id.user_namea)
@@ -39,7 +39,7 @@ public class FriendRequestActivity extends WDActivity {
     private String sessionId;
     private int userId;
     private AddFriendPresenter addFriendPresenter;
-    private int userid1;
+    private int userId1;
 
     @Override
     protected int getLayoutId() {
@@ -49,16 +49,16 @@ public class FriendRequestActivity extends WDActivity {
     @Override
     protected void initView() {
         addFriendPresenter = new AddFriendPresenter(new AddFre());
-        LoginUserInfoBean bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        LoginUserInfoBean infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
         Intent intent = getIntent();
         String headPic = intent.getStringExtra("headPic");
         String nickName = intent.getStringExtra("nickName");
         String signature = intent.getStringExtra("signature");
-        userid1 = intent.getIntExtra("userid1", 0);
+        userId1 = intent.getIntExtra("userid1", 0);
         userHeada.setImageURI(headPic);
         userNamea.setText(nickName);
         userXiangqing.setText(signature);
@@ -80,7 +80,7 @@ public class FriendRequestActivity extends WDActivity {
                     Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addFriendPresenter.request(userId, sessionId, userid1, apply);
+                addFriendPresenter.request(userId, sessionId, userId, apply);
                 break;
             case R.id.back:
                 finish();

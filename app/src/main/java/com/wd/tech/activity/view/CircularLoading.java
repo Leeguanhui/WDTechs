@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class CircularLoading {
 public static Dialog showLoadDialog(Context context, String s, boolean isCancelable) {
     LayoutInflater inflater = LayoutInflater.from(context);
     View v = inflater.inflate(R.layout.circular_loading, null);
-    RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.dialog_bg);
+    LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_bg);
 
     // main.xml中的ImageView
     ImageView loadImage = (ImageView) v.findViewById(R.id.load_iv);
@@ -39,7 +40,7 @@ public static Dialog showLoadDialog(Context context, String s, boolean isCancela
     loadingDialog.setContentView(layout);
     loadingDialog.setCancelable(isCancelable);
     loadingDialog.setCanceledOnTouchOutside(true);
-
+    layout.setBackgroundColor(0x77000000);
 
     Window window = loadingDialog.getWindow();
     WindowManager.LayoutParams lp = window.getAttributes();

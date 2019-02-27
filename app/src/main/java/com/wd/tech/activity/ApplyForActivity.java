@@ -45,10 +45,10 @@ public class ApplyForActivity extends WDActivity {
         Intent intent = getIntent();
         groupId = intent.getIntExtra("groupId", 0);
         applyAddGroupPresenter = new ApplyAddGroupPresenter(new Apply());
-        LoginUserInfoBean bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        LoginUserInfoBean infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
     }
 
