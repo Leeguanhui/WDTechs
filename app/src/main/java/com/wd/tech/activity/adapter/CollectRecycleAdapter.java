@@ -27,6 +27,7 @@ import java.util.List;
 public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAdapter.Vh> {
     List<FindCollectBean> list = new ArrayList<>();
     List<CheckBox> checkBoxes = new ArrayList<>();
+    private FindCollectBean findCollectBean;
 
     public void addAll(List<FindCollectBean> list) {
         this.list.addAll(list);
@@ -62,29 +63,22 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        final FindCollectBean findCollectBeans = new FindCollectBean();
-        if (list.size() > 0) {
-            final FindCollectBean findCollectBean = list.get(i);
-            vh.qiandao.setImageURI(findCollectBean.getThumbnail());
-            vh.date.setText(findCollectBean.getTitle());
-        }
-        // TODO: 2019/2/25 删除 
-        vh.radio.setChecked(findCollectBeans.isClick());
+        findCollectBean = list.get(i);
+        vh.qiandao.setImageURI(findCollectBean.getThumbnail());
+        vh.date.setText(findCollectBean.getTitle());
+        // TODO: 2019/2/25 删除
+        vh.radio.setChecked(findCollectBean.isClick());
         vh.radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                findCollectBeans.setClick(isChecked);
+                findCollectBean.setClick(isChecked);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if (list.size() > 0) {
-            return list.size();
-        } else {
-            return 10;
-        }
+        return list.size();
     }
 
     public void showRadio() {
@@ -97,5 +91,19 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
         for (int i = 0; i < checkBoxes.size(); i++) {
             checkBoxes.get(i).setVisibility(View.GONE);
         }
+    }
+
+    //计算总价格
+    public String getCheckId() {
+        String mPosition = "";
+        for (int i = 0; i < checkBoxes.size(); i++) {
+            CheckBox checkBox = checkBoxes.get(i);
+            boolean checked = checkBox.isChecked();
+            if (checked) {
+                int id = list.get(i).getInfoId();
+                mPosition += id + ",";
+            }
+        }
+        return mPosition;
     }
 }

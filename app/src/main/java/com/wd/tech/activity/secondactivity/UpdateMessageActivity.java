@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.wd.tech.R;
 import com.wd.tech.activity.LoginActivity;
+import com.wd.tech.activity.ReleasePostActivity;
 import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
 import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.activity.view.MyDialog;
@@ -32,12 +33,15 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.ModifyNickNamePresenter;
 import com.wd.tech.presenter.PerfectUserInfoPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,15 +49,15 @@ import butterknife.OnClick;
 public class UpdateMessageActivity extends WDActivity {
     private LoginUserInfoBean userInfo;
     @BindView(R.id.my_name)
-    EditText my_name;
+    EditText mName;
     @BindView(R.id.my_lin)
-    LinearLayout my_lin;
+    LinearLayout mLin;
     @BindView(R.id.my_sex)
-    TextView my_sex;
+    TextView mSex;
     @BindView(R.id.my_brith)
-    TextView my_brith;
+    TextView mBrith;
     @BindView(R.id.my_mali)
-    EditText my_mali;
+    EditText mMali;
 
     PickView pickView;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
@@ -65,6 +69,7 @@ public class UpdateMessageActivity extends WDActivity {
     @BindView(R.id.line2)
     LinearLayout line2;
     private Dialog dialog;
+    private DoTheTaskPresenter doTheTaskPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -73,6 +78,7 @@ public class UpdateMessageActivity extends WDActivity {
 
     @Override
     protected void initView() {
+        doTheTaskPresenter = new DoTheTaskPresenter(new DoTheReuslt());
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
         perfectUserInfoPresenter = new PerfectUserInfoPresenter(new ModifyNameResult());
         byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
@@ -80,7 +86,7 @@ public class UpdateMessageActivity extends WDActivity {
         byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        my_name.setText(name);
+        mName.setText(name);
         view = View.inflate(this, R.layout.sex_itme, null);
         mDialog = new MyDialog(this, view);
         pickView = (PickView) view.findViewById(R.id.pvPickView);
@@ -94,7 +100,7 @@ public class UpdateMessageActivity extends WDActivity {
             @Override
             public void onSelect(String text) {
                 Log.i("tag", "选择了" + text);
-                my_sex.setText(text);
+                mSex.setText(text);
             }
         });
         TextView tv_sexdialog_cancel = view.findViewById(R.id.tv_sexdialog_cancel);
@@ -121,10 +127,10 @@ public class UpdateMessageActivity extends WDActivity {
     @OnClick(R.id.ok_btn)
     public void ok_btn() {
         int sexnum = 1;
-        String name = my_name.getText().toString();
-        String sex = my_sex.getText().toString();
-        String brith = my_brith.getText().toString();
-        String mail = my_mali.getText().toString();
+        String name = mName.getText().toString();
+        String sex = mSex.getText().toString();
+        String brith = mBrith.getText().toString();
+        String mail = mMali.getText().toString();
         if (sex.equals("男")) {
             sexnum = 1;
         } else {
@@ -141,7 +147,7 @@ public class UpdateMessageActivity extends WDActivity {
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                my_brith.setText(formatter.format(date));
+                mBrith.setText(formatter.format(date));
             }
         }).setType(TimePickerView.Type.YEAR_MONTH_DAY)// 默认全部显示
                 .setCancelText("取消")//取消按钮文字
@@ -189,6 +195,7 @@ public class UpdateMessageActivity extends WDActivity {
         public void success(Result result) {
             if (result.getStatus().equals("0000")) {
                 CircularLoading.closeDialog(dialog);
+                doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1006);
                 finish();
             }
         }
@@ -209,16 +216,31 @@ public class UpdateMessageActivity extends WDActivity {
             ByIdUserInfoBean byIdUserInfoBean = (ByIdUserInfoBean) result.getResult();
             sex = byIdUserInfoBean.getSex();
             if (sex == 1) {
-                my_sex.setText("男");
+                mSex.setText("男");
             } else {
-                my_sex.setText("女");
+                mSex.setText("女");
             }
             Date date = new Date();
             date.setTime(byIdUserInfoBean.getBirthday());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String format = sdf.format(date);
-            my_brith.setText(format);
-            my_mali.setText(byIdUserInfoBean.getEmail());
+            mBrith.setText(format);
+            mMali.setText(byIdUserInfoBean.getEmail());
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 做任务接口
+     */
+    private class DoTheReuslt implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+
         }
 
         @Override

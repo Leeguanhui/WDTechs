@@ -375,6 +375,16 @@ public interface AllUrls {
      */
     @DELETE("information/verify/v1/cancelGreat")
     Observable<Result> CancelGreat(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("infoId") int infoId);
+
+    /**
+     * 取消收藏
+     */
+    @DELETE("user/verify/v1/cancelCollection")
+    Observable<Result> cancelCollection(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("infoId") String infoId);
                                 @Header("sessionId") String sessionId,
                                 @Query("infoId") int infoId);
     /**

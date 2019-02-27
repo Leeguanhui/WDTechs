@@ -11,7 +11,7 @@ import butterknife.BindView;
 
 public class AttenActivity extends WDActivity implements XRecyclerView.LoadingListener {
     @BindView(R.id.xrecycle)
-    XRecyclerView xrecycle;
+    XRecyclerView mXRecycle;
     private AttenRecycleAdapter attenRecycleAdapter;
 
     @Override
@@ -22,10 +22,10 @@ public class AttenActivity extends WDActivity implements XRecyclerView.LoadingLi
     @Override
     protected void initView() {
         attenRecycleAdapter = new AttenRecycleAdapter();
-        xrecycle.setLayoutManager(new LinearLayoutManager(this));
-        xrecycle.setAdapter(attenRecycleAdapter);
-        xrecycle.setPullRefreshEnabled(true);
-        xrecycle.setLoadingMoreEnabled(false);
+        mXRecycle.setLayoutManager(new LinearLayoutManager(this));
+        mXRecycle.setAdapter(attenRecycleAdapter);
+        mXRecycle.setPullRefreshEnabled(true);
+        mXRecycle.setLoadingMoreEnabled(false);
     }
 
     @Override

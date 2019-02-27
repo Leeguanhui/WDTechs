@@ -35,20 +35,20 @@ import butterknife.OnClick;
 
 public class SearchActivity extends WDActivity implements XRecyclerView.LoadingListener {
     @BindView(R.id.line1)
-    LinearLayout line1;
+    LinearLayout mLine1;
     @BindView(R.id.line2)
-    LinearLayout line2;
+    LinearLayout mLine2;
     @BindView(R.id.search_edit)
-    EditText search_edit;
+    EditText mSearchedit;
     @BindView(R.id.call_btn)
-    TextView call_btn;
+    TextView mCallbtn;
     @BindView(R.id.flow)
-    FlowLayout flow;
+    FlowLayout mFlow;
     private FindByTitlePresenter findByTitlePresenter;
     private int mPage = 1;
     private int mContent = 10000000;
     @BindView(R.id.xrecycle)
-    XRecyclerView xrecycle;
+    XRecyclerView mXrecycle;
     private SearchRecycleAdapter searchRecycleAdapter;
     private String content;
     private FindTitlePresenter findTitlePresenter;
@@ -61,7 +61,7 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
 
     @OnClick(R.id.search_image)
     public void search_image() {
-        content = search_edit.getText().toString();
+        content = mSearchedit.getText().toString();
         searchRecycleAdapter.removeAll();
         findByTitlePresenter.request(content, mPage, mContent);
     }
@@ -83,24 +83,24 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     protected void initView() {
         findTitlePresenter = new FindTitlePresenter(new TitleCall());
         findByTitlePresenter = new FindByTitlePresenter(new FindByTitleResult());
-        xrecycle.setLayoutManager(new LinearLayoutManager(this));
+        mXrecycle.setLayoutManager(new LinearLayoutManager(this));
         searchRecycleAdapter = new SearchRecycleAdapter(this);
-        xrecycle.setAdapter(searchRecycleAdapter);
-        xrecycle.setLoadingListener(this);
-        xrecycle.setLoadingMoreEnabled(false);
-        xrecycle.setPullRefreshEnabled(true);
-        search_edit.addTextChangedListener(new MyTextWatcher());
+        mXrecycle.setAdapter(searchRecycleAdapter);
+        mXrecycle.setLoadingListener(this);
+        mXrecycle.setLoadingMoreEnabled(false);
+        mXrecycle.setPullRefreshEnabled(true);
+        mSearchedit.addTextChangedListener(new MyTextWatcher());
 
-        search_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mSearchedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                content = search_edit.getText().toString();
+                content = mSearchedit.getText().toString();
                 searchRecycleAdapter.removeAll();
                 findByTitlePresenter.request(content, mPage, mContent);
                 return true;
             }
         });
-        search_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mSearchedit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
@@ -149,9 +149,9 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
                 return;
             }
             searchRecycleAdapter.addAll(byTitleBeans);
-            line1.setVisibility(View.GONE);
-            xrecycle.setVisibility(View.VISIBLE);
-            xrecycle.refreshComplete();
+            mLine1.setVisibility(View.GONE);
+            mXrecycle.setVisibility(View.VISIBLE);
+            mXrecycle.refreshComplete();
         }
 
         @Override
@@ -172,10 +172,10 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (search_edit.getText().toString().length() == 0) {
-                line2.setVisibility(View.GONE);
-                line1.setVisibility(View.VISIBLE);
-                xrecycle.setVisibility(View.GONE);
+            if (mSearchedit.getText().toString().length() == 0) {
+                mLine2.setVisibility(View.GONE);
+                mLine1.setVisibility(View.VISIBLE);
+                mXrecycle.setVisibility(View.GONE);
             }
         }
     }
@@ -185,15 +185,15 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
         public void success(Result<List<ByTitleBean>> data) {
             List<ByTitleBean> byTitleBeans = (List<ByTitleBean>) data.getResult();
             if (byTitleBeans.size() == 0) {
-                line2.setVisibility(View.VISIBLE);
-                line1.setVisibility(View.GONE);
-                xrecycle.setVisibility(View.GONE);
+                mLine2.setVisibility(View.VISIBLE);
+                mLine1.setVisibility(View.GONE);
+                mXrecycle.setVisibility(View.GONE);
                 return;
             }
             searchRecycleAdapter.addAll(byTitleBeans);
-            line1.setVisibility(View.GONE);
-            xrecycle.setVisibility(View.VISIBLE);
-            xrecycle.refreshComplete();
+            mLine1.setVisibility(View.GONE);
+            mXrecycle.setVisibility(View.VISIBLE);
+            mXrecycle.refreshComplete();
         }
 
         @Override
