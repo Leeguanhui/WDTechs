@@ -2,6 +2,7 @@ package com.wd.tech.core;
 
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.AllCommentBean;
+import com.wd.tech.bean.AttUserListBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -10,7 +11,6 @@ import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
-import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
@@ -19,9 +19,12 @@ import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
+import com.wd.tech.bean.NotifiListBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
 import com.wd.tech.bean.UserIntegralBean;
+import com.wd.tech.bean.UserIntegralBean;
+import com.wd.tech.bean.UserIntegralListBean;
 
 import java.io.File;
 import java.util.List;
@@ -209,13 +212,12 @@ public interface AllUrls {
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
                                                                  @Query("count") int count);
-
     /**
      * 根据作者名模糊查询
      */
     @GET("information/v1/findInformationBySource")
     Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
-                                                   @Query("count") int count);
+                                                                 @Query("count") int count);
 
     /**
      * 完善用户信息
@@ -411,6 +413,36 @@ public interface AllUrls {
                                     @Query("infoId")int infoId,
                                     @Query("integralCost")int integralCost
     );
+
+    /**
+     * 关注列表
+     */
+    @GET("user/verify/v1/findFollowUserList")
+    Observable<Result<List<AttUserListBean>>> findFollowUserList(@Header("userId") int userId,
+                                                                 @Header("sessionId") String sessionId,
+                                                                 @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 系统通知
+     */
+    @GET("tool/verify/v1/findSysNoticeList")
+    Observable<Result<List<NotifiListBean>>> findSysNoticeList(@Header("userId") int userId,
+                                                               @Header("sessionId") String sessionId,
+                                                               @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 用户积分
+     */
+    @GET("user/verify/v1/findUserIntegral")
+    Observable<Result<UserIntegralBean>> findUserIntegral(@Header("userId") int userId,
+                                                          @Header("sessionId") String sessionId);
+
+    /**
+     * 用户积分明细列表
+     */
+    @GET("user/verify/v1/findUserIntegralRecord")
+    Observable<Result<List<UserIntegralListBean>>> findUserIntegralRecord(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                                                    @Query("page") int page, @Query("count") int count);
                                                                  @Header("sessionId") String sessionId,
                                                                  @Query("fromUid") int fromUid,
                                                                  @Query("page") int page,

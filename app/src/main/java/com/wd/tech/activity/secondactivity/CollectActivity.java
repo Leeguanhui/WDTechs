@@ -33,7 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CollectActivity extends WDActivity implements XRecyclerView.LoadingListener {
+public class CollectActivity extends WDActivity {
 
     @BindView(R.id.collect_xrecycle)
     XRecyclerView mCollectRecycle;
@@ -67,13 +67,13 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
 
     @Override
     protected void initView() {
+        dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollecResult());
         collectRecycleAdapter = new CollectRecycleAdapter();
         mCollectRecycle.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecycle.setAdapter(collectRecycleAdapter);
-        mCollectRecycle.setLoadingMoreEnabled(true);
+        mCollectRecycle.setLoadingMoreEnabled(false);
         mCollectRecycle.setPullRefreshEnabled(true);
-        mCollectRecycle.setLoadingListener(this);
         findAllCollectionPresenter = new FindAllCollectionPresenter(new FindColleResult());
         userInfo = getUserInfo(this);
         findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
@@ -118,18 +118,6 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
     }
 
-    @Override
-    public void onRefresh() {
-        mPage = 1;
-        collectRecycleAdapter.deleteAll();
-        findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
-    }
-
-    @Override
-    public void onLoadMore() {
-        mPage++;
-        findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
-    }
 
     /**
      * 收藏列表
@@ -145,6 +133,7 @@ public class CollectActivity extends WDActivity implements XRecyclerView.Loading
             mCollectRecycle.loadMoreComplete();
             refreshLayout.finishRefresh();
             refreshLayout.finishLoadmore();
+            CircularLoading.closeDialog(dialog);
         }
 
         @Override
