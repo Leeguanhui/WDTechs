@@ -353,10 +353,7 @@ public interface AllUrls {
     @GET("user/verify/v1/findUserTaskList")
     Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
                                                                     @Header("sessionId") String sessionId);
-                                        @Header("sessionId") String sessionId,
-                                        @Query("fromUid") int fromUid,
-                                        @Query("page") int page,
-                                        @Query("count") int count);
+
     /**
      * 咨询评论
      */

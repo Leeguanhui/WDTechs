@@ -40,11 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/addCommunityGreat"
+            android:layout_toLeftOf="@id/addcommunitygreat"
             android:text="123" />
 
         <ImageView
-            android:id="@+id/addCommunityGreat"
+            android:id="@+id/addcommunitygreat"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_centerVertical="true"

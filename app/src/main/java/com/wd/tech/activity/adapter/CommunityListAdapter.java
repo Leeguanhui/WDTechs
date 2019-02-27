@@ -63,18 +63,18 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.communityUserCommentListAdapter.addItem(communityUserPostVoList);
         viewHolder.communityUserCommentListAdapter.notifyDataSetChanged();
 
-        viewHolder.community_nickName.setText(communityListBean.getNickName());
+        viewHolder.nickName.setText(communityListBean.getNickName());
         Date date = new Date();
         date.setTime(communityListBean.getPublishTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        viewHolder.community_time.setText(sdf.format(date));
-        viewHolder.community_signature.setText(communityListBean.getSignature());
-        viewHolder.community_headPic.setImageURI(communityListBean.getHeadPic());
-        viewHolder.community_content.setText(communityListBean.getContent());
-        viewHolder.community_comment.setText(String.valueOf(communityListBean.getComment()));
-        viewHolder.community_praise.setText(String.valueOf(communityListBean.getPraise()));
+        viewHolder.time.setText(sdf.format(date));
+        viewHolder.signature.setText(communityListBean.getSignature());
+        viewHolder.headPic.setImageURI(communityListBean.getHeadPic());
+        viewHolder.content.setText(communityListBean.getContent());
+        viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
+        viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
 
-        viewHolder.community_headPic.setOnClickListener(new View.OnClickListener() {
+        viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UserPostByIdActivity.class);
@@ -95,8 +95,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             @Override
             public void onClick(View v) {
                 list.get(i).setWhetherGreat(1);
-                String trim = viewHolder.community_praise.getText().toString().trim();
-                addCommunityGreat.addCommunityGreat(list.get(i).getId(), viewHolder.addCommunityGreat, trim, viewHolder.community_praise, list.get(i));
+                String trim = viewHolder.praise.getText().toString().trim();
+                addCommunityGreat.addCommunityGreat(list.get(i).getId(), viewHolder.addCommunityGreat, trim, viewHolder.praise, list.get(i));
             }
         });
 
@@ -143,18 +143,18 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView community_headPic;
-        TextView community_nickName;
-        TextView community_time;
-        TextView community_signature;
+        SimpleDraweeView headPic;
+        TextView nickName;
+        TextView time;
+        TextView signature;
         RecyclerView gridView;
         GridLayoutManager gridLayoutManager;
         ImageAdapter imageAdapter;
         ImageView community_iv1;
         ImageView addCommunityGreat;
-        TextView community_content;
-        TextView community_comment;
-        TextView community_praise;
+        TextView content;
+        TextView comment;
+        TextView praise;
         RecyclerView recyclerView;
         LinearLayoutManager linearLayoutManager;
         CommunityUserCommentListAdapter communityUserCommentListAdapter;
@@ -162,16 +162,16 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            community_headPic = itemView.findViewById(R.id.community_headPic);
-            community_nickName = itemView.findViewById(R.id.community_nickName);
-            community_time = itemView.findViewById(R.id.community_time);
-            community_signature = itemView.findViewById(R.id.community_signature);
+            headPic = itemView.findViewById(R.id.community_headpic);
+            nickName = itemView.findViewById(R.id.community_nickname);
+            time = itemView.findViewById(R.id.community_time);
+            signature = itemView.findViewById(R.id.community_signature);
             gridView = itemView.findViewById(R.id.community_recycler);
-            community_content = itemView.findViewById(R.id.community_content);
+            content = itemView.findViewById(R.id.community_content);
             community_iv1 = itemView.findViewById(R.id.community_iv1);
-            addCommunityGreat = itemView.findViewById(R.id.addCommunityGreat);
-            community_comment = itemView.findViewById(R.id.community_comment);
-            community_praise = itemView.findViewById(R.id.community_praise);
+            addCommunityGreat = itemView.findViewById(R.id.addcommunitygreat);
+            comment = itemView.findViewById(R.id.community_comment);
+            praise = itemView.findViewById(R.id.community_praise);
             pl = itemView.findViewById(R.id.pl);
             imageAdapter = new ImageAdapter();
             int space = context.getResources().getDimensionPixelSize(R.dimen.dip_10);

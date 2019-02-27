@@ -8,74 +8,84 @@
     android:focusableInTouchMode="true"
     android:minHeight="600dp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="取消"
-            android:textColor="#666666"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="发表"
-            android:textColor="#20affa"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/re"
-        android:layout_width="336dp"
-        android:layout_height="137dp"
-        android:layout_below="@id/relativeLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_edit">
-
-        <EditText
-            android:id="@+id/id_editor_detail"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@null"
-            android:hint="记录此刻心情..."
-            android:maxLength="140"
-            android:padding="12dp"
-            android:textColor="#666666"
-            android:textSize="12sp" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/id_editor_detail_font_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="12sp" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bo_image_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/re"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="12dp" />
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="取消"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textview2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="发表"
+                    android:textColor="#20affa"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re"
+                android:layout_width="336dp"
+                android:layout_height="137dp"
+                android:layout_below="@id/relativeLayout1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_edit">
+
+                <EditText
+                    android:id="@+id/id_editor_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:hint="记录此刻心情..."
+                    android:maxLength="140"
+                    android:padding="12dp"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/id_editor_detail_font_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/bo_image_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/re"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="12dp" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

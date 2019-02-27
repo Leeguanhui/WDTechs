@@ -1,6 +1,5 @@
 package com.wd.tech.activity.adapter;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
-import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -25,6 +23,16 @@ public class ReleasePostAdapter extends RecyclerView.Adapter<ReleasePostAdapter.
 
     public void setSign(int sign) {
         this.sign = sign;
+    }
+
+    public interface OnClick {
+        void onClick();
+    }
+
+    OnClick onClick;
+
+    public void setOnClick(OnClick onClick) {
+        this.onClick = onClick;
     }
 
     @NonNull
@@ -55,10 +63,11 @@ public class ReleasePostAdapter extends RecyclerView.Adapter<ReleasePostAdapter.
             public void onClick(View v) {
                 if (sign == 1) {//自定义点击
                     if (i == 0) {
-                        Intent intent = new Intent(
+                        onClick.onClick();
+                        /*Intent intent = new Intent(
                                 Intent.ACTION_PICK,
                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        WDActivity.getForegroundActivity().startActivityForResult(intent, WDActivity.PHOTO);
+                        WDActivity.getForegroundActivity().startActivityForResult(intent, WDActivity.PHOTO);*/
                     } else {
                         UIUtils.showToastSafe("点击了图片");
                     }
