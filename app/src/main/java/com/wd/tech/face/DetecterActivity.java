@@ -72,7 +72,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
     List<AFT_FSDKFace> result = new ArrayList<>();
     List<ASAE_FSDKAge> ages = new ArrayList<>();
     List<ASGE_FSDKGender> genders = new ArrayList<>();
-
+    static int task=0;
     int mCameraID;
     int mCameraRotate;
     int mCameraMirror;
@@ -176,6 +176,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                         }
                     });
                     Log.i("GT", "识别成功");
+                    task=1;
                     finish();
                 } else {
                     final String mNameShow = "未识别";
@@ -194,6 +195,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             mImageView.setImageBitmap(bmp);
                         }
                     });
+                    task=2;
                     Log.i("GT", "识别失败");
                 }
                 mImageNV21 = null;
@@ -386,7 +388,9 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
             Log.d(TAG, "Camera Focus SUCCESS!");
         }
     }
-
+    public static int getTask(){
+        return task;
+    }
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.imageButton) {

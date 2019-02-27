@@ -207,12 +207,13 @@ public interface AllUrls {
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
                                                                  @Query("count") int count);
+
     /**
      * 根据作者名模糊查询
      */
     @GET("information/v1/findInformationBySource")
     Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
-                                                                 @Query("count") int count);
+                                                   @Query("count") int count);
 
     /**
      * 完善用户信息
@@ -354,26 +355,37 @@ public interface AllUrls {
     @GET("user/verify/v1/findUserTaskList")
     Observable<Result<List<FindUserTaskListBean>>> findUserTaskList(@Header("userId") int userId,
                                                                     @Header("sessionId") String sessionId);
+
     /**
      * 咨询评论
      */
     @POST("information/verify/v1/addInfoComment")
     Observable<Result> AddComments(@Header("userId") int userId,
-                                       @Header("sessionId") String sessionId,
-                                       @Query("content") String content,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("content") String content,
                                    @Query("infoId") String infoId);
+
     /**
      * 咨询点赞
      */
     @POST("information/verify/v1/addGreatRecord")
     Observable<Result> AddGreat(@Header("userId") int userId,
-                                   @Header("sessionId") String sessionId,
-                                   @Query("infoId") int infoId);
+                                @Header("sessionId") String sessionId,
+                                @Query("infoId") int infoId);
+
     /**
      * 取消点赞
      */
     @DELETE("information/verify/v1/cancelGreat")
     Observable<Result> CancelGreat(@Header("userId") int userId,
-                                @Header("sessionId") String sessionId,
-                                @Query("infoId") int infoId);
+                                   @Header("sessionId") String sessionId,
+                                   @Query("infoId") int infoId);
+
+    /**
+     * 取消收藏
+     */
+    @DELETE("user/verify/v1/cancelCollection")
+    Observable<Result> cancelCollection(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("infoId") String infoId);
 }

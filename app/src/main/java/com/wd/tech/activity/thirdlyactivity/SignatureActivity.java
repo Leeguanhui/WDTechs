@@ -21,9 +21,9 @@ import butterknife.OnClick;
 public class SignatureActivity extends WDActivity {
 
     @BindView(R.id.editext_sign)
-    EditText editext_sign;
+    EditText mEditextsign;
     @BindView(R.id.text_num)
-    TextView text_num;
+    TextView mTextnum;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
     private ModiftSignaturePresenter modiftSignaturePresenter;
@@ -39,11 +39,11 @@ public class SignatureActivity extends WDActivity {
     @Override
     protected void initView() {
         userInfo = getUserInfo(this);
-        editext_sign.addTextChangedListener(new MyTextWatcher());
+        mEditextsign.addTextChangedListener(new MyTextWatcher());
         modiftSignaturePresenter = new ModiftSignaturePresenter(new ModiftSignaResult());
         mysign = getSharedPreferences("mysign", MODE_PRIVATE).getString("mysign", "");
         if (!(mysign.equals("") && mysign == null)) {
-            editext_sign.setText(mysign);
+            mEditextsign.setText(mysign);
         }
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
         edit = sharedPreferences.edit();
@@ -66,15 +66,15 @@ public class SignatureActivity extends WDActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String content = editext_sign.getText().toString();
+            String content = mEditextsign.getText().toString();
             int length = content.length();
-            text_num.setText(length + "/40");
+            mTextnum.setText(length + "/40");
         }
     }
 
     @OnClick(R.id.send_btn)
     public void send_btn() {
-        content = editext_sign.getText().toString();
+        content = mEditextsign.getText().toString();
         if (content.equals("") || content == null) {
             Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
             return;

@@ -11,8 +11,8 @@ import butterknife.BindView;
 
 public class IntegActivity extends WDActivity implements XRecyclerView.LoadingListener {
     @BindView(R.id.integ_xrecycle)
-    XRecyclerView integ_xrecycle;
-    private IntegRecycleAdapter integRecycleAdapter;
+    XRecyclerView mIntegxrecycle;
+    private IntegRecycleAdapter mIntegRecycleAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -21,11 +21,11 @@ public class IntegActivity extends WDActivity implements XRecyclerView.LoadingLi
 
     @Override
     protected void initView() {
-        integRecycleAdapter = new IntegRecycleAdapter();
-        integ_xrecycle.setLayoutManager(new LinearLayoutManager(this));
-        integ_xrecycle.setAdapter(integRecycleAdapter);
-        integ_xrecycle.setPullRefreshEnabled(true);
-        integ_xrecycle.setLoadingMoreEnabled(false);
+        mIntegRecycleAdapter = new IntegRecycleAdapter();
+        mIntegxrecycle.setLayoutManager(new LinearLayoutManager(this));
+        mIntegxrecycle.setAdapter(mIntegRecycleAdapter);
+        mIntegxrecycle.setPullRefreshEnabled(true);
+        mIntegxrecycle.setLoadingMoreEnabled(false);
     }
 
     @Override

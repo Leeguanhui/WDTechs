@@ -12,14 +12,14 @@ import io.reactivex.Observable;
  * 邮箱：
  * 说明：
  */
-public class CancelGreat extends BasePresenter{
-    public CancelGreat(ICoreInfe dataCall) {
+public class CancelCollectionPresenter extends BasePresenter {
+    public CancelCollectionPresenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.CancelGreat((int)args[0],(String)args[1],(int)args[2]);
+        return allUrls.cancelCollection((int) args[0], (String) args[1], (String) args[2]);
     }
 }

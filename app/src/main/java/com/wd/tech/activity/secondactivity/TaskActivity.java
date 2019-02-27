@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.wd.tech.R;
+import com.wd.tech.activity.MainActivity;
+import com.wd.tech.activity.ReleasePostActivity;
 import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -25,23 +27,23 @@ import butterknife.OnClick;
 public class TaskActivity extends WDActivity {
 
     @BindView(R.id.task_linear)
-    LinearLayout task_linear;
+    LinearLayout mTasklinear;
     private FindUserTaskListPresenter findUserTaskListPresenter;
     private LoginUserInfoBean userInfo;
     @BindView(R.id.sign_bnt)
-    Button sign_bnt;
+    Button mSignbnt;
     @BindView(R.id.comment_bnt)
-    Button comment_bnt;
+    Button mCommentbnt;
     @BindView(R.id.tiezi_bnt)
-    Button tiezi_bnt;
+    Button mTiezibnt;
     @BindView(R.id.fenxiang_bnt)
-    Button fenxiang_bnt;
+    Button mFenxiangbnt;
     @BindView(R.id.guanggao_bnt)
-    Button guanggao_bnt;
+    Button mGuanggaobnt;
     @BindView(R.id.xinxi_bnt)
-    Button xinxi_bnt;
+    Button mXinxibnt;
     @BindView(R.id.weixin_bnt)
-    Button weixin_bnt;
+    Button mWeixinbnt;
     private Dialog dialog;
 
     @Override
@@ -53,14 +55,40 @@ public class TaskActivity extends WDActivity {
     protected void initView() {
         userInfo = getUserInfo(this);
         findUserTaskListPresenter = new FindUserTaskListPresenter(new FindUserTaskResult());
+        mTasklinear.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         findUserTaskListPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
-        task_linear.setVisibility(View.GONE);
         dialog = CircularLoading.showLoadDialog(TaskActivity.this, "加载中...", true);
     }
 
     @OnClick(R.id.sign_bnt)
     public void mSignBtn() {
         startActivity(new Intent(TaskActivity.this, SignCalendarActivity.class));
+    }
+
+    @OnClick(R.id.comment_bnt)
+    public void mCommentBnt() {
+        Intent intent = new Intent(TaskActivity.this, MainActivity.class);
+        intent.putExtra("comment", 1);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tiezi_bnt)
+    public void mTieziBnt() {
+        startActivity(new Intent(TaskActivity.this, ReleasePostActivity.class));
+    }
+
+    @OnClick(R.id.xinxi_bnt)
+    public void mXinxi() {
+        startActivity(new Intent(TaskActivity.this, UpdateMessageActivity.class));
+    }
+
+    @OnClick(R.id.weixin_bnt)
+    public void mWeixin(){
     }
 
     @Override
@@ -81,85 +109,85 @@ public class TaskActivity extends WDActivity {
                 switch (i) {
                     case 0:
                         if (status == 1) {
-                            sign_bnt.setText("已完成");
-                            sign_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            sign_bnt.setTextColor(Color.WHITE);
-                            sign_bnt.setClickable(false);
+                            mSignbnt.setText("已完成");
+                            mSignbnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mSignbnt.setTextColor(Color.WHITE);
+                            mSignbnt.setClickable(false);
                         } else {
-                            sign_bnt.setText("去签到");
-                            sign_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mSignbnt.setText("去签到");
+                            mSignbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 1:
                         if (status == 1) {
-                            comment_bnt.setText("已完成");
-                            comment_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            comment_bnt.setTextColor(Color.WHITE);
-                            comment_bnt.setClickable(false);
+                            mCommentbnt.setText("已完成");
+                            mCommentbnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mCommentbnt.setTextColor(Color.WHITE);
+                            mCommentbnt.setClickable(false);
                         } else {
-                            comment_bnt.setText("去评论");
-                            comment_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mCommentbnt.setText("去评论");
+                            mCommentbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 2:
                         if (status == 1) {
-                            tiezi_bnt.setText("已完成");
-                            tiezi_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            tiezi_bnt.setTextColor(Color.WHITE);
-                            tiezi_bnt.setClickable(false);
+                            mTiezibnt.setText("已完成");
+                            mTiezibnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mTiezibnt.setTextColor(Color.WHITE);
+                            mTiezibnt.setClickable(false);
                         } else {
-                            tiezi_bnt.setText("去发帖");
-                            tiezi_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mTiezibnt.setText("去发帖");
+                            mTiezibnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 3:
                         if (status == 1) {
-                            fenxiang_bnt.setText("已完成");
-                            fenxiang_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            fenxiang_bnt.setTextColor(Color.WHITE);
-                            fenxiang_bnt.setClickable(false);
+                            mFenxiangbnt.setText("已完成");
+                            mFenxiangbnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mFenxiangbnt.setTextColor(Color.WHITE);
+                            mFenxiangbnt.setClickable(false);
                         } else {
-                            fenxiang_bnt.setText("去分享");
-                            fenxiang_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mFenxiangbnt.setText("去分享");
+                            mFenxiangbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 4:
                         if (status == 1) {
-                            guanggao_bnt.setText("已完成");
-                            guanggao_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            guanggao_bnt.setTextColor(Color.WHITE);
-                            guanggao_bnt.setClickable(false);
+                            mGuanggaobnt.setText("已完成");
+                            mGuanggaobnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mGuanggaobnt.setTextColor(Color.WHITE);
+                            mGuanggaobnt.setClickable(false);
                         } else {
-                            guanggao_bnt.setText("去查看");
-                            guanggao_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mGuanggaobnt.setText("去查看");
+                            mGuanggaobnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 5:
                         if (status == 1) {
-                            xinxi_bnt.setText("已完成");
-                            xinxi_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            xinxi_bnt.setTextColor(Color.WHITE);
-                            xinxi_bnt.setClickable(false);
+                            mXinxibnt.setText("已完成");
+                            mXinxibnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mXinxibnt.setTextColor(Color.WHITE);
+                            mXinxibnt.setClickable(false);
                         } else {
-                            xinxi_bnt.setText("去完善");
-                            xinxi_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mXinxibnt.setText("去完善");
+                            mXinxibnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 6:
                         if (status == 1) {
-                            weixin_bnt.setText("已完成");
-                            weixin_bnt.setBackgroundResource(R.drawable.btn_shapert);
-                            weixin_bnt.setTextColor(Color.WHITE);
-                            weixin_bnt.setClickable(false);
+                            mWeixinbnt.setText("已完成");
+                            mWeixinbnt.setBackgroundResource(R.drawable.btn_shapert);
+                            mWeixinbnt.setTextColor(Color.WHITE);
+                            mWeixinbnt.setClickable(false);
                         } else {
-                            weixin_bnt.setText("去绑定");
-                            weixin_bnt.setBackgroundResource(R.drawable.btn_shaperf);
+                            mWeixinbnt.setText("去绑定");
+                            mWeixinbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                 }
             }
             CircularLoading.closeDialog(dialog);
-            task_linear.setVisibility(View.VISIBLE);
+            mTasklinear.setVisibility(View.VISIBLE);
         }
 
         @Override
