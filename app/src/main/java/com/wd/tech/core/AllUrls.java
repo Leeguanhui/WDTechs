@@ -11,6 +11,7 @@ import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
+import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
@@ -444,10 +445,6 @@ public interface AllUrls {
     @GET("user/verify/v1/findUserIntegralRecord")
     Observable<Result<List<UserIntegralListBean>>> findUserIntegralRecord(@Header("userId") int userId, @Header("sessionId") String sessionId,
                                                                     @Query("page") int page, @Query("count") int count);
-                                                                 @Header("sessionId") String sessionId,
-                                                                 @Query("fromUid") int fromUid,
-                                                                 @Query("page") int page,
-                                                                 @Query("count") int count);
 
     /**
      * 审核群申请
