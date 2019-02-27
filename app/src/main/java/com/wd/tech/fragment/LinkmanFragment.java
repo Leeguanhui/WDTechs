@@ -1,16 +1,20 @@
 package com.wd.tech.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -25,7 +29,10 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.UIUtils;
+import com.wd.tech.presenter.DeleteFriendRelationPresenter;
 import com.wd.tech.presenter.InitFriendListPresenter;
+import com.wd.tech.presenter.TransferFriendGroupPresenter;
 
 import java.util.List;
 
@@ -61,16 +68,20 @@ public class LinkmanFragment extends WDFragment {
     @BindView(R.id.qun_layout)
     LinearLayout qunLayout;
     @BindView(R.id.group)
-    TextView group;
-    Unbinder unbinder;
+    TextView grouP;
     //Model：定义的数据
-    private List<InitFriendlist> groups;
+    private List<InitFriendlist> groupS;
     private List<FriendInfoList> childs;
 
     private InitFriendListPresenter listPresenter;
     private String sessionId;
     private int userId;
     private LoginUserInfoBean bean;
+    private PopupWindow window;
+    private View inflate;
+    private DeleteFriendRelationPresenter deleteFriendRelationPresenter;
+    private TransferFriendGroupPresenter transferFriendGroupPresenter;
+    private int black;
 
     @Override
     public String getPageName() {
@@ -84,6 +95,8 @@ public class LinkmanFragment extends WDFragment {
 
     @Override
     protected void initView() {
+        deleteFriendRelationPresenter = new DeleteFriendRelationPresenter(new Delet());
+        transferFriendGroupPresenter = new TransferFriendGroupPresenter(new Tran());
         listPresenter = new InitFriendListPresenter(new InitFr());
         bean = getUserInfo(getContext());
         if (bean != null) {
@@ -92,6 +105,40 @@ public class LinkmanFragment extends WDFragment {
             listPresenter.request(userId, sessionId);
 
         }
+        listPresenter.request(userId, sessionId);
+        getShow();
+        exPandableListview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
+                return true;
+            }
+        });
+        exPandableListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View childView, int flatPos, long id) {
+                if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    long packedPos = ((ExpandableListView) parent).getExpandableListPosition(flatPos);
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
+                    int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+                    FriendInfoList friendInfoList = groupS.get(groupPosition).getFriendInfoList().get(childPosition);
+                    int friendUid = friendInfoList.getFriendUid();
+
+                    window.showAsDropDown(childView.findViewById(R.id.item_pop_show), -80, 15);
+                    for (int i = 0; i < groupS.size(); i++) {
+                        if (groupS.get(i).getGroupName().equals("黑名单")) {
+                            black = groupS.get(i).getGroupId();
+                        }
+                    }
+
+                    getWindow(inflate, friendUid);
+                    return true;
+                }
+
+                return false;
+            }
+
+        });
+
     }
 
     @Override
@@ -120,7 +167,39 @@ public class LinkmanFragment extends WDFragment {
     }
 
 
+    private void getShow() {
+        inflate = View.inflate(getContext(), R.layout.popu_item_long_layout, null);
+        window = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setTouchable(true);
+        window.setFocusable(true);
+        window.setOutsideTouchable(true);
+        window.setBackgroundDrawable(new BitmapDrawable());
 
+    }
+
+    private void getWindow(View inflate, final int id) {
+        TextView popuItemLongDelete = inflate.findViewById(R.id.popu_item_long_delete);
+        TextView popuItemLongBad = inflate.findViewById(R.id.popu_item_long_bad);
+        popuItemLongDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteFriendRelationPresenter.request(userId, sessionId, id);
+                window.dismiss();
+            }
+        });
+        popuItemLongBad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (black == 0) {
+                    window.dismiss();
+                    UIUtils.showToastSafe("没有黑名单");
+                    return;
+                }
+                transferFriendGroupPresenter.request(userId, sessionId, black, id);
+                window.dismiss();
+            }
+        });
+    }
 
 
     @OnClick(R.id.qun_layout)
@@ -135,22 +214,22 @@ public class LinkmanFragment extends WDFragment {
 
         @Override
         public int getGroupCount() {
-            return groups.size();
+            return groupS.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return groups.get(groupPosition).getFriendInfoList().size();
+            return groupS.get(groupPosition).getFriendInfoList().size();
         }
 
         @Override
         public Object getGroup(int groupPosition) {
-            return groups.get(groupPosition);
+            return groupS.get(groupPosition);
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return groups.get(groupPosition).getFriendInfoList().get(childPosition);
+            return groupS.get(groupPosition).getFriendInfoList().get(childPosition);
         }
 
         @Override
@@ -170,7 +249,7 @@ public class LinkmanFragment extends WDFragment {
 
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return false;
+            return true;
         }
 
         //父布局
@@ -185,7 +264,7 @@ public class LinkmanFragment extends WDFragment {
             } else {
                 hodler = (GroupHodler) convertView.getTag();
             }
-            InitFriendlist initFriendlist = groups.get(groupPosition);
+            InitFriendlist initFriendlist = groupS.get(groupPosition);
 
             hodler.groupname.setText(initFriendlist.getGroupName());
 
@@ -202,12 +281,11 @@ public class LinkmanFragment extends WDFragment {
                 holder.headric = convertView.findViewById(R.id.iv_child);
                 holder.qianming = convertView.findViewById(R.id.tv_child);
                 holder.name = convertView.findViewById(R.id.tv_qian);
-
                 convertView.setTag(holder);
             } else {
                 holder = (MyHolder) convertView.getTag();
             }
-            FriendInfoList friendInfoList = groups.get(groupPosition).getFriendInfoList().get(childPosition);
+            FriendInfoList friendInfoList = groupS.get(groupPosition).getFriendInfoList().get(childPosition);
             holder.headric.setImageURI(friendInfoList.getHeadPic());
             holder.qianming.setText(friendInfoList.getRemarkName());//单价
             holder.name.setText(friendInfoList.getSignature());//单价
@@ -233,8 +311,39 @@ public class LinkmanFragment extends WDFragment {
         @Override
         public void success(Result<List<InitFriendlist>> data) {
             if (data.getStatus().equals("0000")) {
-                groups = data.getResult();
+                groupS = data.getResult();
                 exPandableListview.setAdapter(new MyExpandableListView());
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Delet implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+                listPresenter.request(userId, sessionId);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Tran implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+                listPresenter.request(userId, sessionId);
+
             }
         }
 

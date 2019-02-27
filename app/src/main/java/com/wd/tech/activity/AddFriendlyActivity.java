@@ -1,5 +1,6 @@
 package com.wd.tech.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
@@ -43,7 +45,7 @@ public class AddFriendlyActivity extends WDActivity {
     @BindView(R.id.user_youxiang)
     TextView userYouxiang;
     @BindView(R.id.vip)
-    ImageView vip;
+    ImageView Vip;
     @BindView(R.id.btn_r_message)
     Button btnRMessage;
     private int userid1;
@@ -55,6 +57,7 @@ public class AddFriendlyActivity extends WDActivity {
     private String phone;
     private CheckMyFriendPresnter checkMyFriendPresnter;
     private String ss;
+    private Dialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -62,13 +65,20 @@ public class AddFriendlyActivity extends WDActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void initView() {
-        LoginUserInfoBean bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
-            phone = bean.getPhone();
+        LoginUserInfoBean infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
+            phone = infoBean.getPhone();
         }
+        dialog = CircularLoading.showLoadDialog(this, "加载中...", true);
+
         checkMyFriendPresnter = new CheckMyFriendPresnter(new Check());
         Intent intent = getIntent();
         userid1 = intent.getIntExtra("userid1", 0);
@@ -109,9 +119,9 @@ public class AddFriendlyActivity extends WDActivity {
 
 
         if (whetherVip == 1) {
-            vip.setVisibility(View.VISIBLE);
+            Vip.setVisibility(View.VISIBLE);
         } else if (whetherVip == 2) {
-            vip.setVisibility(View.GONE);
+            Vip.setVisibility(View.GONE);
         }
         userIntegral.setText("(" + integral + "积分)");
 
@@ -119,6 +129,7 @@ public class AddFriendlyActivity extends WDActivity {
         if (ss.equals(phone)) {
             btnRAdd.setVisibility(View.GONE);
             btnRMessage.setVisibility(View.GONE);
+            CircularLoading.closeDialog(dialog);
         } else {
             checkMyFriendPresnter.request(userId, sessionId, userid1);
         }
@@ -162,6 +173,7 @@ public class AddFriendlyActivity extends WDActivity {
                     btnRAdd.setVisibility(View.VISIBLE);
                     btnRMessage.setVisibility(View.GONE);
                 }
+                CircularLoading.closeDialog(dialog);
             }
         }
 

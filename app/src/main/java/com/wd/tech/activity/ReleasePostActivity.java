@@ -31,6 +31,7 @@ import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.PhotoUtils;
 import com.wd.tech.core.utils.StringUtils;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.ReleasePostPresenter;
 
 import java.io.File;
@@ -53,6 +54,7 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
     private ReleasePostPresenter releasePostPresenter;
     private String sessionId;
     private int userId;
+    private DoTheTaskPresenter doTheTaskPresenter;
     private View contentView;
     private Dialog bottomDialog;
     private LinearLayout photo;
@@ -73,7 +75,7 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
         //数据库
 
         LoginUserInfoBean userInfo = getUserInfo(this);
-
+        doTheTaskPresenter = new DoTheTaskPresenter(new DoTheReuslt());
         userId = userInfo.getUserId();
         sessionId = userInfo.getSessionId();
 
@@ -246,7 +248,23 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
     private class ReleasePost implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
+            doTheTaskPresenter.request(userId, sessionId, 1003);
             finish();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 做任务接口
+     */
+    private class DoTheReuslt implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+
         }
 
         @Override

@@ -31,10 +31,10 @@ public class FlockActivity extends WDActivity {
     EditText qunEdittextContent;
     @BindView(R.id.text_login)
     TextView textLogin;
-    private String name;
-    private String content;
+    private String namE;
+    private String contenT;
     private CreateGroupPresenter groupPresenter;
-    private LoginUserInfoBean bean;
+    private LoginUserInfoBean infoBean;
     private String sessionId;
     private int userId;
     @Override
@@ -45,10 +45,10 @@ public class FlockActivity extends WDActivity {
     @Override
     protected void initView() {
         groupPresenter = new CreateGroupPresenter(new Creat());
-        bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
     }
 
@@ -66,17 +66,17 @@ public class FlockActivity extends WDActivity {
                 finish();
                 break;
             case R.id.text_login:
-                name = qunEdittextName.getText().toString();
-                content = qunEdittextContent.getText().toString();
-                if (TextUtils.isEmpty(name)){
+                namE = qunEdittextName.getText().toString();
+                contenT = qunEdittextContent.getText().toString();
+                if (TextUtils.isEmpty(contenT)){
                     Toast.makeText(this, "群名不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(content)){
+                if (TextUtils.isEmpty(contenT)){
                     Toast.makeText(this, "介绍不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                groupPresenter.request(userId,sessionId,name,content);
+                groupPresenter.request(userId,sessionId,namE,contenT);
                 break;
         }
     }

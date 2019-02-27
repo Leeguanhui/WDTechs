@@ -24,7 +24,7 @@ import butterknife.OnClick;
 public class AddFriendsActivity extends WDActivity {
 
     @BindView(R.id.back)
-    ImageView back;
+    ImageView backI;
     @BindView(R.id.course_search_tablayout)
     TabLayout courseSearchTablayout;
     @BindView(R.id.search_pager)

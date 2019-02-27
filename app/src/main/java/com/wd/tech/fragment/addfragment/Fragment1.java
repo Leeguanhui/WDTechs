@@ -44,27 +44,27 @@ public class Fragment1 extends WDFragment {
     @BindView(R.id.image)
     SimpleDraweeView image;
     @BindView(R.id.you_text)
-    TextView name;
+    TextView namE;
 
     @BindView(R.id.aaaaa)
-    RelativeLayout aaaaa;
+    RelativeLayout aaaaA;
     @BindView(R.id.ccc)
-    RelativeLayout ccc;
+    RelativeLayout ccC;
     @BindView(R.id.next)
-    ImageView next;
+    ImageView nexT;
     @BindView(R.id.bbb)
-    RelativeLayout bbb;
-    private FindUserByPhonePresenter presenter;
+    RelativeLayout bbB;
+    private FindUserByPhonePresenter phonePresenter;
     private String sessionId;
     private int userId;
-    private String phone;
-    private String email;
+    private String phonE;
+    private String emaiL;
     private String nickName;
-    private int sex;
+    private int seX;
     private String headPic;
-    private int integral;
-    private String signature;
-    private String s;
+    private int integraL;
+    private String signaturE;
+    private String sS;
     private int userId1;
     private long birthday;
     private int whetherVip;
@@ -81,13 +81,13 @@ public class Fragment1 extends WDFragment {
 
     @Override
     protected void initView() {
-        LoginUserInfoBean bean = getUserInfo(getContext());
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        LoginUserInfoBean infoBean = getUserInfo(getContext());
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
 
-        presenter = new FindUserByPhonePresenter(new ADDF());
+        phonePresenter = new FindUserByPhonePresenter(new ADDF());
         fragment1SearchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -105,7 +105,7 @@ public class Fragment1 extends WDFragment {
                     if (TextUtils.isEmpty(content)) {
                         UIUtils.showToastSafe("不能为空");
                     } else {
-                        presenter.request(userId, sessionId, s);
+                        phonePresenter.request(userId, sessionId, sS);
                     }
                 }
                 return false;
@@ -119,8 +119,8 @@ public class Fragment1 extends WDFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_image:
-                s = fragment1SearchEdit.getText().toString();
-                presenter.request(userId, sessionId, s);
+                sS = fragment1SearchEdit.getText().toString();
+                phonePresenter.request(userId, sessionId, sS);
                 break;
             case R.id.next:
                 IntentXiang();
@@ -133,16 +133,16 @@ public class Fragment1 extends WDFragment {
     public void IntentXiang(){
         Intent intent = new Intent(getActivity(), AddFriendlyActivity.class);
         intent.putExtra("userid1", userId1);
-        intent.putExtra("phone", phone);
-        intent.putExtra("email", email);
+        intent.putExtra("phone", phonE);
+        intent.putExtra("email", emaiL);
         intent.putExtra("nickName", nickName);
-        intent.putExtra("sex", sex);
+        intent.putExtra("sex", seX);
         intent.putExtra("headPic", headPic);
-        intent.putExtra("integral", integral);
-        intent.putExtra("signature", signature);
+        intent.putExtra("integral", integraL);
+        intent.putExtra("signature", signaturE);
         intent.putExtra("birthday", birthday);
         intent.putExtra("whetherVip", whetherVip);
-        intent.putExtra("s", s);
+        intent.putExtra("s", sS);
         startActivity(intent);
     }
 
@@ -159,23 +159,23 @@ public class Fragment1 extends WDFragment {
             if (data.getStatus().equals("0000")) {
                 ByIdUserInfoBean result = data.getResult();
                 userId1 = result.getUserId();
-                phone = result.getPhone();
-                email = result.getEmail();
+                phonE = result.getPhone();
+                emaiL = result.getEmail();
                 nickName = result.getNickName();
-                sex = result.getSex();
+                seX = result.getSex();
                 headPic = result.getHeadPic();
-                integral = result.getIntegral();
-                signature = result.getSignature();
+                integraL = result.getIntegral();
+                signaturE = result.getSignature();
                 image.setImageURI(result.getHeadPic());
                 birthday = result.getBirthday();
                 whetherVip = result.getWhetherVip();
-                name.setText(result.getNickName());
-                bbb.setVisibility(View.VISIBLE);
-                ccc.setVisibility(View.GONE);
+                namE.setText(result.getNickName());
+                bbB.setVisibility(View.VISIBLE);
+                ccC.setVisibility(View.GONE);
             }
             if (data.getStatus().equals("1001")) {
-                ccc.setVisibility(View.VISIBLE);
-                bbb.setVisibility(View.GONE);
+                ccC.setVisibility(View.VISIBLE);
+                bbB.setVisibility(View.GONE);
             }
         }
 

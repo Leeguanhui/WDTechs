@@ -34,22 +34,22 @@ import butterknife.OnClick;
 public class ClusterActivity extends WDActivity {
 
     @BindView(R.id.back)
-    ImageView back;
+    ImageView backI;
     @BindView(R.id.fragment1_search_edit)
     EditText fragment1SearchEdit;
     @BindView(R.id.search_image)
     ImageView searchImage;
     @BindView(R.id.aaaaa)
-    RelativeLayout aaaaa;
+    RelativeLayout mAaaa;
     @BindView(R.id.receylview)
-    RecyclerView receylview;
+    RecyclerView receylView;
     @BindView(R.id.smart)
-    SmartRefreshLayout smart;
+    SmartRefreshLayout smarT;
     private String sessionId;
     private int userId;
-    private FindGroupsByUserIdPresenter presenter;
-    private FindGroupsByUserIdAdapter adapter;
-    private List<FindGroupsByUserId> result;
+    private FindGroupsByUserIdPresenter findGroupsByUserIdPresenter;
+    private FindGroupsByUserIdAdapter findGroupsByUserIdAdapter;
+    private List<FindGroupsByUserId> userIdList;
 
     @Override
     protected int getLayoutId() {
@@ -58,25 +58,25 @@ public class ClusterActivity extends WDActivity {
 
     @Override
     protected void initView() {
-        LoginUserInfoBean bean = getUserInfo(this);
-        presenter = new FindGroupsByUserIdPresenter(new GroupFind());
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        LoginUserInfoBean infoBean = getUserInfo(this);
+        findGroupsByUserIdPresenter = new FindGroupsByUserIdPresenter(new GroupFind());
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
-        presenter.request(userId,sessionId);
-        adapter = new FindGroupsByUserIdAdapter(this);
+        findGroupsByUserIdPresenter.request(userId,sessionId);
+        findGroupsByUserIdAdapter = new FindGroupsByUserIdAdapter(this);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
-        receylview.setLayoutManager(layoutManager);
-        receylview.setAdapter(adapter);
-        smart.setOnRefreshListener(new OnRefreshListener() {
+        receylView.setLayoutManager(layoutManager);
+        receylView.setAdapter(findGroupsByUserIdAdapter);
+        smarT.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                presenter.request(userId,sessionId);
-                adapter.addItem(result);
-                adapter.notifyDataSetChanged();
-                smart.finishRefresh();
+                findGroupsByUserIdPresenter.request(userId,sessionId);
+                findGroupsByUserIdAdapter.addItem(userIdList);
+                findGroupsByUserIdAdapter.notifyDataSetChanged();
+                smarT.finishRefresh();
             }
         });
     }
@@ -104,10 +104,10 @@ public class ClusterActivity extends WDActivity {
         @Override
         public void success(Result<List<FindGroupsByUserId>> data) {
             if (data.getStatus().equals("0000")){
-                result = data.getResult();
+                userIdList = data.getResult();
                 Toast.makeText(ClusterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-                adapter.addItem(result);
-                adapter.notifyDataSetChanged();
+                findGroupsByUserIdAdapter.addItem(userIdList);
+                findGroupsByUserIdAdapter.notifyDataSetChanged();
              }
         }
 

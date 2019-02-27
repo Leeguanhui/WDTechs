@@ -23,25 +23,30 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.RsaCoder;
+import com.wd.tech.core.utils.StringUtils;
+import com.wd.tech.face.FaceLoginActivity;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
+
+import java.util.concurrent.Executor;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class LoginActivity extends WDActivity implements CustomAdapt {
-    @BindView(R.id.mTv_Reg)
-    TextView mTv_Reg;
-    @BindView(R.id.mEt_Phone_Login)
-    EditText mEt_Phone_Login;
+    @BindView(R.id.to_reg)
+    TextView mToreg;
+    @BindView(R.id.user_phone)
+    EditText mUserphone;
     @BindView(R.id.mEd_Pwd_Login)
     EditText mEd_Pwd_Login;
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
     private Dialog dialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -51,7 +56,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     protected void initView() {
         loginUserInfoPresenter = new LoginUserInfoPresenter(new LoginResult());
         //跳转到注册页面
-        mTv_Reg.setOnClickListener(new View.OnClickListener() {
+        mToreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegActivity.class));
@@ -64,19 +69,8 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     protected void destoryData() {
 
     }
-
-//    @OnClick(R.id.wechat_btn)
-//    public void wechat_btn() {
-//        mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
-//        mWechatApi.registerApp("wx4c96b6b8da494224");
-//        final SendAuth.Req req = new SendAuth.Req();
-//        req.scope = "snsapi_userinfo";
-//        req.state = "wechat_sdk_demo";
-//        mWechatApi.sendReq(req);
-//        finish();
-//    }
     @OnClick(R.id.wechat_btn)
-    public void mWechatBtn(){
+    public void mWechatBtn() {
         mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
         mWechatApi.registerApp("wx4c96b6b8da494224");
         final SendAuth.Req req = new SendAuth.Req();
@@ -85,10 +79,24 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         mWechatApi.sendReq(req);
         finish();
     }
-    @OnClick(R.id.mBt_Login)
-    public void mBt_Login() {
-        String phone = mEt_Phone_Login.getText().toString();
+
+    @OnClick(R.id.face_btn)
+    public void mFaceBtn() {
+        startActivity(new Intent(this, FaceLoginActivity.class));
+    }
+
+    @OnClick(R.id.login_btn)
+    public void mLoginBtn() {
+        String phone = mUserphone.getText().toString();
         String pwd = mEd_Pwd_Login.getText().toString();
+        if(phone.equals("")||phone==null||pwd.equals("")||pwd==null){
+            Toast.makeText(this, "手机号和密码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!StringUtils.isPhoneLegal(phone)){
+            Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
         try {
             String RSAPwd = RsaCoder.encryptByPublicKey(pwd);
             loginUserInfoPresenter.request(phone, RSAPwd);
@@ -122,9 +130,9 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
-                CircularLoading.closeDialog(dialog);
                 finish();
             }
+            CircularLoading.closeDialog(dialog);
         }
 
         @Override

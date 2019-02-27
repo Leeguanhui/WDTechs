@@ -60,22 +60,23 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         if (viewHolder instanceof Daichuli) {
             String timedate = TimeUtills.timedate(list.get(i).getNoticeTime());
             ((Daichuli) viewHolder).tvtime.setText(timedate);
             ((Daichuli) viewHolder).tvname.setText(list.get(i).getGroupName());
             ((Daichuli) viewHolder).sdv.setImageURI(list.get(i).getHeadPic());
+            ((Daichuli) viewHolder).group_tv_request1.setText("邀请你加入"+"“"+list.get(i).getGroupName()+"”");
             ((Daichuli) viewHolder).agree1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "同意", Toast.LENGTH_SHORT).show();
+                    onItemClickListener.onItemClick(list.get(i).getNoticeId());
                 }
             });
             ((Daichuli) viewHolder).jujue1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "拒绝", Toast.LENGTH_SHORT).show();
+                    onItemClickListener1.onItemClick1(list.get(i).getNoticeId());
                 }
             });
 
@@ -83,13 +84,14 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
             String timedate = TimeUtills.timedate(list.get(i).getNoticeTime());
             ((Agree) viewHolder).tvtime2.setText(timedate);
             ((Agree) viewHolder).sdv2.setImageURI(list.get(i).getHeadPic());
-            ((Agree) viewHolder).tv_name2.setText(list.get(i).getGroupName());
-
+            ((Agree) viewHolder).tv_name2.setText(list.get(i).getNickName());
+            ((Agree)viewHolder).group_tv_request2.setText("邀请你加入"+"“"+list.get(i).getGroupName()+"”");
         }else{
             String timedate = TimeUtills.timedate(list.get(i).getNoticeTime());
             ((Jujue) viewHolder).tvtime3.setText(timedate);
             ((Jujue) viewHolder).sdv3.setImageURI(list.get(i).getHeadPic());
             ((Jujue) viewHolder).tv_name3.setText(list.get(i).getGroupName());
+            ((Jujue) viewHolder).group_tv_request_jujue.setText("邀请你加入"+"“"+list.get(i).getGroupName()+"”");
         }
     }
 
@@ -110,7 +112,7 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
 
     //待处理
     class Daichuli extends RecyclerView.ViewHolder {
-        TextView tvtime , tvname , agree1 , jujue1;
+        TextView tvtime , tvname , agree1 , jujue1,group_tv_request1;
         SimpleDraweeView sdv;
 
 
@@ -121,6 +123,7 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
             tvname = itemView.findViewById(R.id.group_tv_name1);
             agree1 = itemView.findViewById(R.id.group_agree1);
             jujue1 = itemView.findViewById(R.id.group_jujue1);
+            group_tv_request1 = itemView.findViewById(R.id.group_tv_request1);
 
         }
     }
@@ -144,7 +147,7 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
     //拒绝
     class Jujue extends RecyclerView.ViewHolder {
 
-        TextView tvtime3 , tv_name3;
+        TextView tvtime3 , tv_name3,group_tv_request_jujue;
         SimpleDraweeView sdv3;
 
         public Jujue(@NonNull View itemView) {
@@ -152,8 +155,29 @@ public class FindGroupNoticePageListAdapter extends RecyclerView.Adapter<Recycle
             tvtime3 = itemView.findViewById(R.id.group_longtime3);
             tv_name3 = itemView.findViewById(R.id.group_tv_name3);
             sdv3 = itemView.findViewById(R.id.group_sdv_t3);
+            group_tv_request_jujue = itemView.findViewById(R.id.group_tv_request_jujue);
 
 
         }
     }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int noticeId);
+    }//定义接口
+    public interface OnItemClickListener1 {
+        void onItemClick1(int noticeId);
+    }
+
+    //方法名
+    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener1 onItemClickListener1;
+
+    //t方法      设置点击方法
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }//t方法      设置点击方法
+    public void setOnItemClickListener1(OnItemClickListener1 onItemClickListener1) {
+        this.onItemClickListener1 = onItemClickListener1;
+    }
+
 }

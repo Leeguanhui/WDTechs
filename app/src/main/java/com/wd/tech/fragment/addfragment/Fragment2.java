@@ -2,6 +2,7 @@ package com.wd.tech.fragment.addfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,19 +41,19 @@ public class Fragment2 extends WDFragment {
     @BindView(R.id.search2_image)
     ImageView search2Image;
     @BindView(R.id.aaaaa)
-    RelativeLayout aaaaa;
+    RelativeLayout aaaaaA;
     @BindView(R.id.ccc)
-    RelativeLayout ccc;
+    RelativeLayout ccC;
     @BindView(R.id.image)
-    SimpleDraweeView image;
+    SimpleDraweeView imagE;
     @BindView(R.id.you_text)
     TextView youText;
     @BindView(R.id.next)
-    ImageView next;
+    ImageView nexT;
     @BindView(R.id.bbb)
-    RelativeLayout bbb;
-    private FindGroupInfoPresenter presenter;
-    private String s;
+    RelativeLayout bbB;
+    private FindGroupInfoPresenter findGroupInfoPresenter;
+    private String sS;
     private String sessionId;
     private int userId;
     private int groupId;
@@ -76,11 +77,11 @@ public class Fragment2 extends WDFragment {
     @Override
     protected void initView() {
 
-        presenter = new FindGroupInfoPresenter(new FindGroup());
-        LoginUserInfoBean bean = getUserInfo(getContext());
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+        findGroupInfoPresenter = new FindGroupInfoPresenter(new FindGroup());
+        LoginUserInfoBean infoBean = getUserInfo(getContext());
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
     }
 
@@ -89,8 +90,13 @@ public class Fragment2 extends WDFragment {
         switch (view.getId()) {
             case R.id.search2_image:
                 String s = fragment2SearchEdit.getText().toString();
+                if (TextUtils.isEmpty(s)) {
+                    bbB.setVisibility(View.GONE);
+                    return;
+                }
                 Integer integer = Integer.valueOf(s);
-                presenter.request(userId, sessionId, integer);
+
+                findGroupInfoPresenter.request(userId, sessionId, integer);
                 break;
             case R.id.next:
                 AddQun();
@@ -128,14 +134,14 @@ public class Fragment2 extends WDFragment {
                 maxCount = result.getMaxCount();
                 ownerUid = result.getOwnerUid();
                 description = result.getDescription();
-                image.setImageURI(result.getGroupImage());
+                imagE.setImageURI(result.getGroupImage());
                 youText.setText(result.getGroupName());
-                bbb.setVisibility(View.VISIBLE);
-                ccc.setVisibility(View.GONE);
+                bbB.setVisibility(View.VISIBLE);
+                ccC.setVisibility(View.GONE);
             }
             if (data.getStatus().equals("1001")) {
-                ccc.setVisibility(View.VISIBLE);
-                bbb.setVisibility(View.GONE);
+                ccC.setVisibility(View.VISIBLE);
+                bbB.setVisibility(View.GONE);
             }
         }
 

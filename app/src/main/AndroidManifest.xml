@@ -68,9 +68,8 @@
         <activity android:name=".activity.view.InfoAdvertisingVo" />
         <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
         <activity android:name=".activity.view.Type" />
-        <activity android:name="com.wd.tech.activity.NewFriendsActivity"/>
+        <activity android:name="com.wd.tech.activity.NewFriendsActivity" />
         <activity android:name=".activity.view.SearchType" />
-        <activity android:name=".activity.view.SearchActivity" />
         <activity android:name=".activity.UserPostByIdActivity"></activity>
         <activity android:name=".activity.thirdlyactivity.SearchActivity" />
         <activity android:name=".activity.secondactivity.SignCalendarActivity" />
@@ -78,13 +77,22 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.view.SearchActivity" />
         <activity android:name=".activity.AddFriendlyActivity" />
         <activity android:name=".activity.FriendRequestActivity" />
         <activity android:name=".activity.AddGroupActivity" />
         <activity android:name=".activity.ApplyForActivity" />
-        <activity android:name="com.wd.tech.activity.GroupChatActivity"/>
+        <activity android:name="com.wd.tech.activity.GroupChatActivity" />
         <activity android:name=".activity.ClusterActivity"></activity>
+        <activity android:name=".face.RegisterActivity"></activity>
+        <activity android:name=".face.DetecterActivity"></activity>
+        <activity android:name=".face.FaceLoginActivity"></activity>
+        <activity android:name=".face.LoginActivity"></activity>
+        <activity android:name=".face.PermissionAcitivity" />
+        <activity android:name=".activity.IntergralExchange"></activity>
+        <activity android:name=".activity.GroupChatActivity" />
+        <activity android:name=".activity.ClusterActivity" />
+        <activity android:name=".activity.IntergralExchange" />
+        <activity android:name=".activity.DredgeVip"></activity>
     </application>
 
 </manifest>

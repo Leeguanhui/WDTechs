@@ -122,4 +122,28 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/qun_te_selector"
         />
+    <Button
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/groupdetails_btntui"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/groupdetailsbtnr"
+        android:text="退出群组"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:layout_width="336dp"
+        android:layout_height="40dp" />
+    <Button
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/groupdetails_btnjie"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/groupdetailsbtnr"
+        android:text="解散群组"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:layout_width="336dp"
+        android:layout_height="40dp" />
 </RelativeLayout>

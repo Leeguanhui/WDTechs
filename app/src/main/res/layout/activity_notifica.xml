@@ -37,10 +37,15 @@
         android:layout_below="@+id/RL_02"
         android:layout_marginTop="15dp"
         android:background="#D0D0D0D0" />
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/notifica_xrecycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

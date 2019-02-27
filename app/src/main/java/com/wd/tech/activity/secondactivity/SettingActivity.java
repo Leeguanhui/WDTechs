@@ -45,23 +45,23 @@ public class SettingActivity extends WDActivity {
     private static final int CODE_RESULT_REQUEST = 0xa2;
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
     @BindView(R.id.my_header)
-    SimpleDraweeView my_header;
+    SimpleDraweeView mHeader;
     @BindView(R.id.my_name)
-    TextView my_name;
+    TextView mName;
     @BindView(R.id.my_sex)
-    TextView my_sex;
+    TextView mSex;
     @BindView(R.id.my_brith)
-    TextView my_brith;
+    TextView mBrith;
     @BindView(R.id.my_phone)
-    TextView my_phone;
+    TextView mPhone;
     @BindView(R.id.my_mail)
-    TextView my_mail;
+    TextView mMail;
     @BindView(R.id.my_jifen)
-    TextView my_jifen;
+    TextView mJifen;
     @BindView(R.id.my_vip)
-    TextView my_vip;
+    TextView mVip;
     @BindView(R.id.my_face)
-    TextView my_face;
+    TextView mFace;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
@@ -161,26 +161,26 @@ public class SettingActivity extends WDActivity {
         public void success(Object data) {
             Result result = (Result) data;
             ByIdUserInfoBean byIdUserInfoBean = (ByIdUserInfoBean) result.getResult();
-            my_header.setImageURI(Uri.parse(byIdUserInfoBean.getHeadPic()));
-            my_name.setText(byIdUserInfoBean.getNickName());
-            my_sex.setText(byIdUserInfoBean.getSex());
+            mHeader.setImageURI(Uri.parse(byIdUserInfoBean.getHeadPic()));
+            mName.setText(byIdUserInfoBean.getNickName());
+            mSex.setText(byIdUserInfoBean.getSex());
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             date.setTime(byIdUserInfoBean.getBirthday());
             String Datetime = format.format(date);
-            my_brith.setText(Datetime);
-            my_phone.setText(byIdUserInfoBean.getPhone());
-            my_mail.setText(byIdUserInfoBean.getEmail());
-            my_jifen.setText(byIdUserInfoBean.getIntegral() + "");
+            mBrith.setText(Datetime);
+            mPhone.setText(byIdUserInfoBean.getPhone());
+            mMail.setText(byIdUserInfoBean.getEmail());
+            mJifen.setText(byIdUserInfoBean.getIntegral() + "");
             if (byIdUserInfoBean.getWhetherVip() == 1) {
-                my_vip.setText("是");
+                mVip.setText("是");
             } else {
-                my_vip.setText("否");
+                mVip.setText("否");
             }
             if (byIdUserInfoBean.getWhetherFaceId() == 1) {
-                my_vip.setText("已绑定");
+                mFace.setText("已绑定");
             } else {
-                my_vip.setText("未绑定");
+                mFace.setText("未绑定");
             }
         }
 

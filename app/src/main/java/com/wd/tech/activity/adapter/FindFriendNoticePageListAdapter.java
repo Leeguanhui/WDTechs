@@ -62,7 +62,7 @@ public class FindFriendNoticePageListAdapter  extends RecyclerView.Adapter<Recyc
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         if (viewHolder instanceof Daichuli) {
             String timedate = TimeUtills.timedate(list.get(i).getNoticeTime());
             ((Daichuli) viewHolder).tvtime.setText(timedate);
@@ -71,13 +71,13 @@ public class FindFriendNoticePageListAdapter  extends RecyclerView.Adapter<Recyc
             ((Daichuli) viewHolder).agree1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "同意", Toast.LENGTH_SHORT).show();
+                    onItemClickListener.onItemClick(list.get(i).getNoticeId());
                 }
             });
             ((Daichuli) viewHolder).jujue1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "拒绝", Toast.LENGTH_SHORT).show();
+                    onItemClickListener1.onItemClick1(list.get(i).getNoticeId());
                 }
             });
 
@@ -158,5 +158,24 @@ public class FindFriendNoticePageListAdapter  extends RecyclerView.Adapter<Recyc
 
 
         }
+    }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int noticeId);
+    }//定义接口
+    public interface OnItemClickListener1 {
+        void onItemClick1(int noticeId);
+    }
+
+    //方法名
+    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener1 onItemClickListener1;
+
+    //t方法      设置点击方法
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }//t方法      设置点击方法
+    public void setOnItemClickListener1(OnItemClickListener1 onItemClickListener1) {
+        this.onItemClickListener1 = onItemClickListener1;
     }
 }

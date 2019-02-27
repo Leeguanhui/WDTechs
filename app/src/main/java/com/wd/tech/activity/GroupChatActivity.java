@@ -16,6 +16,7 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.FindGroupNoticePageListPresenter;
+import com.wd.tech.presenter.ReviewGroupApplyPresenter;
 
 import java.util.List;
 
@@ -23,17 +24,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GroupChatActivity extends WDActivity implements XRecyclerView.LoadingListener{
+public class GroupChatActivity extends WDActivity implements XRecyclerView.LoadingListener {
 
 
     @BindView(R.id.group_chat_xrecyclerview)
     XRecyclerView groupChatXrecyclerview;
 
-    private FindGroupNoticePageListAdapter adapter;
+    private FindGroupNoticePageListAdapter findGroupNoticePageListAdapter;
     private String sessionId;
     private int userId;
-    private LoginUserInfoBean bean;
-    private FindGroupNoticePageListPresenter presenter;
+    private LoginUserInfoBean infoBean;
+    private FindGroupNoticePageListPresenter findGroupNoticePageListPresenter;
+    private ReviewGroupApplyPresenter reviewGroupApplyPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -42,19 +44,34 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
 
     @Override
     protected void initView() {
-        presenter = new FindGroupNoticePageListPresenter(new GroupChatData());
-        bean = getUserInfo(this);
-        if (bean != null) {
-            sessionId = bean.getSessionId();
-            userId = bean.getUserId();
+
+        findGroupNoticePageListPresenter = new FindGroupNoticePageListPresenter(new GroupChatData());
+        reviewGroupApplyPresenter = new ReviewGroupApplyPresenter(new Review());
+        infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
         }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         groupChatXrecyclerview.setLayoutManager(linearLayoutManager);
-        adapter = new FindGroupNoticePageListAdapter(this);
-        groupChatXrecyclerview.setAdapter(adapter);
+        findGroupNoticePageListAdapter = new FindGroupNoticePageListAdapter(this);
+        groupChatXrecyclerview.setAdapter(findGroupNoticePageListAdapter);
         groupChatXrecyclerview.setLoadingListener(this);
-        presenter.request(userId,sessionId,true,5);
+        findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
+        findGroupNoticePageListAdapter.setOnItemClickListener(new FindGroupNoticePageListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int noticeId) {
+                reviewGroupApplyPresenter.request(userId,sessionId,noticeId,1);
+            }
+        });
+        findGroupNoticePageListAdapter.setOnItemClickListener1(new FindGroupNoticePageListAdapter.OnItemClickListener1() {
+            @Override
+            public void onItemClick1(int noticeId) {
+                reviewGroupApplyPresenter.request(userId,sessionId,noticeId,2);
+            }
+        });
     }
 
     @Override
@@ -62,6 +79,16 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        infoBean = getUserInfo(this);
+        if (infoBean != null) {
+            sessionId = infoBean.getSessionId();
+            userId = infoBean.getUserId();
+        }
+        findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
+    }
 
     @OnClick(R.id.group_chat_back)
     public void onViewClicked() {
@@ -70,21 +97,21 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
 
     @Override
     public void onRefresh() {
-        if (presenter.isRunning()){
+        if (findGroupNoticePageListPresenter.isRunning()) {
             groupChatXrecyclerview.refreshComplete();
             return;
         }
-        presenter.request(userId,sessionId,true,5);
+        findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
 
     }
 
     @Override
     public void onLoadMore() {
-        if (presenter.isRunning()){
+        if (findGroupNoticePageListPresenter.isRunning()) {
             groupChatXrecyclerview.loadMoreComplete();
             return;
         }
-        presenter.request(userId,sessionId,false,5);
+        findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
 
     }
 
@@ -94,10 +121,10 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
         public void success(Result<List<FindGroupNoticePageList>> result) {
             groupChatXrecyclerview.refreshComplete();
             groupChatXrecyclerview.loadMoreComplete();
-            adapter.clear();
-            if (result.getStatus().equals("0000")){
-                adapter.addAll(result.getResult());
-                adapter.notifyDataSetChanged();
+            findGroupNoticePageListAdapter.clear();
+            if (result.getStatus().equals("0000")) {
+                findGroupNoticePageListAdapter.addAll(result.getResult());
+                findGroupNoticePageListAdapter.notifyDataSetChanged();
             }
         }
 
@@ -110,6 +137,21 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
 
     protected void onDestroy() {
         super.onDestroy();
-        presenter.unBind();
+        findGroupNoticePageListPresenter.unBind();
+    }
+
+    private class Review implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(GroupChatActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

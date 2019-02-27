@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.bean.NotifiListBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +22,11 @@ import java.util.List;
  */
 // TODO: 2019/2/19 穿数据 
 public class NofitiRecycleAdapter extends RecyclerView.Adapter<NofitiRecycleAdapter.Vh> {
-    List<String> list = new ArrayList<>();
+    List<NotifiListBean> list = new ArrayList<>();
 
-    public void addAll(List<String> list) {
+    public void addAll(List<NotifiListBean> list) {
         this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
     class Vh extends RecyclerView.ViewHolder {
@@ -45,11 +49,18 @@ public class NofitiRecycleAdapter extends RecyclerView.Adapter<NofitiRecycleAdap
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
+        NotifiListBean notifiListBean = list.get(i);
+        Date date = new Date();
+        date.setTime(notifiListBean.getCreateTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sdf.format(date);
+        vh.nofiti_time.setText(format);
+        vh.nofiti_content.setText(notifiListBean.getContent());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
 
