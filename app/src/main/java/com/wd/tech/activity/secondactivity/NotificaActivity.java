@@ -2,6 +2,7 @@ package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -20,10 +21,11 @@ import com.wd.tech.presenter.SysNoticeListPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class NotificaActivity extends WDActivity {
+public class NotificaActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.notifica_xrecycle)
-    XRecyclerView mNotificaxrecycle;
+    RecyclerView mNotificaxrecycle;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private NofitiRecycleAdapter mNofitiRecycleAdapter;
@@ -46,13 +48,21 @@ public class NotificaActivity extends WDActivity {
         mNofitiRecycleAdapter = new NofitiRecycleAdapter();
         mNotificaxrecycle.setLayoutManager(new LinearLayoutManager(this));
         mNotificaxrecycle.setAdapter(mNofitiRecycleAdapter);
-        mNotificaxrecycle.setPullRefreshEnabled(true);
-        mNotificaxrecycle.setLoadingMoreEnabled(false);
     }
 
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     /**

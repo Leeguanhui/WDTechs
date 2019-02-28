@@ -7,39 +7,43 @@
     android:orientation="vertical"
     tools:context=".activity.secondactivity.AttenActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="25dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="12dp"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/common_icon_back_n" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="我的关注"
-            android:textColor="#666666"
-            android:textSize="16sp" />
-    </LinearLayout>
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp">
+        android:layout_height="match_parent">
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/xrecycle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/common_icon_back_n" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="我的关注"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/xrecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

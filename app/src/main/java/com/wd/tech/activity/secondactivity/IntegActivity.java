@@ -2,6 +2,7 @@ package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,18 +21,22 @@ import com.wd.tech.bean.UserIntegralListBean;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.FindContinuousPresenter;
 import com.wd.tech.presenter.IntegralRecordPresenter;
 import com.wd.tech.presenter.UserIntegralPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class IntegActivity extends WDActivity  {
+public class IntegActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.integ_xrecycle)
-    XRecyclerView mIntegxrecycle;
+    RecyclerView mIntegxrecycle;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.datatext)
+    TextView mDatatext;
     private IntegRecycleAdapter mIntegRecycleAdapter;
     private UserIntegralPresenter userIntegralPresenter;
     private LoginUserInfoBean userInfo;
@@ -41,6 +46,7 @@ public class IntegActivity extends WDActivity  {
     private IntegralRecordPresenter integralRecordPresenter;
     int mPage = 1;
     int mCount = 1000;
+    private FindContinuousPresenter findContinuousPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +56,8 @@ public class IntegActivity extends WDActivity  {
     @Override
     protected void initView() {
         userInfo = getUserInfo(this);
+        findContinuousPresenter = new FindContinuousPresenter(new FindContinuResult());
+        findContinuousPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         integralRecordPresenter = new IntegralRecordPresenter(new IntegralRecordResult());
         integralRecordPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
         userIntegralPresenter = new UserIntegralPresenter(new UserIntegralResult());
@@ -81,6 +89,16 @@ public class IntegActivity extends WDActivity  {
 
     }
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
+    }
+
     /**
      * 查询用户积分
      */
@@ -108,6 +126,23 @@ public class IntegActivity extends WDActivity  {
             mRefreshLayout.finishRefresh();
             mRefreshLayout.finishLoadmore();
             CircularLoading.closeDialog(dialog);
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 连续签到天数
+     */
+    private class FindContinuResult implements ICoreInfe<Result> {
+        @Override
+        public void success(Result result) {
+            double data = (double) result.getResult();
+            int a = (int) data;
+            mDatatext.setText("您已连续签到" + a + "天");
         }
 
         @Override

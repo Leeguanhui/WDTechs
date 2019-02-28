@@ -36,8 +36,9 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class SettingActivity extends WDActivity {
+public class SettingActivity extends WDActivity implements CustomAdapt {
     private static int output_X = 100;
     private static int output_Y = 100;
     private static final int CODE_GALLERY_REQUEST = 0xa0;
@@ -151,6 +152,16 @@ public class SettingActivity extends WDActivity {
         //设置显示动画
         window.setWindowAnimations(R.style.mystyle);  //添加动画
         myDialog.show();
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     /**

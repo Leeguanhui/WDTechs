@@ -45,8 +45,9 @@ import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class UpdateMessageActivity extends WDActivity {
+public class UpdateMessageActivity extends WDActivity implements CustomAdapt {
     private LoginUserInfoBean userInfo;
     @BindView(R.id.my_name)
     EditText mName;
@@ -186,6 +187,16 @@ public class UpdateMessageActivity extends WDActivity {
         mDialog.show();
     }
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
+    }
+
 
     /**
      * 完善个人资料
@@ -194,7 +205,6 @@ public class UpdateMessageActivity extends WDActivity {
         @Override
         public void success(Result result) {
             if (result.getStatus().equals("0000")) {
-                CircularLoading.closeDialog(dialog);
                 doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1006);
                 finish();
             }
@@ -240,7 +250,7 @@ public class UpdateMessageActivity extends WDActivity {
     private class DoTheReuslt implements ICoreInfe {
         @Override
         public void success(Object data) {
-
+            CircularLoading.closeDialog(dialog);
         }
 
         @Override

@@ -1,7 +1,9 @@
 package com.wd.tech.activity.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,8 +14,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
+import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.ReleasePostActivity;
 import com.wd.tech.activity.adapter.CommunityListAdapter;
+import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -27,16 +31,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
  * 作者：古祥坤 on 2019/2/18 15:50
  * 邮箱：1724959985@qq.com
  */
-public class Fragment_Page_three extends WDFragment {
+public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
     private CommunityListPresenter communityListPresenter;
     @BindView(R.id.communitylist_recycler)
-    XRecyclerView recyclerView;
+    RecyclerView recyclerView;
     private CommunityListAdapter communityListAdapter;
     private int page = 1;
     private String sessionId;
@@ -45,6 +51,7 @@ public class Fragment_Page_three extends WDFragment {
     private AddCommunityGreatPresenter addCommunityGreatPresenter;
     @BindView(R.id.smartrefresh)
     SmartRefreshLayout refreshLayout;
+    private Dialog dialog;
 
     @Override
     public String getPageName() {
@@ -58,7 +65,7 @@ public class Fragment_Page_three extends WDFragment {
 
     @Override
     protected void initView() {
-        userInfo = getUserInfo(getContext());
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         if (userInfo == null) {
             userId = 0;
             sessionId = "0";
@@ -114,6 +121,17 @@ public class Fragment_Page_three extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
+        userInfo = getUserInfo(getContext());
+        if (userInfo == null) {
+            userId = 0;
+            sessionId = "0";
+        } else {
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }
+
+        dialog = CircularLoading.showLoadDialog(getContext(), "加载中...", true);
+
         communityListAdapter.removeAll();
         communityListPresenter.request(userId, sessionId, 1, 1000);
     }
@@ -127,6 +145,7 @@ public class Fragment_Page_three extends WDFragment {
             communityListAdapter.notifyDataSetChanged();
             refreshLayout.finishRefresh();//结束刷新
             refreshLayout.finishLoadmore();//结束加载
+            CircularLoading.closeDialog(dialog);
         }
 
         @Override

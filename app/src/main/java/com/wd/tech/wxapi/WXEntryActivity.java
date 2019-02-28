@@ -52,6 +52,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
         } else {
             Log.e("LKing", "授权登录失败\n\n自动返回");
+            finish();
         }
     }
 

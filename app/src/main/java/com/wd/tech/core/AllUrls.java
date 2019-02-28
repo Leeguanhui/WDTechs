@@ -515,6 +515,15 @@ public interface AllUrls {
     Observable<Result> retreat(
             @Header("userid") int userid,
             @Header("sessionid") String sessionid,
+            @Query("groupId") int groupId);
+
+    /**
+     * 连续签到天数
+     */
+    @GET("user/verify/v1/findContinuousSignDays")
+    Observable<Result> findContinuousSignDays(
+            @Header("userid") int userid,
+            @Header("sessionid") String sessionid);
             @Query("groupId") int groupId
     );
     /**
