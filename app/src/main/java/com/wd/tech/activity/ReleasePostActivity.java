@@ -38,10 +38,11 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
 import static com.wd.tech.activity.secondactivity.SettingActivity.hasSdcard;
 
-public class ReleasePostActivity extends WDActivity implements View.OnClickListener {
+public class ReleasePostActivity extends WDActivity implements View.OnClickListener ,CustomAdapt {
 
     @BindView(R.id.id_editor_detail)
     EditText mText;
@@ -242,6 +243,16 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
                 bottomDialog.dismiss();
                 break;
         }
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     //发布帖子成功接口
