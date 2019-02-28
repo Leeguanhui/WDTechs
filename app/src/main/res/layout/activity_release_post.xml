@@ -46,11 +46,13 @@
 
             <RelativeLayout
                 android:id="@+id/re"
-                android:layout_width="336dp"
+                android:layout_width="match_parent"
                 android:layout_height="137dp"
                 android:layout_below="@id/relativeLayout1"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="12dp"
                 android:background="@drawable/shape_edit">
 
                 <EditText
