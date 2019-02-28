@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.UserIntegralBean;
@@ -142,7 +143,8 @@ public class IntergralExchange extends WDActivity {
            go.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-
+                startActivity(new Intent(IntergralExchange.this,TaskActivity.class));
+                finish();
                }
            });
        }
