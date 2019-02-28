@@ -25,8 +25,9 @@ import com.wd.tech.presenter.UserPostByIdPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class UserPostByIdActivity extends WDActivity {
+public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
 
     private UserPostByIdPresenter userPostByIdPresenter;
     private LoginUserInfoBean userInfo;
@@ -88,6 +89,16 @@ public class UserPostByIdActivity extends WDActivity {
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     private class UserPostById implements ICoreInfe<Result> {

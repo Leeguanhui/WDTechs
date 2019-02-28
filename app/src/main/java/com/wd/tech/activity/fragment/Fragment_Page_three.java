@@ -27,12 +27,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
  * 作者：古祥坤 on 2019/2/18 15:50
  * 邮箱：1724959985@qq.com
  */
-public class Fragment_Page_three extends WDFragment {
+public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
     private CommunityListPresenter communityListPresenter;
     @BindView(R.id.communitylist_recycler)
@@ -58,7 +60,7 @@ public class Fragment_Page_three extends WDFragment {
 
     @Override
     protected void initView() {
-        userInfo = getUserInfo(getContext());
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         if (userInfo == null) {
             userId = 0;
             sessionId = "0";
@@ -114,6 +116,14 @@ public class Fragment_Page_three extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
+        userInfo = getUserInfo(getContext());
+        if (userInfo == null) {
+            userId = 0;
+            sessionId = "0";
+        } else {
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }
         communityListAdapter.removeAll();
         communityListPresenter.request(userId, sessionId, 1, 1000);
     }
