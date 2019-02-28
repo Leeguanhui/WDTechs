@@ -517,4 +517,20 @@ public interface AllUrls {
             @Header("sessionid") String sessionid,
             @Query("groupId") int groupId
     );
+    /**
+     * 用户购买VIP
+     */
+    @POST("tool/verify/v1/buyVip")
+    Observable<Result> PAYVIP(@Header("userId") int userId,
+                                                    @Header("sessionId") String sessionId,
+                                                    @Query("commodityId") int commodityId,
+                              @Query("sign") String sign
+                              );
+    /**
+     * 支付
+     */
+    @POST("tool/verify/v1/pay")
+    Observable<Result> PAY(@Header("userId") int userId,
+                              @Header("sessionId") String sessionId,
+                           @Query("orderId") String orderId,@Query("payType") int payType);
 }

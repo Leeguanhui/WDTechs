@@ -138,8 +138,6 @@ public class Fragment_Page_one extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
-        zxInformationPresenter.request(userId, sessionId,0,NUM,10);
-        zxxRecyAdapter.notifyDataSetChanged();
         banner.start();
     }
 

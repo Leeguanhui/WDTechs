@@ -110,14 +110,11 @@ public class IntergralExchange extends WDActivity {
         String format = formatter.format(releaseTime);
         data.setText(format);
         likenum.setText(praise+"");
-
-
     }
 
     @OnClick(R.id.exchange)
     public void ExChange(){
        if (amount>=integralCost){
-
            newsExChangePresenter.request(userId,sessionId,id,amount);
        }else{
            View inflate = View.inflate(this, R.layout.exchange_seccess, null);
