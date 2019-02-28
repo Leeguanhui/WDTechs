@@ -23,8 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class TaskActivity extends WDActivity {
+public class TaskActivity extends WDActivity implements CustomAdapt {
 
     @BindView(R.id.task_linear)
     LinearLayout mTasklinear;
@@ -88,12 +89,22 @@ public class TaskActivity extends WDActivity {
     }
 
     @OnClick(R.id.weixin_bnt)
-    public void mWeixin(){
+    public void mWeixin() {
     }
 
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     /**

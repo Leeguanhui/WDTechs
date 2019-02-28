@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,11 +33,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CollectActivity extends WDActivity {
+public class CollectActivity extends WDActivity implements CustomAdapt {
 
     @BindView(R.id.collect_xrecycle)
-    XRecyclerView mCollectRecycle;
+    RecyclerView mCollectRecycle;
     private CollectRecycleAdapter collectRecycleAdapter;
     private FindAllCollectionPresenter findAllCollectionPresenter;
     private int mPage = 1;
@@ -72,8 +74,6 @@ public class CollectActivity extends WDActivity {
         collectRecycleAdapter = new CollectRecycleAdapter();
         mCollectRecycle.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecycle.setAdapter(collectRecycleAdapter);
-        mCollectRecycle.setLoadingMoreEnabled(false);
-        mCollectRecycle.setPullRefreshEnabled(true);
         findAllCollectionPresenter = new FindAllCollectionPresenter(new FindColleResult());
         userInfo = getUserInfo(this);
         findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
@@ -113,9 +113,23 @@ public class CollectActivity extends WDActivity {
         mDeleteimage.setVisibility(View.VISIBLE);
         mOkbtn.setVisibility(View.GONE);
         String checkId = collectRecycleAdapter.getCheckId();
+        if (checkId.equals("") || checkId == null) {
+            return;
+        }
         String substring = checkId.substring(0, checkId.length() - 1);
+
         cancelCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), substring);
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
 
@@ -129,8 +143,6 @@ public class CollectActivity extends WDActivity {
             List<FindCollectBean> findColleResults = (List<FindCollectBean>) result.getResult();
             collectRecycleAdapter.addAll(findColleResults);
             collectRecycleAdapter.notifyDataSetChanged();
-            mCollectRecycle.refreshComplete();
-            mCollectRecycle.loadMoreComplete();
             refreshLayout.finishRefresh();
             refreshLayout.finishLoadmore();
             CircularLoading.closeDialog(dialog);

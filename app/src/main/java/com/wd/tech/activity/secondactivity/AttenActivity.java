@@ -2,6 +2,7 @@ package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,10 +23,11 @@ import com.wd.tech.presenter.AttUserListPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class AttenActivity extends WDActivity {
+public class AttenActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.xrecycle)
-    XRecyclerView mXRecycle;
+    RecyclerView mXRecycle;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     private AttenRecycleAdapter attenRecycleAdapter;
@@ -34,6 +36,7 @@ public class AttenActivity extends WDActivity {
     int mCount = 1000;
     private LoginUserInfoBean userInfo;
     private Dialog dialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_atten;
@@ -47,8 +50,6 @@ public class AttenActivity extends WDActivity {
         attenRecycleAdapter = new AttenRecycleAdapter();
         mXRecycle.setLayoutManager(new LinearLayoutManager(this));
         mXRecycle.setAdapter(attenRecycleAdapter);
-        mXRecycle.setPullRefreshEnabled(true);
-        mXRecycle.setLoadingMoreEnabled(false);
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -72,6 +73,16 @@ public class AttenActivity extends WDActivity {
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
 

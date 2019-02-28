@@ -116,6 +116,7 @@ public class MainActivity extends WDActivity {
             transaction.hide(fragment_page_three);
         }
         transaction.commit();
+        mRadio.check(mRadio.getChildAt(0).getId());
         mRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -30,30 +30,30 @@
             <RadioButton
                 android:id="@+id/one"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/common_tab_informatiion_s"
+                android:drawableTop="@drawable/common_selete"
                 android:gravity="center"
                 android:text="资讯" />
 
             <RadioButton
                 android:id="@+id/two"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/common_tab_message_n"
+                android:drawableTop="@drawable/message_selete"
                 android:gravity="center"
                 android:text="消息" />
 
             <RadioButton
                 android:id="@+id/three"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/common_tab_community_n"
+                android:drawableTop="@drawable/community_selete"
                 android:gravity="center"
                 android:text="社区" />
         </RadioGroup>
@@ -121,7 +121,7 @@
 
             <TextView
                 android:id="@+id/mysign"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/myname"
                 android:layout_marginTop="5dp"

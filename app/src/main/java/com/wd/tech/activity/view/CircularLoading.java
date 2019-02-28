@@ -39,9 +39,8 @@ public static Dialog showLoadDialog(Context context, String s, boolean isCancela
     Dialog loadingDialog = new Dialog(context, R.style.TransDialogStyle);
     loadingDialog.setContentView(layout);
     loadingDialog.setCancelable(isCancelable);
-    loadingDialog.setCanceledOnTouchOutside(true);
+    loadingDialog.setCanceledOnTouchOutside(false);
     layout.setBackgroundColor(0x77000000);
-
     Window window = loadingDialog.getWindow();
     WindowManager.LayoutParams lp = window.getAttributes();
     lp.width = WindowManager.LayoutParams.WRAP_CONTENT;

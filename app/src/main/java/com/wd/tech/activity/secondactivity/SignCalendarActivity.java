@@ -25,7 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class SignCalendarActivity extends WDActivity {
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class SignCalendarActivity extends WDActivity implements CustomAdapt {
     private SignCalendar calendar;
     private String date;
     private TextView tv_sign_year_month;
@@ -121,6 +123,16 @@ public class SignCalendarActivity extends WDActivity {
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     /**

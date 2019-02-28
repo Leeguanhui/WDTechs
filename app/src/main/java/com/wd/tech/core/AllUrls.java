@@ -213,12 +213,13 @@ public interface AllUrls {
     @GET("information/v1/findInformationByTitle")
     Observable<Result<List<ByTitleBean>>> findInformationByTitle(@Query("title") String title, @Query("page") int page,
                                                                  @Query("count") int count);
+
     /**
      * 根据作者名模糊查询
      */
     @GET("information/v1/findInformationBySource")
     Observable<Result<List<ByTitleBean>>> findName(@Query("source") String source, @Query("page") int page,
-                                                                 @Query("count") int count);
+                                                   @Query("count") int count);
 
     /**
      * 完善用户信息
@@ -366,16 +367,18 @@ public interface AllUrls {
      */
     @POST("information/verify/v1/addInfoComment")
     Observable<Result> AddComments(@Header("userId") int userId,
-                                       @Header("sessionId") String sessionId,
-                                       @Query("content") String content,
+                                   @Header("sessionId") String sessionId,
+                                   @Query("content") String content,
                                    @Query("infoId") String infoId);
+
     /**
      * 咨询点赞
      */
     @POST("information/verify/v1/addGreatRecord")
     Observable<Result> AddGreat(@Header("userId") int userId,
-                                   @Header("sessionId") String sessionId,
-                                   @Query("infoId") int infoId);
+                                @Header("sessionId") String sessionId,
+                                @Query("infoId") int infoId);
+
     /**
      * 取消点赞
      */
@@ -383,13 +386,14 @@ public interface AllUrls {
     Observable<Result> CancelGreat(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Query("infoId") int infoId);
+
     /**
      * 收藏
      */
     @POST("user/verify/v1/addCollection")
     Observable<Result> AddCollection(@Header("userId") int userId,
-                                        @Header("sessionId") String sessionId,
-                                        @Query("infoId") int infoId);
+                                     @Header("sessionId") String sessionId,
+                                     @Query("infoId") int infoId);
 
     /**
      * 取消收藏
@@ -404,16 +408,17 @@ public interface AllUrls {
      */
     @GET("user/verify/v1/findUserIntegral")
     Observable<Result<UserIntegralBean>> UserJf(@Header("userId") int userId,
-                                                      @Header("sessionId") String sessionId
-                              );
+                                                @Header("sessionId") String sessionId
+    );
+
     /**
      * 积分兑换资讯
      */
     @POST("information/verify/v1/infoPayByIntegral")
     Observable<Result> UserExchange(@Header("userId") int userId,
                                     @Header("sessionId") String sessionId,
-                                    @Query("infoId")int infoId,
-                                    @Query("integralCost")int integralCost
+                                    @Query("infoId") int infoId,
+                                    @Query("integralCost") int integralCost
     );
 
     /**
@@ -444,7 +449,7 @@ public interface AllUrls {
      */
     @GET("user/verify/v1/findUserIntegralRecord")
     Observable<Result<List<UserIntegralListBean>>> findUserIntegralRecord(@Header("userId") int userId, @Header("sessionId") String sessionId,
-                                                                    @Query("page") int page, @Query("count") int count);
+                                                                          @Query("page") int page, @Query("count") int count);
 
     /**
      * 审核群申请
@@ -515,6 +520,13 @@ public interface AllUrls {
     Observable<Result> retreat(
             @Header("userid") int userid,
             @Header("sessionid") String sessionid,
-            @Query("groupId") int groupId
-    );
+            @Query("groupId") int groupId);
+
+    /**
+     * 连续签到天数
+     */
+    @GET("user/verify/v1/findContinuousSignDays")
+    Observable<Result> findContinuousSignDays(
+            @Header("userid") int userid,
+            @Header("sessionid") String sessionid);
 }
