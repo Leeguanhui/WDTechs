@@ -107,6 +107,13 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
                 communityListBean.setPraise(a);
                 community_praise.setText(String.valueOf(communityListBean.getPraise()));
             }
+
+            //评论
+            @Override
+            public void addCommunityComment(int id) {
+                ids = id;
+                show(pl);
+            }
         });
 
         //评论
@@ -115,14 +122,6 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         pl = LayoutInflater.from(getContext()).inflate(R.layout.comment_popupwindow, null);
         editText = pl.findViewById(R.id.et_discuss);
         button = pl.findViewById(R.id.tv_confirm);
-        //评论
-        communityListAdapter.setAddCommunityComment(new CommunityListAdapter.AddCommunityComment() {
-            @Override
-            public void addCommunityComment(int id) {
-                ids = id;
-                show(pl);
-            }
-        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
