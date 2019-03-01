@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wd.tech.R;
 import com.wd.tech.activity.MainActivity;
+import com.wd.tech.activity.adapter.SearchAdapter;
 import com.wd.tech.activity.adapter.SearchRecycleAdapter;
 import com.wd.tech.activity.view.FlowLayout;
 import com.wd.tech.bean.ByTitleBean;
@@ -28,6 +30,7 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.FindByTitlePresenter;
 import com.wd.tech.presenter.FindTitlePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +46,7 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     @BindView(R.id.call_btn)
     TextView mCallbtn;
     @BindView(R.id.flow)
-    FlowLayout mFlow;
+    RecyclerView mFlow;
     private FindByTitlePresenter findByTitlePresenter;
     private int mPage = 1;
     private int mContent = 10000000;
@@ -53,6 +56,8 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     private String content;
     private FindTitlePresenter findTitlePresenter;
     private InputMethodManager systemService;
+    private List<String> list=new ArrayList<>();
+    private SearchAdapter searchAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -62,6 +67,10 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     @OnClick(R.id.search_image)
     public void search_image() {
         content = mSearchedit.getText().toString();
+        if (content!=null){
+            list.add(content);
+            searchAdapter.setList(list);
+        }
         searchRecycleAdapter.removeAll();
         findByTitlePresenter.request(content, mPage, mContent);
     }
@@ -76,11 +85,10 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
         super.onCreate(savedInstanceState);
         systemService = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }
-
-
-
     @Override
     protected void initView() {
+        searchAdapter = new SearchAdapter(this);
+        mFlow.setAdapter(searchAdapter);
         findTitlePresenter = new FindTitlePresenter(new TitleCall());
         findByTitlePresenter = new FindByTitlePresenter(new FindByTitleResult());
         mXrecycle.setLayoutManager(new LinearLayoutManager(this));
