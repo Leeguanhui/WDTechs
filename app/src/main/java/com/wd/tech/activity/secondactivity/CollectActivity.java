@@ -117,7 +117,6 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
             return;
         }
         String substring = checkId.substring(0, checkId.length() - 1);
-
         cancelCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), substring);
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
     }

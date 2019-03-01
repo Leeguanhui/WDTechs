@@ -6,14 +6,14 @@ import com.wd.tech.core.utils.NotWorkUtils;
 
 import io.reactivex.Observable;
 
-public class FindContinuousPresenter extends BasePresenter {
-    public FindContinuousPresenter(ICoreInfe dataCall) {
+public class CanceFollowPresenter extends BasePresenter {
+    public CanceFollowPresenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.findContinuousSignDays((int) args[0], (String) args[1]);
+        return allUrls.cancelFollow((int) args[0], (String) args[1], (int) args[2]);
     }
 }
