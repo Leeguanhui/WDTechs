@@ -535,9 +535,6 @@ public interface AllUrls {
                                            @Header("sessionid") String sessionid,
                                            @Query("communityId") int communityId,
                                            @Query("content") String content);
-            @Header("sessionid") String sessionid,
-            @Query("groupId") int groupId
-    );
     /**
      * 用户购买VIP
      */

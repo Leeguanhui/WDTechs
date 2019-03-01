@@ -152,15 +152,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".activity.GroupChatActivity" />
-        <activity android:name=".activity.ClusterActivity" />
-        <activity android:name=".face.RegisterActivity" />
-        <activity android:name=".face.DetecterActivity" />
-        <activity android:name=".face.FaceLoginActivity" />
-        <activity android:name=".face.LoginActivity" />
-        <activity android:name=".face.PermissionAcitivity" />
-        <activity android:name=".activity.IntergralExchange" />
-        <activity android:name=".activity.DredgeVip" />
         <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity"></activity>
     </application>
 
