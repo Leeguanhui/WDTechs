@@ -21,6 +21,8 @@ import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.EaseUI;
 import com.wd.tech.face.FaceDB;
 
 import java.io.File;
@@ -93,7 +95,8 @@ public class WDApplication extends Application {
             StrictMode.setVmPolicy(builder.build());
         }
 
-
+        EaseUI.getInstance().init(this, null);
+        EMClient.getInstance().setDebugMode(true);
     }
 
     public void setCaptureImage(Uri uri) {

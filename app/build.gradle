@@ -5,7 +5,7 @@ android {
         tech {
             keyAlias 'tech'
             keyPassword '123456'
-            storeFile file('C:/Users/Lee辉/Desktop/tech.keystore')
+            storeFile file('C:/Users/asus-/Downloads/tech.keystore')
             storePassword '123456'
         }
     }
@@ -18,6 +18,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.tech
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi", "armeabi-v7a"
         }
@@ -45,7 +46,6 @@ greendao {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     implementation 'com.guo.android_extend:android-extend:1.0.6'
@@ -75,16 +75,15 @@ dependencies {
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.greenrobot:greendao-generator:3.2.2'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
     implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
     implementation 'com.contrarywind:Android-PickerView:3.0.3'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'org.greenrobot:eventbus:3.1.1'
-
     implementation files('libs/facedetection.jar')
     implementation files('libs/facerecognition.jar')
     implementation files('libs/facetracking.jar')
     implementation files('libs/genderestimation.jar')
     implementation files('libs/ageestimation.jar')
+    implementation project(':easeui')
 }
