@@ -15,6 +15,7 @@ import com.wd.tech.R;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.thirdlyactivity.SearchActivity;
+import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.activity.view.Type;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -108,9 +109,18 @@ public class Fragment_Page_one extends WDFragment {
         banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
-                Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
-                intent.putExtra("id",result.get(i).getJumpUrl());
-                startActivity(intent);
+                String jumpUrl = result.get(i).getJumpUrl();
+                String[] split = jumpUrl.split(":");
+                if (split[0].equals("wd")){
+                    Intent intent = new Intent(getActivity(),NewsDetails.class);
+                    intent.putExtra("id",1);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
+                    intent.putExtra("id",result.get(i).getJumpUrl());
+                    startActivity(intent);
+                }
+
             }
         });
         menu.setOnClickListener(new View.OnClickListener() {

@@ -1,20 +1,16 @@
 package com.wd.tech.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends WDActivity {
@@ -55,6 +52,12 @@ public class MainActivity extends WDActivity {
     RadioGroup mRadio;
     @BindView(R.id.listview)
     ListView listview;
+    @BindView(R.id.one)
+    RadioButton one;
+    @BindView(R.id.two)
+    RadioButton two;
+    @BindView(R.id.three)
+    RadioButton three;
     private Fragment_Page_one fragment_page_one;
     private Fragment_Page_two fragment_page_two;
     private Fragment_Page_three fragment_page_three;
@@ -93,6 +96,7 @@ public class MainActivity extends WDActivity {
     @Override
     protected void initView() {
         closeSwipeBack();
+
         Intent intent = getIntent();
         comment = intent.getIntExtra("comment", 0);
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
@@ -281,6 +285,13 @@ public class MainActivity extends WDActivity {
             listview.setVisibility(View.GONE);
             login_bnt.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     /**
