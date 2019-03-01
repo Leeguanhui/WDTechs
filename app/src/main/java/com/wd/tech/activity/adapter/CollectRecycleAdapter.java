@@ -93,7 +93,7 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
         }
     }
 
-    //计算总价格
+    //批量删除
     public String getCheckId() {
         String mPosition = "";
         for (int i = 0; i < checkBoxes.size(); i++) {

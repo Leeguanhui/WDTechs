@@ -14,6 +14,15 @@ public class Result <T> {
     T result;
     int groupId;
     int flag;
+    String faceId;
+
+    public String getFaceId() {
+        return faceId;
+    }
+
+    public void setFaceId(String faceId) {
+        this.faceId = faceId;
+    }
 
     public int getFlag() {
         return flag;

@@ -13,6 +13,7 @@ import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
 import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
+import com.wd.tech.bean.FindMyPostListBean;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
@@ -529,4 +530,45 @@ public interface AllUrls {
     Observable<Result> findContinuousSignDays(
             @Header("userid") int userid,
             @Header("sessionid") String sessionid);
+
+    /**
+     * 我的帖子
+     */
+    @GET("community/verify/v1/findMyPostById")
+    Observable<Result<List<FindMyPostListBean>>> findMyPostById(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 删除帖子
+     */
+    @DELETE("community/verify/v1/deletePost")
+    Observable<Result> deletePost(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("communityId") String communityId);
+
+    /**
+     * 用户修改
+     */
+    @PUT("user/verify/v1/modifyUserPwd")
+    Observable<Result> modifyUserPwd(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("oldPwd") String oldPwd, @Query("newPwd") String newPwd);
+
+    /**
+     * 绑定Face
+     */
+    @PUT("user/verify/v1/bindingFaceId")
+    Observable<Result> bindingFaceId(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("featureInfo") String featureInfo);
+
+    /**
+     * 绑定微信
+     */
+    @POST("user/verify/v1/bindWeChat")
+    @FormUrlEncoded
+    Observable<Result> bindWeChat(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("code") String code);
 }

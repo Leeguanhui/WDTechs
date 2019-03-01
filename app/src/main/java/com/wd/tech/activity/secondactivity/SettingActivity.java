@@ -1,5 +1,6 @@
 package com.wd.tech.activity.secondactivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,15 +11,24 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
+import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
+import com.wd.tech.activity.thirdlyactivity.UpdatePwdActivity;
+import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.activity.view.MyDialog;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -27,6 +37,7 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.StringUtils;
+import com.wd.tech.face.FaceLoginActivity;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 import com.wd.tech.presenter.UserHeaderPresenter;
 
@@ -66,12 +77,15 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
-    private View view;
-    private MyDialog myDialog;
-    private Button btn_take_photo, btn_pick_photo,cancel_btn;
+    private LinearLayout btn_take_photo, btn_pick_photo;
+    TextView cancel_btn;
     private UserHeaderPresenter userHeaderPresenter;
     private LoginUserInfoBean userInfo;
-
+    private Dialog dialog;
+    private View contentView;
+    private Dialog bottomDialog;
+    private IWXAPI mWechatApi;
+    int type=1;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;
@@ -80,36 +94,40 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     @Override
     protected void initView() {
         userHeaderPresenter = new UserHeaderPresenter(new UserHeaderResult());
-        view = View.inflate(this, R.layout.photo_item, null);
-        btn_take_photo = view.findViewById(R.id.btn_take_photo);
-        btn_pick_photo = view.findViewById(R.id.btn_pick_photo);
-        cancel_btn = view.findViewById(R.id.cancel_btn);
+        contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_normal, null);
+        btn_take_photo = contentView.findViewById(R.id.tv_take_photo);
+        btn_pick_photo = contentView.findViewById(R.id.tv_take_pic);
+        cancel_btn = contentView.findViewById(R.id.tv_cancel);
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
         edit = sharedPreferences.edit();
         userInfo = getUserInfo(this);
         byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
         byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
-        myDialog = new MyDialog(this, view);
+
+        //底部弹出dialog
+        bottomDialog = new Dialog(this, R.style.BottomDialog);
+
         btn_take_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choseHeadImageFromCameraCapture();
-                myDialog.dismiss();
+                bottomDialog.dismiss();
             }
         });
         btn_pick_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choseHeadImageFromGallery();
-                myDialog.dismiss();
+                bottomDialog.dismiss();
             }
         });
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDialog.dismiss();
+                bottomDialog.dismiss();
             }
         });
+        dialog = CircularLoading.showLoadDialog(this, "加载", true);
     }
 
     @OnClick(R.id.dropout)
@@ -130,11 +148,35 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         alert.show();
     }
 
+    @OnClick(R.id.updatepwd)
+    public void updatepwd() {
+        startActivity(new Intent(this, UpdatePwdActivity.class));
+    }
+
     @OnClick(R.id.back_bnt)
     public void back_bnt() {
         finish();
     }
 
+    @OnClick(R.id.my_face)
+    public void my_face() {
+        startActivity(new Intent(this, FaceLoginActivity.class));
+    }
+
+    @OnClick(R.id.my_wx)
+    public void my_wx() {
+        type=2;
+        mWechatApi = WXAPIFactory.createWXAPI(SettingActivity.this, "wx4c96b6b8da494224", false);
+        mWechatApi.registerApp("wx4c96b6b8da494224");
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo";
+        mWechatApi.sendReq(req);
+        finish();
+    }
+   public int getType(){
+       return type;
+    }
     @OnClick(R.id.line1)
     public void line1() {
         startActivity(new Intent(SettingActivity.this, SignatureActivity.class));
@@ -145,13 +187,10 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
 
     }
 
+
     @OnClick(R.id.my_header)
     public void my_header() {
-        myDialog.getWindow().setGravity(Gravity.BOTTOM);
-        Window window = myDialog.getWindow();
-        //设置显示动画
-        window.setWindowAnimations(R.style.mystyle);  //添加动画
-        myDialog.show();
+        show(contentView);
     }
 
     @Override
@@ -174,7 +213,12 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             ByIdUserInfoBean byIdUserInfoBean = (ByIdUserInfoBean) result.getResult();
             mHeader.setImageURI(Uri.parse(byIdUserInfoBean.getHeadPic()));
             mName.setText(byIdUserInfoBean.getNickName());
-            mSex.setText(byIdUserInfoBean.getSex());
+            int sex = byIdUserInfoBean.getSex();
+            if (sex == 1) {
+                mSex.setText("男");
+            } else {
+                mSex.setText("女");
+            }
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             date.setTime(byIdUserInfoBean.getBirthday());
@@ -193,6 +237,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             } else {
                 mFace.setText("未绑定");
             }
+            CircularLoading.closeDialog(dialog);
         }
 
         @Override
@@ -340,5 +385,17 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         public void fail(ApiException e) {
 
         }
+    }
+
+    //Dialog
+    private void show(View contentViewss) {
+        bottomDialog.setContentView(contentViewss);
+        ViewGroup.LayoutParams layoutParams = contentViewss.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        contentViewss.setLayoutParams(layoutParams);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.setCanceledOnTouchOutside(true);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
     }
 }

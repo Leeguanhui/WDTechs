@@ -251,7 +251,6 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
         Log.d(TAG, "AFT_FSDK_InitialFaceEngine =" + err.getCode());
         err = engine.AFT_FSDK_GetVersion(version);
         Log.d(TAG, "AFT_FSDK_GetVersion:" + version.toString() + "," + err.getCode());
-
         ASAE_FSDKError error = mAgeEngine.ASAE_FSDK_InitAgeEngine(FaceDB.appid, FaceDB.age_key);
         Log.d(TAG, "ASAE_FSDK_InitAgeEngine =" + error.getCode());
         error = mAgeEngine.ASAE_FSDK_GetVersion(mAgeVersion);

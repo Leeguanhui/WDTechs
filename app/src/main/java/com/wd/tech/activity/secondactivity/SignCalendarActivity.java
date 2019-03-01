@@ -20,7 +20,6 @@ import com.wd.tech.presenter.FindUserSignRecordingPresenter;
 import com.wd.tech.presenter.UserSignPresenter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +30,6 @@ public class SignCalendarActivity extends WDActivity implements CustomAdapt {
     private SignCalendar calendar;
     private String date;
     private TextView tv_sign_year_month;
-    List<String> list = new ArrayList<String>();
     private int month;
     private int year;
     private RelativeLayout rlGetGiftData;
@@ -40,11 +38,9 @@ public class SignCalendarActivity extends WDActivity implements CustomAdapt {
     private ImageView ivSunBg;
     private RelativeLayout rlQuedingBtn;
     private Button rlBtnSign;
-    private ImageView signBack;
     private UserSignPresenter userSignPresenter;
     private LoginUserInfoBean userInfo;
     private FindUserSignPresenter findUserSignPresenter;
-    private Double resultInt;
     private FindUserSignRecordingPresenter findUserSignRecordingPresenter;
     private DoTheTaskPresenter doTheTaskPresenter;
 

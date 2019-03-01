@@ -43,6 +43,7 @@
 
 
             <TextView
+                android:id="@+id/sign_texts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -88,6 +89,7 @@
 
 
             <TextView
+                android:id="@+id/comment_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -135,6 +137,7 @@
 
 
             <TextView
+                android:id="@+id/tiezi_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -181,6 +184,7 @@
 
 
             <TextView
+                android:id="@+id/fenxiang_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -225,6 +229,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/guanggao_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -279,6 +284,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/xinxi_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -323,6 +329,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/weixin_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
@@ -35,6 +37,7 @@ import com.wd.tech.activity.secondactivity.SettingActivity;
 import com.wd.tech.activity.secondactivity.SignCalendarActivity;
 import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.activity.secondactivity.UpdateMessageActivity;
+import com.wd.tech.activity.thirdlyactivity.SignatureActivity;
 import com.wd.tech.bean.ByIdUserInfoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.PersonallistBean;
@@ -254,12 +257,15 @@ public class MainActivity extends WDActivity {
 
     @OnClick({R.id.myheader, R.id.myname})
     public void myheader() {
-
         Intent intent = new Intent(this, UpdateMessageActivity.class);
         intent.putExtra("name", nickName);
         startActivity(intent);
     }
 
+    @OnClick(R.id.mysign)
+    public void  mysign(){
+        startActivity(new Intent(this,SignatureActivity.class));
+    }
     @Override
     protected void destoryData() {
 
@@ -303,8 +309,15 @@ public class MainActivity extends WDActivity {
                 }
                 nickName = userInfoBean.getNickName();
                 myname.setText(userInfoBean.getNickName());
+                relat_one.setVisibility(View.VISIBLE);
+                text_one.setVisibility(View.VISIBLE);
+                listview.setVisibility(View.VISIBLE);
+                login_bnt.setVisibility(View.GONE);
             } else {
-                Toast.makeText(MainActivity.this, "用户信息请求失败,请稍后重试。", Toast.LENGTH_SHORT).show();
+                relat_one.setVisibility(View.GONE);
+                text_one.setVisibility(View.GONE);
+                listview.setVisibility(View.GONE);
+                login_bnt.setVisibility(View.VISIBLE);
             }
 
         }
