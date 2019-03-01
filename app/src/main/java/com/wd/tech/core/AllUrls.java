@@ -523,7 +523,7 @@ public interface AllUrls {
     @GET("user/verify/v1/findContinuousSignDays")
     Observable<Result> findContinuousSignDays(
             @Header("userid") int userid,
-            @Header("sessionid") String sessionid);
+            @Header("sessionid") String sessionid,
             @Query("groupId") int groupId
     );
     /**

@@ -64,24 +64,25 @@
             <RadioButton
                 android:layout_width="129dp"
                 android:layout_height="53dp"
-                android:button="@drawable/year"
-                android:text="年VIP"
+                android:button="@null"
+                android:text="     年VIP"
                 android:paddingLeft="15dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/chose_vip"
-
+                android:drawableLeft="@drawable/year"
                 android:id="@+id/year"
                 />
             <RadioButton
                 android:layout_width="129dp"
                 android:layout_height="53dp"
-                android:button="@drawable/quarter"
-                android:text="季VIP"
+                android:button="@null"
+                android:text="     季VIP"
                 android:paddingLeft="15dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/quarter"
                 android:id="@+id/quarter"
                 />
             <RadioButton
@@ -90,10 +91,11 @@
                 android:paddingLeft="15dp"
             android:layout_marginTop="90dp"
                 android:layout_marginLeft="-287dp"
-                android:button="@drawable/month"
-                android:text="月VIP"
+                android:button="@null"
+                android:text="     月VIP"
                 android:id="@+id/month"
                 android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/month"
             />
 
             <RadioButton
@@ -101,11 +103,12 @@
                 android:layout_height="53dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="90dp"
-                android:button="@drawable/week"
-                android:text="周VIP"
+                android:button="@null"
+                android:text="     周VIP"
                 android:paddingLeft="15dp"
                 android:id="@+id/week"
                 android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/week"
                 />
         </RadioGroup>
     </RelativeLayout>
@@ -138,6 +141,7 @@
              android:layout_height="wrap_content"
              android:id="@+id/money"
              android:textSize="24sp"
+             android:text="0"
              android:textColor="#ff5757"
              android:layout_centerVertical="true"
              android:layout_toRightOf="@id/m"

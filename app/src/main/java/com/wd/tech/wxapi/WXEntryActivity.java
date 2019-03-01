@@ -4,17 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.wd.tech.R;
 import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.MainActivity;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -27,9 +35,12 @@ import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.WeChatLoginPresenter;
 
+import java.io.InputStream;
+import java.util.HashMap;
+
 public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
     private IWXAPI api;
-
+    int WX_LOGIN=1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +51,44 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //应用请求微信的响应结果将通过onResp回调
     @Override
     public void onResp(BaseResp resp) {
-        if (resp.errCode == BaseResp.ErrCode.ERR_OK) {//用户同意
-            final String code = ((SendAuth.Resp) resp).code;
-            try {
-                String versionName = getVersionName(WXEntryActivity.this);
-                WeChatLoginPresenter weChatLoginPresenter = new WeChatLoginPresenter(new WeChatLoginResult());
-                weChatLoginPresenter.request(versionName, code);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
+        switch (resp.getType()) {
+            case ConstantsAPI.COMMAND_SENDAUTH:
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {//用户同意
+                    final String code = ((SendAuth.Resp) resp).code;
+                    try {
+                        String versionName = getVersionName(WXEntryActivity.this);
+                        WeChatLoginPresenter weChatLoginPresenter = new WeChatLoginPresenter(new WeChatLoginResult());
+                        weChatLoginPresenter.request(versionName, code);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
-        } else {
-            Log.e("LKing", "授权登录失败\n\n自动返回");
-            finish();
+                } else {
+                    Log.e("LKing", "授权登录失败\n\n自动返回");
+                    finish();
+                }
+            case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX: {
+                String result2 = null;
+                switch (resp.errCode) {
+                    case BaseResp.ErrCode.ERR_OK:
+                        finish();
+                        result2 = "成功";
+                        break;
+                    case BaseResp.ErrCode.ERR_USER_CANCEL:
+                        result2 = "取消";
+                        break;
+                    case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                        result2 = "失败";
+                        break;
+                    default:
+                        result2 = "错误";
+                        break;
+                }
+                finish();
+                break;
+            }
+            default:
+                break;
         }
     }
 
@@ -60,8 +96,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     public void onReq(BaseReq req) {
         //......这里是用来处理接收的请求,暂不做讨论
     }
-
-
     /**
      * 登录
      */
@@ -99,4 +133,11 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         String version = packInfo.versionName;
         return version;
     }
+
+
+
+
+
+
+
 }

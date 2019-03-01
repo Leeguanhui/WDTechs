@@ -2,6 +2,7 @@ package com.wd.tech.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -62,6 +63,12 @@ public class DredgeVip extends WDActivity {
 
     @Override
     protected void initView() {
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         pay_chose_presenter = new Pay_Chose_Presenter(new WXPAY());
         pay_vip_presenter = new Pay_Vip_Presenter(new PayBack());
         LoginUserInfoBean userInfo = getUserInfo(this);

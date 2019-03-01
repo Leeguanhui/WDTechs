@@ -110,6 +110,12 @@ public class IntergralExchange extends WDActivity {
         String format = formatter.format(releaseTime);
         data.setText(format);
         likenum.setText(praise+"");
+        mean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.exchange)
@@ -121,7 +127,6 @@ public class IntergralExchange extends WDActivity {
            final Dialog dialog = new Dialog(this);
            dialog.setContentView(inflate);
            dialog.show();
-
            ImageView back=inflate.findViewById(R.id.back);
            Button delete=inflate.findViewById(R.id.delete);
            Button go=inflate.findViewById(R.id.go);
