@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ReleasePostAdapter extends RecyclerView.Adapter<ReleasePostAdapter.MyHodler> {
     private List<Object> mList = new ArrayList<>();
+    private List<Object> mLists = new ArrayList<>();
     private int sign;//0:普通点击，1自定义
 
     public void addAll(List<Object> list) {
@@ -49,6 +50,7 @@ public class ReleasePostAdapter extends RecyclerView.Adapter<ReleasePostAdapter.
             if (imageUrl.contains("http:")) {//加载http
                 myHodler.image.setImageURI(Uri.parse(imageUrl));
             } else {//加载sd卡
+//                String userIdJiequ = imageUrl.substring(imageUrl.indexOf("file://"));
                 Uri uri = Uri.parse("file://" + imageUrl);
                 myHodler.image.setImageURI(uri);
             }

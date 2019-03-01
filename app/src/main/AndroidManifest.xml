@@ -21,8 +21,6 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -89,10 +87,16 @@
         <activity android:name=".face.LoginActivity"></activity>
         <activity android:name=".face.PermissionAcitivity" />
         <activity android:name=".activity.IntergralExchange"></activity>
-        <activity android:name=".activity.GroupChatActivity" />
-        <activity android:name=".activity.ClusterActivity" />
-        <activity android:name=".activity.IntergralExchange" />
         <activity android:name=".activity.DredgeVip"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zz.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wd.tech.R;
 import com.wd.tech.bean.CommunityCommentVoListBean;
@@ -46,6 +47,16 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
 
     public interface addCommunityGreat {
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityCommentVoListBean communityListBean);
+    }
+
+    public interface AddCommunityComment {
+        void addCommunityComment(int id);
+    }
+
+    AddCommunityComment addCommunityComment;
+
+    public void setAddCommunityComment(AddCommunityComment addCommunityComment) {
+        this.addCommunityComment = addCommunityComment;
     }
 
     @NonNull
@@ -103,6 +114,17 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
             viewHolder.imageAdapter.addAll(Arrays.asList(images));
             viewHolder.gridLayoutManager.setSpanCount(colNum);//设置列数
             viewHolder.imageAdapter.notifyDataSetChanged();
+
+            //评论
+            viewHolder.communityIv.setTag(i);
+            viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int tag = (int) v.getTag();
+                    Toast.makeText(context, "" + tag, Toast.LENGTH_SHORT).show();
+                    addCommunityComment.addCommunityComment(list.get(tag).getId());
+                }
+            });
         }
     }
 

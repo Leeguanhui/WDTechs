@@ -529,4 +529,13 @@ public interface AllUrls {
     Observable<Result> findContinuousSignDays(
             @Header("userid") int userid,
             @Header("sessionid") String sessionid);
+
+    /**
+     * 社区评论
+     */
+    @POST("community/verify/v1/addCommunityComment")
+    Observable<Result> addCommunityComment(@Header("userid") int userid,
+                                           @Header("sessionid") String sessionid,
+                                           @Query("communityId") int communityId,
+                                           @Query("content") String content);
 }

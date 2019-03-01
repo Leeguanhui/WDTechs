@@ -89,5 +89,4 @@
                 android:layout_marginRight="12dp" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </RelativeLayout>
