@@ -46,16 +46,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     public interface addCommunityGreat {
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
-    }
-
-    public interface AddCommunityComment {
         void addCommunityComment(int id);
-    }
-
-    AddCommunityComment addCommunityComment;
-
-    public void setAddCommunityComment(AddCommunityComment addCommunityComment) {
-        this.addCommunityComment = addCommunityComment;
     }
 
     @NonNull
@@ -110,6 +101,15 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             }
         });
 
+        //评论
+        viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
+                addCommunityGreat.addCommunityComment(list.get(i).getId());
+            }
+        });
+
         if (StringUtils.isEmpty(communityListBean.getFile())) {
             viewHolder.gridView.setVisibility(View.GONE);
         } else {
@@ -130,17 +130,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             viewHolder.imageAdapter.addAll(Arrays.asList(images));
             viewHolder.gridLayoutManager.setSpanCount(colNum);//设置列数
             viewHolder.imageAdapter.notifyDataSetChanged();
-
-            //评论
-            viewHolder.communityIv.setTag(i);
-            viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int tag = (int) v.getTag();
-                    Toast.makeText(context, "" + tag, Toast.LENGTH_SHORT).show();
-                    addCommunityComment.addCommunityComment(list.get(tag).getId());
-                }
-            });
         }
     }
 
