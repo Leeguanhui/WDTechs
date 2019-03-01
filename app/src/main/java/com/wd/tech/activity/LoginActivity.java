@@ -1,6 +1,5 @@
 package com.wd.tech.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -9,9 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +29,6 @@ import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
-
-import java.util.concurrent.Executor;
 
 import butterknife.BindView;
 import butterknife.OnClick;
