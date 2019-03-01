@@ -113,7 +113,6 @@ public class LinkmanFragment extends WDFragment {
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
 //                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
                 Intent intent = new Intent(getContext(), IMActivity.class);
-
                 intent.putExtra(EaseConstant.EXTRA_USER_ID,groupS.get(i).getFriendInfoList().get(i).getUserName());
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EMMessage.ChatType.Chat);
                 startActivity(intent);
