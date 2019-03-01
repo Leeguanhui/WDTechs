@@ -40,7 +40,13 @@ import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.wd.tech.R;
+import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.bean.Result;
+import com.wd.tech.core.ICoreInfe;
+import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.WDApplication;
+import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.BindFacePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +56,7 @@ import java.util.Map;
  * Created by gqj3375 on 2017/4/27.
  */
 
-public class RegisterActivity extends Activity implements SurfaceHolder.Callback {
+public class RegisterActivity extends WDActivity implements SurfaceHolder.Callback {
     private final String TAG = this.getClass().toString();
     private final static int MSG_CODE = 0x1000;
     private final static int MSG_EVENT_REG = 0x1001;
@@ -62,7 +68,6 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
     private UIHandler mUIHandler;
     // Intent data.
     private String mFilePath;
-
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
     private Bitmap mBitmap;
@@ -74,18 +79,22 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
     private HListView mHListView;
     private RegisterViewAdapter mRegisterViewAdapter;
     private AFR_FSDKFace mAFR_FSDKFace;
+    private BindFacePresenter bindFacePresenter;
+    private LoginUserInfoBean userInfo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_register);
-        //initial data.
+    protected int getLayoutId() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    protected void initView() {
         if (!getIntentData(getIntent().getExtras())) {
             Log.e(TAG, "getIntentData fail!");
             this.finish();
         }
-
+        userInfo = getUserInfo(this);
+        bindFacePresenter = new BindFacePresenter(new BindFaceResult());
         mRegisterViewAdapter = new RegisterViewAdapter(this);
         mHListView = (HListView) findViewById(R.id.hlistView);
         mHListView.setAdapter(mRegisterViewAdapter);
@@ -111,8 +120,8 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
                     ImageConverter convert = new ImageConverter();
                     convert.initial(mBitmap.getWidth(), mBitmap.getHeight(), ImageConverter.CP_PAF_NV21);
                     if (convert.convert(mBitmap, data)) {
-                        Log.d(TAG, "convert ok!");
                         String face = new String(data);
+                        Log.d("TAGGT", "convert ok!" + face);
                     }
                     convert.destroy();
                 } catch (Exception e) {
@@ -211,6 +220,10 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
                         mUIHandler.sendMessage(reg);
                     }
                     error1 = engine1.AFR_FSDK_UninitialEngine();
+                    byte[] featureData = mAFR_FSDKFace.getFeatureData();
+                    String s = new String(featureData);
+                    bindFacePresenter.request(userInfo.getUserId(), userInfo.getSessionId(), s);
+                    Log.d("mAFR_FSDKFace", s);
                     Log.d("com.arcsoft", "AFR_FSDK_UninitialEngine : " + error1.getCode());
                 } else {
                     Message reg = Message.obtain();
@@ -223,6 +236,10 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
             }
         });
         view.start();
+    }
+
+    @Override
+    protected void destoryData() {
 
     }
 
@@ -398,6 +415,22 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
                         }
                     })
                     .show();
+        }
+    }
+
+    /**
+     * 绑定face
+     */
+    private class BindFaceResult implements ICoreInfe<Result> {
+        @Override
+        public void success(Result result) {
+            String message = result.getMessage();
+            Toast.makeText(RegisterActivity.this, ""+message, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }

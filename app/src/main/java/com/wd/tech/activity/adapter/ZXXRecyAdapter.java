@@ -126,6 +126,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
         }
     }
 
+
     private class ListViewHolder extends XRecyclerView.ViewHolder {
         SimpleDraweeView simple;
         TextView title,content,writer,data,share,likenum;

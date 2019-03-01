@@ -41,6 +41,7 @@
         android:text="立即开通"
         android:textSize="20sp"
         android:textColor="#666666"
+        android:id="@+id/ok"
         />
     <View
         android:layout_width="match_parent"
@@ -55,110 +56,61 @@
         android:layout_marginTop="1dp"
         android:id="@+id/b"
         >
-        <RelativeLayout
-            android:layout_width="129dp"
-            android:layout_height="53dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-           android:id="@+id/z"
-            android:background="@drawable/chose_vip"
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
-           <ImageView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/year"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="15dp"
-               />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="年VIP"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
+            <RadioButton
+                android:layout_width="129dp"
+                android:layout_height="53dp"
+                android:button="@null"
+                android:text="     年VIP"
+                android:paddingLeft="15dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/year"
+                android:id="@+id/year"
                 />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="129dp"
-            android:layout_height="53dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-           android:id="@+id/x"
-            android:background="@drawable/chose_vip"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/quarter"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+            <RadioButton
+                android:layout_width="129dp"
+                android:layout_height="53dp"
+                android:button="@null"
+                android:text="     季VIP"
+                android:paddingLeft="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/quarter"
+                android:id="@+id/quarter"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="季VIP"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                />
+            <RadioButton
+                android:layout_width="129dp"
+                android:layout_height="53dp"
+                android:paddingLeft="15dp"
+            android:layout_marginTop="90dp"
+                android:layout_marginLeft="-287dp"
+                android:button="@null"
+                android:text="     月VIP"
+                android:id="@+id/month"
+                android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/month"
+            />
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="129dp"
-            android:layout_height="53dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:id="@+id/c"
-            android:layout_below="@id/z"
-            android:background="@drawable/chose_vip"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/month"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+            <RadioButton
+                android:layout_width="129dp"
+                android:layout_height="53dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="90dp"
+                android:button="@null"
+                android:text="     周VIP"
+                android:paddingLeft="15dp"
+                android:id="@+id/week"
+                android:background="@drawable/chose_vip"
+                android:drawableLeft="@drawable/week"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="月VIP"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="129dp"
-            android:layout_height="53dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:id="@+id/v"
-            android:layout_below="@id/x"
-            android:background="@drawable/chose_vip"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/week"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="周VIP"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                />
-
-        </RelativeLayout>
+        </RadioGroup>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -189,9 +141,9 @@
              android:layout_height="wrap_content"
              android:id="@+id/money"
              android:textSize="24sp"
+             android:text="0"
              android:textColor="#ff5757"
              android:layout_centerVertical="true"
-             android:text="1111111"
              android:layout_toRightOf="@id/m"
              android:layout_marginLeft="10dp"
              />
@@ -230,8 +182,8 @@
         android:layout_marginTop="20dp"
         >
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/common_icon_weixin_n"
             android:layout_marginLeft="30dp"
             android:id="@+id/weixin"
@@ -243,12 +195,13 @@
             android:layout_marginLeft="10dp"
             android:text="微信支付"
             android:textSize="14sp"
+            android:layout_marginTop="5dp"
             android:textColor="#666666"
             android:id="@+id/wx"
             />
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/zfb"
             android:layout_below="@id/weixin"
             android:layout_marginLeft="30dp"
@@ -264,7 +217,7 @@
             android:textColor="#666666"
             android:layout_toRightOf="@id/zhifubao"
             android:layout_below="@id/wx"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             />
         <RadioGroup
             android:layout_width="wrap_content"
@@ -284,7 +237,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/chose_zfb"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/chose_pay_type"
                 android:button="@null"
                 />

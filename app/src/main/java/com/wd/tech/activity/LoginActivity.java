@@ -2,6 +2,11 @@ package com.wd.tech.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,7 +40,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.user_phone)
     EditText mUserphone;
     @BindView(R.id.mEd_Pwd_Login)
-    EditText mEd_Pwd_Login;
+    EditText mUserPwd;
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
     private Dialog dialog;
@@ -55,6 +60,53 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 startActivity(new Intent(LoginActivity.this, RegActivity.class));
             }
         });
+        //输入框不能空格
+        mUserphone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (s.toString().contains(" ")) {
+                    String[] str = s.toString().split(" ");
+                    String str1 = "";
+                    for (int i = 0; i < str.length; i++) {
+                        str1 += str[i];
+                    }
+                    mUserphone.setText(str1);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        mUserPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (s.toString().contains(" ")) {
+                    String[] str = s.toString().split(" ");
+                    String str1 = "";
+                    for (int i = 0; i < str.length; i++) {
+                        str1 += str[i];
+                    }
+                    mUserphone.setText(str1);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
     }
 
@@ -62,6 +114,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     protected void destoryData() {
 
     }
+
     @OnClick(R.id.wechat_btn)
     public void mWechatBtn() {
         mWechatApi = WXAPIFactory.createWXAPI(LoginActivity.this, "wx4c96b6b8da494224", false);
@@ -81,12 +134,12 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.login_btn)
     public void mLoginBtn() {
         String phone = mUserphone.getText().toString();
-        String pwd = mEd_Pwd_Login.getText().toString();
-        if(phone.equals("")||phone==null||pwd.equals("")||pwd==null){
+        String pwd = mUserPwd.getText().toString();
+        if (phone.equals("") || phone == null || pwd.equals("") || pwd == null) {
             Toast.makeText(this, "手机号和密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!StringUtils.isPhoneLegal(phone)){
+        if (!StringUtils.isPhoneLegal(phone)) {
             Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
             return;
         }

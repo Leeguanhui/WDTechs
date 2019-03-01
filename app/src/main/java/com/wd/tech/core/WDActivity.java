@@ -22,6 +22,8 @@ import com.wd.tech.greendao.LoginUserInfoBeanDao;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -38,7 +40,6 @@ public abstract class WDActivity extends SwipeBackActivity {
      * 记录处于前台的Activity
      */
     private static WDActivity mForegroundActivity = null;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +58,13 @@ public abstract class WDActivity extends SwipeBackActivity {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         if (isRegisterEventBus()) {
-            if (!EventBus.getDefault().isRegistered(this)){
+            if (!EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().register(this);
             }
         }
     }
+
+
     /**
      * 是否注册事件分发
      *
@@ -70,6 +73,7 @@ public abstract class WDActivity extends SwipeBackActivity {
     protected boolean isRegisterEventBus() {
         return false;
     }
+
     /**
      * 设置layoutId
      *
@@ -109,6 +113,33 @@ public abstract class WDActivity extends SwipeBackActivity {
             return loginUserInfoBean;
         }
         return null;
+    }
+    /**
+     *  MD5加密
+     * @param sourceStr
+     * @return
+     */
+    public static String MD5(String sourceStr) {
+        String result = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(sourceStr.getBytes());
+            byte b[] = md.digest();
+            int i;
+            StringBuffer buf = new StringBuffer("");
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            result = buf.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e);
+        }
+        return result;
     }
 
     /**
@@ -160,8 +191,8 @@ public abstract class WDActivity extends SwipeBackActivity {
     protected void onDestroy() {
         super.onDestroy();
         destoryData();
-        if (isRegisterEventBus()){
-            if (EventBus.getDefault().isRegistered(this)){
+        if (isRegisterEventBus()) {
+            if (EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().unregister(this);
             }
         }

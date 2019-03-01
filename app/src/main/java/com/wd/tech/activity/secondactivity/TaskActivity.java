@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wd.tech.R;
 import com.wd.tech.activity.MainActivity;
@@ -45,6 +46,20 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     Button mXinxibnt;
     @BindView(R.id.weixin_bnt)
     Button mWeixinbnt;
+    @BindView(R.id.sign_texts)
+    TextView mSigntext;
+    @BindView(R.id.comment_text)
+    TextView mCommenttext;
+    @BindView(R.id.tiezi_text)
+    TextView mTiezitext;
+    @BindView(R.id.fenxiang_text)
+    TextView mFenxiangtext;
+    @BindView(R.id.guanggao_text)
+    TextView mGuanggaotext;
+    @BindView(R.id.xinxi_text)
+    TextView mXinxitext;
+    @BindView(R.id.weixin_text)
+    TextView mWeixintext;
     private Dialog dialog;
 
     @Override
@@ -92,6 +107,11 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     public void mWeixin() {
     }
 
+    @OnClick(R.id.guanggao_bnt)
+    public void wGuang() {
+        startActivity(new Intent(TaskActivity.this, MainActivity.class));
+    }
+
     @Override
     protected void destoryData() {
 
@@ -121,76 +141,90 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
                     case 0:
                         if (status == 1) {
                             mSignbnt.setText("已完成");
+                            mSigntext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mSignbnt.setBackgroundResource(R.drawable.btn_shapert);
                             mSignbnt.setTextColor(Color.WHITE);
                             mSignbnt.setClickable(false);
                         } else {
+                            mSigntext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mSignbnt.setText("去签到");
                             mSignbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 1:
                         if (status == 1) {
+                            mCommenttext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mCommentbnt.setText("已完成");
                             mCommentbnt.setBackgroundResource(R.drawable.btn_shapert);
                             mCommentbnt.setTextColor(Color.WHITE);
                             mCommentbnt.setClickable(false);
                         } else {
+                            mCommenttext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mCommentbnt.setText("去评论");
                             mCommentbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 2:
                         if (status == 1) {
+                            mTiezitext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mTiezibnt.setText("已完成");
                             mTiezibnt.setBackgroundResource(R.drawable.btn_shapert);
                             mTiezibnt.setTextColor(Color.WHITE);
                             mTiezibnt.setClickable(false);
                         } else {
+                            mTiezitext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mTiezibnt.setText("去发帖");
                             mTiezibnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 3:
                         if (status == 1) {
+                            mFenxiangtext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mFenxiangbnt.setText("已完成");
                             mFenxiangbnt.setBackgroundResource(R.drawable.btn_shapert);
                             mFenxiangbnt.setTextColor(Color.WHITE);
                             mFenxiangbnt.setClickable(false);
                         } else {
+                            mFenxiangtext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mFenxiangbnt.setText("去分享");
                             mFenxiangbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 4:
                         if (status == 1) {
+                            mGuanggaotext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mGuanggaobnt.setText("已完成");
                             mGuanggaobnt.setBackgroundResource(R.drawable.btn_shapert);
                             mGuanggaobnt.setTextColor(Color.WHITE);
                             mGuanggaobnt.setClickable(false);
                         } else {
+                            mGuanggaotext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mGuanggaobnt.setText("去查看");
                             mGuanggaobnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 5:
                         if (status == 1) {
+                            mXinxitext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mXinxibnt.setText("已完成");
                             mXinxibnt.setBackgroundResource(R.drawable.btn_shapert);
                             mXinxibnt.setTextColor(Color.WHITE);
                             mXinxibnt.setClickable(false);
                         } else {
+                            mXinxitext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mXinxibnt.setText("去完善");
                             mXinxibnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }
                         break;
                     case 6:
                         if (status == 1) {
+                            mWeixintext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mWeixinbnt.setText("已完成");
                             mWeixinbnt.setBackgroundResource(R.drawable.btn_shapert);
                             mWeixinbnt.setTextColor(Color.WHITE);
                             mWeixinbnt.setClickable(false);
                         } else {
+                            mWeixintext.setText("+" + findUserTaskListBean.getTaskIntegral());
                             mWeixinbnt.setText("去绑定");
                             mWeixinbnt.setBackgroundResource(R.drawable.btn_shaperf);
                         }

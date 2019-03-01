@@ -21,6 +21,9 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -29,7 +32,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.WelcomeActivity">
@@ -47,32 +49,85 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity android:name=".activity.secondactivity.SettingActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegActivity" />
-        <activity android:name=".activity.secondactivity.TaskActivity" />
-        <activity android:name=".activity.secondactivity.AttenActivity" />
-        <activity android:name=".activity.secondactivity.IntegActivity" />
-        <activity android:name=".activity.secondactivity.CollectActivity" />
-        <activity android:name=".activity.secondactivity.NotificaActivity" />
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.secondactivity.InvitActivity" />
-        <activity android:name=".activity.AddFriendsActivity" />
-        <activity android:name=".activity.view.NewsDetails" />
-        <activity android:name=".activity.FlockActivity" />
-        <activity android:name=".activity.ImageActivity" />
-        <activity android:name=".activity.ReleasePostActivity" />
-        <activity android:name=".activity.thirdlyactivity.SignatureActivity" />
-        <activity android:name=".activity.view.InfoAdvertisingVo" />
-        <activity android:name=".activity.secondactivity.UpdateMessageActivity" />
-        <activity android:name=".activity.view.Type" />
-        <activity android:name="com.wd.tech.activity.NewFriendsActivity" />
-        <activity android:name=".activity.view.SearchType" />
-        <activity android:name=".activity.UserPostByIdActivity"></activity>
-        <activity android:name=".activity.thirdlyactivity.SearchActivity" />
-        <activity android:name=".activity.secondactivity.SignCalendarActivity" />
+        <activity
+            android:name=".activity.secondactivity.SettingActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.RegActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.TaskActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.AttenActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.IntegActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.CollectActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.NotificaActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.InvitActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.AddFriendsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.view.NewsDetails"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.FlockActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.ImageActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.ReleasePostActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.thirdlyactivity.SignatureActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.view.InfoAdvertisingVo"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.UpdateMessageActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.view.Type"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.NewFriendsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.view.SearchType"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.UserPostByIdActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.thirdlyactivity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.secondactivity.SignCalendarActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
         <activity android:name=".activity.AddFriendlyActivity" />
@@ -97,6 +152,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <activity android:name=".activity.GroupChatActivity" />
+        <activity android:name=".activity.ClusterActivity" />
+        <activity android:name=".face.RegisterActivity" />
+        <activity android:name=".face.DetecterActivity" />
+        <activity android:name=".face.FaceLoginActivity" />
+        <activity android:name=".face.LoginActivity" />
+        <activity android:name=".face.PermissionAcitivity" />
+        <activity android:name=".activity.IntergralExchange" />
+        <activity android:name=".activity.DredgeVip" />
+        <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity"></activity>
     </application>
 
 </manifest>

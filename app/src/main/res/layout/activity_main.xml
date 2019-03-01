@@ -34,6 +34,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/common_selete"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="资讯" />
 
@@ -44,6 +45,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/message_selete"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="消息" />
 
@@ -55,6 +57,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/community_selete"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:text="社区" />
         </RadioGroup>
     </LinearLayout>

@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,12 +29,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.DredgeVip;
 import com.wd.tech.activity.IntergralExchange;
 import com.wd.tech.activity.adapter.DetailsCommentAdapter;
 import com.wd.tech.activity.adapter.DetailsMoreAdapter;
 import com.wd.tech.activity.adapter.DetailsTypeAdapter;
+import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.DetailsCommentsBean;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -120,6 +129,9 @@ public class NewsDetails extends WDActivity {
     private CancelCollectionPresenter cancelCollectionPresenter;
     private AddCollectionPresenter addCollectionPresenter;
     private int whetherCollection;
+    private String title1;
+    private String thumbnail;
+    private String summary;
 
     @Override
     protected int getLayoutId() {
@@ -198,10 +210,55 @@ public class NewsDetails extends WDActivity {
         }
 
    }
+   //点击分享
+   @OnClick(R.id.shape)
+   public void ClickShare(){
+       View inflate = View.inflate(this, R.layout.share, null);
+       final Dialog dialog = new Dialog(this);
+       Window dialogWindow = dialog.getWindow();
+       dialogWindow.setGravity(Gravity.CENTER);
+       dialog.setContentView(inflate);
+       dialog.show();
+       RelativeLayout back=inflate.findViewById(R.id.a);
+       RelativeLayout wxq=inflate.findViewById(R.id.wxq);
+       back.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               dialog.dismiss();
+           }
+       });
+       wxq.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+                 wechatShare(1);
+
+           }
+       });
+   }
+    /**
+     * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
+     * @param flag(0:分享到微信好友，1：分享到微信朋友圈)
+     */
+    private void wechatShare(int flag){
+        IWXAPI api= WXAPIFactory.createWXAPI(NewsDetails.this, "wx4c96b6b8da494224",false);
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "www.baidu.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = title1;
+        msg.description = summary;
+        //这里替换一张自己工程里的图片资源
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.wxshare);
+        msg.setThumbImage(thumb);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
     @OnClick(R.id.fufei)
     public void Pay(){
         if (userInfo !=null){
-
             dialog.setCanceledOnTouchOutside(true);
             final View inflate = View.inflate(this, R.layout.dia_pay_type, null);
             dialog.setContentView(inflate);
@@ -214,7 +271,10 @@ public class NewsDetails extends WDActivity {
             dialogWindow.setAttributes(p);
             dialogWindow.setGravity(Gravity.BOTTOM);
             dialogWindow.setWindowAnimations(R.style.main_menu_animStyle);
-
+            dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+            dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
+            dialog.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
+            dialog.show();
             RelativeLayout mJf=inflate.findViewById(R.id.r);
             RelativeLayout mVip=inflate.findViewById(R.id.t);
             mJf.setOnClickListener(new View.OnClickListener() {
@@ -278,6 +338,7 @@ public class NewsDetails extends WDActivity {
     @Override
     public void onResume() {
         super.onResume();
+        newsDetails_presenter.request(userId, sessionId, id);
         dialog.dismiss();
     }
 
@@ -301,6 +362,9 @@ public class NewsDetails extends WDActivity {
             }else{
                 mBang.setImageResource(R.drawable.common_icon);
             }
+            title1 = result.getTitle();
+            thumbnail = result.getThumbnail();
+            summary = result.getSummary();
             title.setText(result.getTitle());
             simple.setImageURI(result.getThumbnail());
             comment1 = data.getResult().getComment();

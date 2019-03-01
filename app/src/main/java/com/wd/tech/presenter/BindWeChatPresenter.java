@@ -6,14 +6,20 @@ import com.wd.tech.core.utils.NotWorkUtils;
 
 import io.reactivex.Observable;
 
-public class FindContinuousPresenter extends BasePresenter {
-    public FindContinuousPresenter(ICoreInfe dataCall) {
+/**
+ * 作者：夏洪武
+ * 时间：2019/2/26.
+ * 邮箱：
+ * 说明：
+ */
+public class BindWeChatPresenter extends BasePresenter {
+    public BindWeChatPresenter(ICoreInfe dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.findContinuousSignDays((int) args[0], (String) args[1], (int) args[2]);
+        return allUrls.bindWeChat((int) args[0], (String) args[1], (String) args[2]);
     }
 }
