@@ -84,7 +84,7 @@ public class AddFriendlyActivity extends WDActivity {
         userid1 = intent.getIntExtra("userid1", 0);
         String phone1 = intent.getStringExtra("phone");
         String email = intent.getStringExtra("email");
-        ss = intent.getStringExtra("s");
+        ss = intent.getStringExtra("sss");
         nickName = intent.getStringExtra("nickName");
         int sex = intent.getIntExtra("sex", 1);
         headPic = intent.getStringExtra("headPic");
@@ -131,7 +131,7 @@ public class AddFriendlyActivity extends WDActivity {
             btnRMessage.setVisibility(View.GONE);
             CircularLoading.closeDialog(dialog);
         } else {
-            checkMyFriendPresnter.request(userId, sessionId, userid1);
+//            checkMyFriendPresnter.request(userId, sessionId, userid1);
         }
     }
 

@@ -142,7 +142,7 @@ public class Fragment1 extends WDFragment {
         intent.putExtra("signature", signaturE);
         intent.putExtra("birthday", birthday);
         intent.putExtra("whetherVip", whetherVip);
-        intent.putExtra("s", sS);
+        intent.putExtra("sss", sS);
         startActivity(intent);
     }
 

@@ -17,10 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.EaseConstant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wd.tech.R;
 import com.wd.tech.activity.ClusterActivity;
 import com.wd.tech.activity.GroupChatActivity;
+import com.wd.tech.activity.IMActivity;
 import com.wd.tech.activity.NewFriendsActivity;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InitFriendlist;
@@ -110,7 +113,13 @@ public class LinkmanFragment extends WDFragment {
         exPandableListview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
+//                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
+                Intent intent = new Intent(getContext(), IMActivity.class);
+
+                intent.putExtra(EaseConstant.EXTRA_USER_ID,groupS.get(i).getFriendInfoList().get(i).getUserName());
+                intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EMMessage.ChatType.Chat);
+                startActivity(intent);
+
                 return true;
             }
         });

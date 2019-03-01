@@ -1,8 +1,12 @@
 package com.wd.tech.activity;
 
+import android.content.Intent;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.wd.tech.R;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
@@ -79,8 +83,27 @@ public class RegActivity extends WDActivity {
         @Override
         public void success(Result result) {
             Toast.makeText(RegActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(RegActivity.this,LoginActivity.class));
             if (result.getStatus().equals("0000")) {
-                finish();
+                EMClient.getInstance().login(mEt_Phone_Reg.getText().toString(),mEt_Pwd_Reg.getText().toString(),new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        Log.d("main", "登录聊天服务器成功！");
+                        finish();
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        Log.d("main", "登录聊天服务器失败！");
+                    }
+                });
             }
         }
 
