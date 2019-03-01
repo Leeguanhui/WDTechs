@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
@@ -47,6 +48,16 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
     }
 
+    public interface AddCommunityComment {
+        void addCommunityComment(int id);
+    }
+
+    AddCommunityComment addCommunityComment;
+
+    public void setAddCommunityComment(AddCommunityComment addCommunityComment) {
+        this.addCommunityComment = addCommunityComment;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -73,7 +84,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.content.setText(communityListBean.getContent());
         viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
         viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
-
         viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,9 +131,16 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             viewHolder.gridLayoutManager.setSpanCount(colNum);//设置列数
             viewHolder.imageAdapter.notifyDataSetChanged();
 
-            if (list.get(i).getComment() > 0) {
-                viewHolder.pl.setText("没有更多评论了");
-            }
+            //评论
+            viewHolder.communityIv.setTag(i);
+            viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int tag = (int) v.getTag();
+                    Toast.makeText(context, "" + tag, Toast.LENGTH_SHORT).show();
+                    addCommunityComment.addCommunityComment(list.get(tag).getId());
+                }
+            });
         }
     }
 
@@ -150,7 +167,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         RecyclerView gridView;
         GridLayoutManager gridLayoutManager;
         ImageAdapter imageAdapter;
-        ImageView community_iv1;
+        ImageView communityIv;
         ImageView addCommunityGreat;
         TextView content;
         TextView comment;
@@ -168,7 +185,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             signature = itemView.findViewById(R.id.community_signature);
             gridView = itemView.findViewById(R.id.community_recycler);
             content = itemView.findViewById(R.id.community_content);
-            community_iv1 = itemView.findViewById(R.id.community_iv1);
+            communityIv = itemView.findViewById(R.id.community_iv);
             addCommunityGreat = itemView.findViewById(R.id.addcommunitygreat);
             comment = itemView.findViewById(R.id.community_comment);
             praise = itemView.findViewById(R.id.community_praise);

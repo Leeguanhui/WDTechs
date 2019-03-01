@@ -37,6 +37,7 @@
             android:id="@+id/mEt_Name_Reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/ICON_Name"
@@ -84,6 +85,7 @@
             android:layout_toRightOf="@+id/ICON_Phone"
             android:background="@null"
             android:hint="手机号"
+            android:singleLine="true"
             android:inputType="number"
             android:maxLength="11"
             android:textColor="#FFFFFF"
@@ -128,6 +130,7 @@
             android:layout_toRightOf="@+id/ICON_Lock"
             android:background="@null"
             android:hint="登录密码"
+            android:singleLine="true"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp" />

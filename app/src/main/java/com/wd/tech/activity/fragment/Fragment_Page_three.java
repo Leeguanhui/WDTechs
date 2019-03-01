@@ -4,17 +4,20 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
-import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.ReleasePostActivity;
 import com.wd.tech.activity.adapter.CommunityListAdapter;
 import com.wd.tech.activity.view.CircularLoading;
@@ -24,6 +27,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.CommunityListPresenter;
 
@@ -52,6 +56,12 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     @BindView(R.id.smartrefresh)
     SmartRefreshLayout refreshLayout;
     private Dialog dialog;
+    private AddCommunityCommentPresenter addCommunityCommentPresenter;
+    private View pl;
+    private TextView button;
+    private EditText editText;
+    private Dialog bottomDialog;
+    private int ids;
 
     @Override
     public String getPageName() {
@@ -73,6 +83,9 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             userId = userInfo.getUserId();
             sessionId = userInfo.getSessionId();
         }
+
+        //dialog
+        bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
 
         communityListPresenter = new CommunityListPresenter(new CommunityList());
         communityListPresenter.request(userId, sessionId, 1, 1000);
@@ -96,8 +109,32 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             }
         });
 
+        //评论
+        addCommunityCommentPresenter = new AddCommunityCommentPresenter(new AddCommunityComment());
+
+        pl = LayoutInflater.from(getContext()).inflate(R.layout.comment_popupwindow, null);
+        editText = pl.findViewById(R.id.et_discuss);
+        button = pl.findViewById(R.id.tv_confirm);
+        //评论
+        communityListAdapter.setAddCommunityComment(new CommunityListAdapter.AddCommunityComment() {
+            @Override
+            public void addCommunityComment(int id) {
+                ids = id;
+                show(pl);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String trim = editText.getText().toString().trim();
+                dialog = CircularLoading.showLoadDialog(getContext(), "加载中...", true);
+                addCommunityCommentPresenter.request(userId, sessionId, ids, trim);
+            }
+        });
+
         refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
-        refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
+//        refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
         //上下拉刷新
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -109,13 +146,15 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
                 communityListPresenter.request(userId, sessionId, page, 1000);
             }
         });
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                page++;
-                communityListPresenter.request(userId, sessionId, page, 1000);
-            }
-        });
+//        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+//            @Override
+//            public void onLoadmore(RefreshLayout refreshlayout) {
+//                page++;
+//                communityListAdapter.removeAll();
+//                communityListAdapter.notifyDataSetChanged();
+//                communityListPresenter.request(userId, sessionId, page, 1000);
+//            }
+//        });
     }
 
     @Override
@@ -177,5 +216,34 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         public void fail(ApiException e) {
 
         }
+    }
+
+    //评论
+    private class AddCommunityComment implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            bottomDialog.dismiss();
+            dialog.dismiss();
+            editText.setText(null);
+            communityListAdapter.removeAll();
+            communityListPresenter.request(userId, sessionId, 1, 1000);
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    //dialog
+    private void show(View contentViewss) {
+        bottomDialog.setContentView(contentViewss);
+        ViewGroup.LayoutParams layoutParams = contentViewss.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        contentViewss.setLayoutParams(layoutParams);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.setCanceledOnTouchOutside(true);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
     }
 }

@@ -4,11 +4,15 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -42,7 +46,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 
 import static com.wd.tech.activity.secondactivity.SettingActivity.hasSdcard;
 
-public class ReleasePostActivity extends WDActivity implements View.OnClickListener ,CustomAdapt {
+public class ReleasePostActivity extends WDActivity implements View.OnClickListener, CustomAdapt {
 
     @BindView(R.id.id_editor_detail)
     EditText mText;
@@ -62,9 +66,14 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
     private LinearLayout pic;
     private TextView cancel;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
     private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x03;
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
     private Uri imageUri;
+    private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
+    private Uri cropImageUri;
+    private static final int OUTPUT_X = 480;
+    private static final int OUTPUT_Y = 480;
 
     @Override
     protected int getLayoutId() {
@@ -74,7 +83,6 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
     @Override
     protected void initView() {
         //数据库
-
         LoginUserInfoBean userInfo = getUserInfo(this);
         doTheTaskPresenter = new DoTheTaskPresenter(new DoTheReuslt());
         userId = userInfo.getUserId();
@@ -149,24 +157,29 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
                         addCircleAdapter.add(filePath);
                         addCircleAdapter.notifyDataSetChanged();
                         bottomDialog.dismiss();
-//                Bitmap bitmap = UIUtils.decodeFile(new File(filePath),200);
-//                mImage.setImageBitmap(bitmap);
                     }
                     break;
                 //拍照完成回调
                 case CODE_CAMERA_REQUEST:
-                    String path = PhotoUtils.getPath(this, imageUri);
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, OUTPUT_X, OUTPUT_Y, CODE_RESULT_REQUEST);
+                    break;
+                //裁剪完成回调
+                case CODE_RESULT_REQUEST:
+                    //将图片转换成bitmap
+                    Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
+                    //将bitmap转换成uri地址
+                    Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null));
+                    //将uri地址转换成string类型地址
+                    String path = PhotoUtils.getRealFilePath(this, uri);
                     if (!StringUtils.isEmpty(path)) {
                         addCircleAdapter.add(path);
                         addCircleAdapter.notifyDataSetChanged();
                         bottomDialog.dismiss();
                     }
                     break;
+                default:
             }
-
-//
-//            Uri uri = Uri.fromFile(file);
-//            Parcelable data1 = data.getParcelableExtra("data");
         }
     }
 
@@ -186,9 +199,9 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
             if (hasSdcard()) {
                 imageUri = Uri.fromFile(fileUri);
                 //通过FileProvider创建一个content类型的Uri
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);
-//                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);
+                }
                 PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
             } else {
                 Toast.makeText(this, "设备没有SD卡！", Toast.LENGTH_SHORT).show();
@@ -206,8 +219,8 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (hasSdcard()) {
                         imageUri = Uri.fromFile(fileUri);
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-//                            imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                            imageUri = FileProvider.getUriForFile(ReleasePostActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                         PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
                     } else {
                         Toast.makeText(this, "设备没有SD卡！", Toast.LENGTH_SHORT).show();

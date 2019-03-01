@@ -40,7 +40,6 @@ public abstract class WDActivity extends SwipeBackActivity {
      * 记录处于前台的Activity
      */
     private static WDActivity mForegroundActivity = null;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +58,13 @@ public abstract class WDActivity extends SwipeBackActivity {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         if (isRegisterEventBus()) {
-            if (!EventBus.getDefault().isRegistered(this)){
+            if (!EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().register(this);
             }
         }
     }
+
+
     /**
      * 是否注册事件分发
      *
@@ -72,6 +73,7 @@ public abstract class WDActivity extends SwipeBackActivity {
     protected boolean isRegisterEventBus() {
         return false;
     }
+
     /**
      * 设置layoutId
      *
@@ -189,8 +191,8 @@ public abstract class WDActivity extends SwipeBackActivity {
     protected void onDestroy() {
         super.onDestroy();
         destoryData();
-        if (isRegisterEventBus()){
-            if (EventBus.getDefault().isRegistered(this)){
+        if (isRegisterEventBus()) {
+            if (EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().unregister(this);
             }
         }

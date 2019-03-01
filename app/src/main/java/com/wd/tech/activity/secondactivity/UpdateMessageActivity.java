@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.wd.tech.R;
@@ -59,7 +60,6 @@ public class UpdateMessageActivity extends WDActivity implements CustomAdapt {
     TextView mBrith;
     @BindView(R.id.my_mali)
     EditText mMali;
-
     PickView pickView;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     MyDialog mDialog;
@@ -207,6 +207,8 @@ public class UpdateMessageActivity extends WDActivity implements CustomAdapt {
             if (result.getStatus().equals("0000")) {
                 doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1006);
                 finish();
+            }else{
+                Toast.makeText(UpdateMessageActivity.this, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

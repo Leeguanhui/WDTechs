@@ -25,6 +25,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.MainActivity;
+import com.wd.tech.activity.secondactivity.SettingActivity;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
