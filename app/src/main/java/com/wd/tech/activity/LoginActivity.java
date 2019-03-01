@@ -180,14 +180,13 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 EMClient.getInstance().login(loginUserInfoBean.getUserName(),loginUserInfoBean.getPwd(),new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
                         Log.d("main", "登录聊天服务器成功！");
-                        finish();
+
                     }
 
                     @Override
@@ -200,9 +199,9 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         Log.d("main", "登录聊天服务器失败！");
                     }
                 });
-
-
             }
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
             CircularLoading.closeDialog(dialog);
         }
 

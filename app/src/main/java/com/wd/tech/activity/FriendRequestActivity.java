@@ -1,7 +1,6 @@
 package com.wd.tech.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddFriendPresenter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FriendRequestActivity extends WDActivity {
@@ -80,7 +78,7 @@ public class FriendRequestActivity extends WDActivity {
                     Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addFriendPresenter.request(userId, sessionId, userId, apply);
+                addFriendPresenter.request(userId, sessionId, userId1, apply);
                 break;
             case R.id.back:
                 finish();
