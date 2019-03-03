@@ -32,7 +32,7 @@ public class Type extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         recy.setLayoutManager(new GridLayoutManager(this,2));
         typeAdapter = new TypeAdapter(this);
         typePresenter = new TypePresenter(new AllType());

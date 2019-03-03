@@ -48,7 +48,7 @@ public abstract class WDActivity extends SwipeBackActivity {
         ButterKnife.bind(this);//绑定布局
         //初始化右滑退出
         initSwipeBack();
-        initView();
+        initView(savedInstanceState);
 
         //沉浸式状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -84,7 +84,7 @@ public abstract class WDActivity extends SwipeBackActivity {
     /**
      * 初始化视图
      */
-    protected abstract void initView();
+    protected abstract void initView(Bundle savedInstanceState);
 
     /**
      * 清除数据

@@ -80,7 +80,7 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
 
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         findTitlePresenter = new FindTitlePresenter(new TitleCall());
         findByTitlePresenter = new FindByTitlePresenter(new FindByTitleResult());
         mXrecycle.setLayoutManager(new LinearLayoutManager(this));

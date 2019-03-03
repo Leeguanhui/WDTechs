@@ -3,6 +3,7 @@ package com.wd.tech.activity.secondactivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -68,7 +69,7 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         findUserTaskListPresenter = new FindUserTaskListPresenter(new FindUserTaskResult());
         mTasklinear.setVisibility(View.GONE);
@@ -84,6 +85,7 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.sign_bnt)
     public void mSignBtn() {
         startActivity(new Intent(TaskActivity.this, SignCalendarActivity.class));
+        finish();
     }
 
     @OnClick(R.id.comment_bnt)
@@ -91,27 +93,36 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
         Intent intent = new Intent(TaskActivity.this, MainActivity.class);
         intent.putExtra("comment", 1);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.tiezi_bnt)
     public void mTieziBnt() {
         startActivity(new Intent(TaskActivity.this, ReleasePostActivity.class));
+        finish();
     }
 
     @OnClick(R.id.xinxi_bnt)
     public void mXinxi() {
         startActivity(new Intent(TaskActivity.this, UpdateMessageActivity.class));
+        finish();
     }
 
     @OnClick(R.id.weixin_bnt)
     public void mWeixin() {
+
     }
 
     @OnClick(R.id.guanggao_bnt)
     public void wGuang() {
         startActivity(new Intent(TaskActivity.this, MainActivity.class));
+        finish();
     }
-
+    @OnClick(R.id.fenxiang_bnt)
+    public void wFenXinag(){
+        startActivity(new Intent(TaskActivity.this, MainActivity.class));
+        finish();
+    }
     @Override
     protected void destoryData() {
 

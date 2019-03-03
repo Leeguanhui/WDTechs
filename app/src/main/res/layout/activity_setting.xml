@@ -49,9 +49,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/setting_linear_shaper"
                 android:padding="20dp">
 
@@ -88,7 +88,7 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/my_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -171,9 +171,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/setting_linear_shaper"
                 android:paddingLeft="20dp"
                 android:paddingTop="20dp"
@@ -243,7 +243,7 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/my_mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -258,9 +258,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/setting_linear_shaper"
                 android:paddingLeft="20dp"
