@@ -65,7 +65,6 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     protected int getLayoutId() {
         return R.layout.activity_search;
     }
-
     @OnClick(R.id.search_image)
     public void search_image() {
         content = mSearchedit.getText().toString();
@@ -84,7 +83,7 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         searchRecycleAdapter = new SearchRecycleAdapter(this);
         Log.e("qwer", list.size() + "");
         /*if (list.size()!=0){
