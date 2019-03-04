@@ -2,6 +2,7 @@ package com.wd.tech.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -55,7 +56,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         loginUserInfoPresenter = new LoginUserInfoPresenter(new LoginResult());
         //跳转到注册页面
         mToreg.setOnClickListener(new View.OnClickListener() {

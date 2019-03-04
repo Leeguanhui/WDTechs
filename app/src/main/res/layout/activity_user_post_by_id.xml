@@ -49,6 +49,44 @@
                         android:layout_marginTop="10dp"
                         android:textColor="#666666"
                         android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/more"
+                        android:layout_width="24dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/community_btn_more" />
+
+                    <LinearLayout
+                        android:id="@+id/linear"
+                        android:layout_width="144dp"
+                        android:layout_height="62dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="-144dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/friends"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#39b8fb"
+                            android:text="+好友"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/attention"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#ff5757"
+                            android:text="+关注"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <View

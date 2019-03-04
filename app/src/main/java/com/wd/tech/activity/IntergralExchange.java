@@ -80,7 +80,7 @@ public class IntergralExchange extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         newsExChangePresenter = new NewsExChangePresenter(new Change());
         userIntegral = new UserIntegral(new UserBack());
         LoginUserInfoBean userInfo = getUserInfo(this);

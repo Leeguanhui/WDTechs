@@ -1,6 +1,7 @@
 package com.wd.tech.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -45,7 +46,7 @@ public class FriendRequestActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         addFriendPresenter = new AddFriendPresenter(new AddFre());
         LoginUserInfoBean infoBean = getUserInfo(this);
         if (infoBean != null) {

@@ -23,6 +23,7 @@ import com.wd.tech.presenter.FindMyPostPresnter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class InvitActivity extends WDActivity implements CustomAdapt {
@@ -45,7 +46,7 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         dialog = CircularLoading.showLoadDialog(this, "", true);
         deletePostPresnter = new DeletePostPresnter(new DeleteResult());
         findMyPostPresnter = new FindMyPostPresnter(new FindMyPostResult());
@@ -62,7 +63,10 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
             }
         });
     }
-
+    @OnClick(R.id.back_imag)
+    public void back_imag(){
+        finish();
+    }
     @Override
     protected void destoryData() {
 

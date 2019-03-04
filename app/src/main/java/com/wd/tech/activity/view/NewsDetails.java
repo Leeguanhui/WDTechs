@@ -140,7 +140,7 @@ public class NewsDetails extends WDActivity {
 
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         dialog = new Dialog(this);
@@ -231,7 +231,6 @@ public class NewsDetails extends WDActivity {
            @Override
            public void onClick(View v) {
                  wechatShare(1);
-
            }
        });
    }

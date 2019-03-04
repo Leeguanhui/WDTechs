@@ -29,7 +29,7 @@ public class InfoAdvertisingVo extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -53,13 +53,6 @@ public class InfoAdvertisingVo extends WDActivity {
     @Override
     protected void destoryData() {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     /**

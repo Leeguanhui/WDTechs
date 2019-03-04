@@ -66,7 +66,7 @@ public class AddGroupActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         retreatPresenter = new RetreatPresenter(new Retreat());
         whetherInGroupPresenter = new WhetherInGroupPresenter(new Whether());
         findGroupsByCreatePresenter = new FindGroupsByCreatePresenter(new Create());

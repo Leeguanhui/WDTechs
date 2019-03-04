@@ -88,7 +88,7 @@ public class RegisterActivity extends WDActivity implements SurfaceHolder.Callba
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         if (!getIntentData(getIntent().getExtras())) {
             Log.e(TAG, "getIntentData fail!");
             this.finish();

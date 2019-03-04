@@ -1,5 +1,6 @@
 package com.wd.tech.activity.secondactivity;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class SignCalendarActivity extends WDActivity implements CustomAdapt {
@@ -50,7 +52,7 @@ public class SignCalendarActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         findUserSignRecordingPresenter = new FindUserSignRecordingPresenter(new FinduserRecordResult());
         userInfo = getUserInfo(this);
         //接收传递过来的初始化数据
@@ -120,7 +122,10 @@ public class SignCalendarActivity extends WDActivity implements CustomAdapt {
     protected void destoryData() {
 
     }
-
+    @OnClick(R.id.back_bnt)
+    public void back_bnt(){
+        finish();
+    }
     @Override
     public boolean isBaseOnWidth() {
         return false;

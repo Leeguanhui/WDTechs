@@ -36,7 +36,7 @@ public class UpdatePwdActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         updatePwdPresnter = new UpdatePwdPresnter(new UpdatePwdResult());
     }

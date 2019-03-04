@@ -1,6 +1,7 @@
 package com.wd.tech.activity;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -38,7 +39,7 @@ public class AddFriendsActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         Fragment1 fragment1 = new Fragment1();
         Fragment2 fragment2 = new Fragment2();
         mFragments.add(fragment1);

@@ -40,7 +40,7 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         reviewFriendApplyPresenter = new ReviewFriendApplyPresenter(new Review());
         LoginUserInfoBean infoBean = getUserInfo(this);
         if (infoBean != null) {

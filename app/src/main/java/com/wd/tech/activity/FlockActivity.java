@@ -43,7 +43,7 @@ public class FlockActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         groupPresenter = new CreateGroupPresenter(new Creat());
         infoBean = getUserInfo(this);
         if (infoBean != null) {

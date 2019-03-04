@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -32,6 +35,7 @@ import com.wd.tech.presenter.CanceFollowPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class AttenActivity extends WDActivity implements CustomAdapt {
@@ -48,14 +52,15 @@ public class AttenActivity extends WDActivity implements CustomAdapt {
     private CanceFollowPresenter canceFollowPresenter;
     private List<AttUserListBean> resultResult;
     private Dialog showLoadDialog;
-    private int mIndex=0;
+    private int mIndex = 0;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_atten;
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         canceFollowPresenter = new CanceFollowPresenter(new CanceResult());
         attUserListPresenter = new AttUserListPresenter(new AttUserResult());
@@ -82,12 +87,15 @@ public class AttenActivity extends WDActivity implements CustomAdapt {
             @SuppressLint("ResourceAsColor")
             @Override
             public void create(SwipeMenu menu) {
+                WindowManager m = AttenActivity.this.getWindowManager();
+                Display d = m.getDefaultDisplay();
                 //创建一个开放的item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 //设置item的背景
-                openItem.setBackground(new ColorDrawable(R.color.itemcolor));
+                openItem.setBackground(new ColorDrawable(Color.RED));
                 //设置item的宽度
-                openItem.setWidth(150);
+                int width = (int) (d.getWidth() * 0.2);
+                openItem.setWidth(width);
                 //设置item的标题
                 openItem.setTitle("取消关注");
                 openItem.setTitleColor(Color.WHITE);
@@ -105,7 +113,7 @@ public class AttenActivity extends WDActivity implements CustomAdapt {
                 switch (index) {
                     case 0:
                         List<AttUserListBean> list = attenRecycleAdapter.getList();
-                        mIndex=position;
+                        mIndex = position;
                         AttUserListBean attUserListBean = list.get(position);
                         canceFollowPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), attUserListBean.getFocusUid());
                         showLoadDialog = CircularLoading.showLoadDialog(AttenActivity.this, "", true);
@@ -118,6 +126,10 @@ public class AttenActivity extends WDActivity implements CustomAdapt {
         mXRecycle.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);//左
     }
 
+    @OnClick(R.id.back_btn)
+    public void back_btn(){
+        finish();
+    }
     @Override
     protected void destoryData() {
 
@@ -159,7 +171,7 @@ public class AttenActivity extends WDActivity implements CustomAdapt {
     private class CanceResult implements ICoreInfe<Result> {
         @Override
         public void success(Result result) {
-            if(result.getStatus().equals("0000")){
+            if (result.getStatus().equals("0000")) {
                 attenRecycleAdapter.removePosition(mIndex);
                 CircularLoading.closeDialog(showLoadDialog);
             }

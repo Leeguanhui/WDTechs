@@ -41,7 +41,7 @@ public class ApplyForActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         Intent intent = getIntent();
         groupId = intent.getIntExtra("groupId", 0);
         applyAddGroupPresenter = new ApplyAddGroupPresenter(new Apply());
