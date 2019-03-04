@@ -5,7 +5,7 @@ android {
         tech {
             keyAlias 'tech'
             keyPassword '123456'
-            storeFile file('C:/Users/Lee辉/Desktop/tech.keystore')
+            storeFile file('C:/Users/admin/Desktop/tech.keystore')
             storePassword '123456'
         }
     }

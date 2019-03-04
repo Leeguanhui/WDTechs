@@ -598,7 +598,7 @@ public interface AllUrls {
     @FormUrlEncoded
     Observable<Result> bindWeChat(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
-            @Query("code") String code);
+            @Field("code") String code);
 
     /**
      * 取消关注
@@ -607,4 +607,10 @@ public interface AllUrls {
     Observable<Result> cancelFollow(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("focusId") int focusId);
+
+    /**
+     * 查询是否绑定微信号
+     */
+    @GET("user/verify/v1/whetherToBindWeChat")
+    Observable<Result> whetherToBindWeChat(@Header("userid") int userid, @Header("sessionid") String sessionid);
 }
