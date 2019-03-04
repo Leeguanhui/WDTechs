@@ -23,6 +23,7 @@ import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.NotifiListBean;
+import com.wd.tech.bean.QueryFriendInformationBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
 import com.wd.tech.bean.UserIntegralBean;
@@ -599,7 +600,7 @@ public interface AllUrls {
     @FormUrlEncoded
     Observable<Result> bindWeChat(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
-            @Query("code") String code);
+            @Field("code") String code);
 
     /**
      * 取消关注
@@ -608,6 +609,36 @@ public interface AllUrls {
     Observable<Result> cancelFollow(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("focusId") int focusId);
+
+    /**
+     * 查询是否绑定微信号
+     */
+    @GET("user/verify/v1/whetherToBindWeChat")
+    Observable<Result> whetherToBindWeChat(@Header("userid") int userid, @Header("sessionid") String sessionid);
+
+    /**
+     * 关注用户
+     */
+    @POST("user/verify/v1/addFollow")
+    Observable<Result> addFollow(@Header("userid") int userid,
+                                 @Header("sessionid") String sessionid,
+                                 @Query("focusId") int focusId);
+
+    /**
+     * 查询好友信息
+     */
+    @GET("user/verify/v1/queryFriendInformation")
+    Observable<Result<QueryFriendInformationBean>> queryFriendInformation(@Header("userid") int userid,
+                                                                          @Header("sessionid") String sessionid,
+                                                                          @Query("friend") int friend);
+
+    /**
+     * 取消点赞
+     */
+    @DELETE("community/verify/v1/cancelCommunityGreat")
+    Observable<Result> cancelCommunityGreat(@Header("userid") int userid,
+                                            @Header("sessionid") String sessionid,
+                                            @Query("communityId") int communityId);
 
     /**
      * 创建自定义好友分组

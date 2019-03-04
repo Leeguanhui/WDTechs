@@ -3,11 +3,15 @@ package com.wd.tech.activity.secondactivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.MainActivity;
 import com.wd.tech.activity.ReleasePostActivity;
@@ -18,7 +22,9 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.FindUserTaskListPresenter;
+import com.wd.tech.presenter.WheWeChatPresenter;
 
 import java.util.List;
 
@@ -61,6 +67,8 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.weixin_text)
     TextView mWeixintext;
     private Dialog dialog;
+    private IWXAPI mWechatApi;
+    static int type = 1;
 
     @Override
     protected int getLayoutId() {
@@ -68,7 +76,7 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         findUserTaskListPresenter = new FindUserTaskListPresenter(new FindUserTaskResult());
         mTasklinear.setVisibility(View.GONE);
@@ -84,6 +92,7 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.sign_bnt)
     public void mSignBtn() {
         startActivity(new Intent(TaskActivity.this, SignCalendarActivity.class));
+        finish();
     }
 
     @OnClick(R.id.comment_bnt)
@@ -91,25 +100,46 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
         Intent intent = new Intent(TaskActivity.this, MainActivity.class);
         intent.putExtra("comment", 1);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.tiezi_bnt)
     public void mTieziBnt() {
         startActivity(new Intent(TaskActivity.this, ReleasePostActivity.class));
+        finish();
     }
 
     @OnClick(R.id.xinxi_bnt)
     public void mXinxi() {
         startActivity(new Intent(TaskActivity.this, UpdateMessageActivity.class));
+        finish();
     }
 
     @OnClick(R.id.weixin_bnt)
     public void mWeixin() {
+        type=2;
+        mWechatApi = WXAPIFactory.createWXAPI(TaskActivity.this, "wx4c96b6b8da494224", false);
+        mWechatApi.registerApp("wx4c96b6b8da494224");
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo";
+        mWechatApi.sendReq(req);
+    }
+
+    public static int getType() {
+        return type;
     }
 
     @OnClick(R.id.guanggao_bnt)
     public void wGuang() {
         startActivity(new Intent(TaskActivity.this, MainActivity.class));
+        finish();
+    }
+
+    @OnClick(R.id.fenxiang_bnt)
+    public void wFenXinag() {
+        startActivity(new Intent(TaskActivity.this, MainActivity.class));
+        finish();
     }
 
     @Override
@@ -240,4 +270,6 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
 
         }
     }
+
+
 }

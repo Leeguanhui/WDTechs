@@ -11,7 +11,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:background="#FFFFFF"
+        android:background="@drawable/back_graden"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="可用积分"
                     android:textColor="#FFFFFF"
@@ -62,10 +62,9 @@
                 android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginRight="10dp" />
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

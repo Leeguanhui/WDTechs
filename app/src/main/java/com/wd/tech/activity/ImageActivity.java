@@ -1,6 +1,7 @@
 package com.wd.tech.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class ImageActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         Intent intent = getIntent();
         currentPosition = intent.getIntExtra("currentPosition", 0);
         Urls = intent.getStringArrayListExtra("image");

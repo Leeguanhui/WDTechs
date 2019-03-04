@@ -5,6 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,6 +29,7 @@ import com.wd.tech.presenter.FindMyPostPresnter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class InvitActivity extends WDActivity implements CustomAdapt {
@@ -38,6 +45,10 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
     private DeletePostPresnter deletePostPresnter;
     public int position = 0;
     private Dialog dialog;
+    private View view;
+    private PopupWindow pop;
+    private TextView cancle,delete;
+    private int id;
 
     @Override
     protected int getLayoutId() {
@@ -45,10 +56,15 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
+        view = View.inflate(this, R.layout.delete_view, null);
         dialog = CircularLoading.showLoadDialog(this, "", true);
         deletePostPresnter = new DeletePostPresnter(new DeleteResult());
         findMyPostPresnter = new FindMyPostPresnter(new FindMyPostResult());
+        pop = new PopupWindow(view, (LinearLayout.LayoutParams.WRAP_CONTENT), (LinearLayout.LayoutParams.WRAP_CONTENT), false);
+        pop.setContentView(view);
+        pop.setOutsideTouchable(true);
+        pop.setFocusable(true);
         invitRecycleAdapter = new InvitRecycleAdapter(this);
         mRecycle.setLayoutManager(new LinearLayoutManager(this));
         mRecycle.setAdapter(invitRecycleAdapter);
@@ -56,11 +72,32 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
         findMyPostPresnter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
         invitRecycleAdapter.setItemClickListener(new InvitRecycleAdapter.itemClickListener() {
             @Override
-            public void getUserId(int positions,int id) {
+            public void getUserId(int positions, int ids) {
                 position = positions;
+                id = ids;
+                pop.showAtLocation(InvitActivity.this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+            }
+        });
+        cancle = view.findViewById(R.id.cancle_btn);
+        delete = view.findViewById(R.id.delete_bnt);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 deletePostPresnter.request(userInfo.getUserId(), userInfo.getSessionId(), String.valueOf(id));
             }
         });
+    }
+
+    @OnClick(R.id.back_imag)
+    public void back_imag() {
+        finish();
     }
 
     @Override
@@ -106,6 +143,7 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
             String status = result.getStatus();
             if (status.equals("0000")) {
                 invitRecycleAdapter.removeByPosition(position);
+                pop.dismiss();
             }
         }
 

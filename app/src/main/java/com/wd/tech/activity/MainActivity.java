@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -46,6 +47,7 @@ import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +95,8 @@ public class MainActivity extends WDActivity {
     private SharedPreferences.Editor edit;
     private String nickName;
     private int comment;
+    @BindView(R.id.vip_btn)
+    ImageView vip_btn;
 
     @Override
     protected int getLayoutId() {
@@ -100,9 +104,8 @@ public class MainActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         closeSwipeBack();
-
         Intent intent = getIntent();
         comment = intent.getIntExtra("comment", 0);
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
@@ -113,19 +116,31 @@ public class MainActivity extends WDActivity {
         fragment_page_one = new Fragment_Page_one();
         fragment_page_two = new Fragment_Page_two();
         fragment_page_three = new Fragment_Page_three();
-        transaction.add(R.id.fragment, fragment_page_one);
-        transaction.add(R.id.fragment, fragment_page_two);
-        transaction.add(R.id.fragment, fragment_page_three);
-        if (comment == 1) {
-            transaction.show(fragment_page_three);
-            transaction.hide(fragment_page_two);
-            transaction.hide(fragment_page_one);
+        if (savedInstanceState != null) {
+            fragment_page_one = (Fragment_Page_one) getSupportFragmentManager().findFragmentByTag("info");
+            fragment_page_two = (Fragment_Page_two) getSupportFragmentManager().findFragmentByTag("message");
+            fragment_page_three = (Fragment_Page_three) getSupportFragmentManager().findFragmentByTag("society");
+
         } else {
-            transaction.show(fragment_page_one);
-            transaction.hide(fragment_page_two);
-            transaction.hide(fragment_page_three);
+            fragment_page_one = new Fragment_Page_one();
+            fragment_page_two = new Fragment_Page_two();
+            fragment_page_three = new Fragment_Page_three();
+            transaction.add(R.id.fragment, fragment_page_one, "info")
+                    .add(R.id.fragment, fragment_page_two, "message")
+                    .add(R.id.fragment, fragment_page_three, "society");
         }
-        transaction.commit();
+        if (comment == 1) {
+            transaction.show(fragment_page_three).hide(fragment_page_two).hide(fragment_page_one).commit();
+        } else {
+            transaction.show(fragment_page_one).hide(fragment_page_two).hide(fragment_page_three).commit();
+        }
+
+
+//        transaction.add(R.id.fragment, fragment_page_one);
+//        transaction.add(R.id.fragment, fragment_page_two);
+//        transaction.add(R.id.fragment, fragment_page_three);
+
+
         mRadio.check(mRadio.getChildAt(0).getId());
         mRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -270,9 +285,10 @@ public class MainActivity extends WDActivity {
     }
 
     @OnClick(R.id.mysign)
-    public void  mysign(){
-        startActivity(new Intent(this,SignatureActivity.class));
+    public void mysign() {
+        startActivity(new Intent(this, SignatureActivity.class));
     }
+
     @Override
     protected void destoryData() {
 
@@ -313,6 +329,12 @@ public class MainActivity extends WDActivity {
                     mysign.setText(userInfoBean.getSignature());
                     edit.putString("mysign", userInfoBean.getSignature());
                     edit.commit();
+                }
+                int whetherVip = userInfoBean.getWhetherVip();
+                if (whetherVip == 1) {
+                    vip_btn.setVisibility(View.VISIBLE);
+                } else {
+                    vip_btn.setVisibility(View.INVISIBLE);
                 }
                 nickName = userInfoBean.getNickName();
                 myname.setText(userInfoBean.getNickName());

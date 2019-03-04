@@ -36,6 +36,15 @@ public class CommunityListBean<T> {
     private List<CommunityCommentVoListBean> communityUserPostVoList;
     private List<CommunityCommentVoListBean> communityCommentVoList;
     private CommunityUserVoBean communityUserVo;
+    private boolean check;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public List<CommunityCommentVoListBean> getCommunityCommentVoList() {
         return communityCommentVoList;

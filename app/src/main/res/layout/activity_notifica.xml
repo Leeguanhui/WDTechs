@@ -20,6 +20,7 @@
             android:text="我的通知" />
 
         <ImageView
+            android:id="@+id/back_imag"
             android:layout_width="8dp"
             android:layout_height="12dp"
             android:layout_centerVertical="true"

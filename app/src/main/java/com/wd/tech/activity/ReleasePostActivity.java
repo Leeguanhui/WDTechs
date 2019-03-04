@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -81,7 +82,7 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         //数据库
         LoginUserInfoBean userInfo = getUserInfo(this);
         doTheTaskPresenter = new DoTheTaskPresenter(new DoTheReuslt());

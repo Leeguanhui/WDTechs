@@ -1,6 +1,8 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -20,6 +22,7 @@ import com.wd.tech.R;
 import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.adapter.CollectRecycleAdapter;
 import com.wd.tech.activity.view.CircularLoading;
+import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.bean.FindCollectBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -68,10 +71,10 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollecResult());
-        collectRecycleAdapter = new CollectRecycleAdapter();
+        collectRecycleAdapter = new CollectRecycleAdapter(this);
         mCollectRecycle.setLayoutManager(new LinearLayoutManager(this));
         mCollectRecycle.setAdapter(collectRecycleAdapter);
         findAllCollectionPresenter = new FindAllCollectionPresenter(new FindColleResult());
@@ -90,6 +93,14 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 findAllCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
+            }
+        });
+        collectRecycleAdapter.setOnClickListener(new CollectRecycleAdapter.onClickListener() {
+            @Override
+            public void OnClick(int id) {
+                Intent intent = new Intent(CollectActivity.this, NewsDetails.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
     }
@@ -119,6 +130,11 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
         String substring = checkId.substring(0, checkId.length() - 1);
         cancelCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), substring);
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
+    }
+
+    @OnClick(R.id.back_imag)
+    public void back_imag() {
+        finish();
     }
 
     @Override

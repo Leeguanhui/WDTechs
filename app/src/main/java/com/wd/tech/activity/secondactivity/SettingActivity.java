@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,9 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.StringUtils;
 import com.wd.tech.face.FaceLoginActivity;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
+import com.wd.tech.presenter.ModifyNickNamePresenter;
 import com.wd.tech.presenter.UserHeaderPresenter;
+import com.wd.tech.presenter.WheWeChatPresenter;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -59,7 +62,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.my_header)
     SimpleDraweeView mHeader;
     @BindView(R.id.my_name)
-    TextView mName;
+    EditText mName;
     @BindView(R.id.my_sex)
     TextView mSex;
     @BindView(R.id.my_brith)
@@ -74,6 +77,8 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     TextView mVip;
     @BindView(R.id.my_face)
     TextView mFace;
+    @BindView(R.id.my_wx)
+    TextView mWx;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
@@ -85,14 +90,21 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     private View contentView;
     private Dialog bottomDialog;
     private IWXAPI mWechatApi;
-    int type=1;
+    static int type = 1;
+    //网络数据
+    private ByIdUserInfoBean byIdUserInfoBean;
+    private ModifyNickNamePresenter modifyNickNamePresenter;
+    private WheWeChatPresenter wheWeChatPresenter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
+        wheWeChatPresenter = new WheWeChatPresenter(new WhetherWeChatResult());
+        modifyNickNamePresenter = new ModifyNickNamePresenter(new NickNameResult());
         userHeaderPresenter = new UserHeaderPresenter(new UserHeaderResult());
         contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_normal, null);
         btn_take_photo = contentView.findViewById(R.id.tv_take_photo);
@@ -103,7 +115,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         userInfo = getUserInfo(this);
         byIdUserInfoPresenter = new ByIdUserInfoPresenter(new ByIdUserResult());
         byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
-
+        wheWeChatPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         //底部弹出dialog
         bottomDialog = new Dialog(this, R.style.BottomDialog);
 
@@ -165,7 +177,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.my_wx)
     public void my_wx() {
-        type=2;
+        type = 2;
         mWechatApi = WXAPIFactory.createWXAPI(SettingActivity.this, "wx4c96b6b8da494224", false);
         mWechatApi.registerApp("wx4c96b6b8da494224");
         final SendAuth.Req req = new SendAuth.Req();
@@ -174,9 +186,11 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         mWechatApi.sendReq(req);
         finish();
     }
-   public int getType(){
-       return type;
+
+    public static int getType() {
+        return type;
     }
+
     @OnClick(R.id.line1)
     public void line1() {
         startActivity(new Intent(SettingActivity.this, SignatureActivity.class));
@@ -210,7 +224,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         @Override
         public void success(Object data) {
             Result result = (Result) data;
-            ByIdUserInfoBean byIdUserInfoBean = (ByIdUserInfoBean) result.getResult();
+            byIdUserInfoBean = (ByIdUserInfoBean) result.getResult();
             mHeader.setImageURI(Uri.parse(byIdUserInfoBean.getHeadPic()));
             mName.setText(byIdUserInfoBean.getNickName());
             int sex = byIdUserInfoBean.getSex();
@@ -237,6 +251,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             } else {
                 mFace.setText("未绑定");
             }
+
             CircularLoading.closeDialog(dialog);
         }
 
@@ -397,5 +412,41 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         bottomDialog.setCanceledOnTouchOutside(true);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         bottomDialog.show();
+    }
+
+    /**
+     * 修改名称
+     */
+    private class NickNameResult implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 绑定微信
+     */
+    private class WhetherWeChatResult implements ICoreInfe<Result> {
+        @Override
+        public void success(Result result) {
+            int bindStatus = result.getBindStatus();
+
+            if (bindStatus == 1) {
+                mWx.setText("已绑定");
+            } else {
+                mWx.setText("未绑定");
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

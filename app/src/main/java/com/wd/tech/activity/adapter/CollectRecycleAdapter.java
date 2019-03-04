@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,7 +28,11 @@ import java.util.List;
 public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAdapter.Vh> {
     List<FindCollectBean> list = new ArrayList<>();
     List<CheckBox> checkBoxes = new ArrayList<>();
+    Context context;
 
+    public CollectRecycleAdapter(Context context) {
+        this.context = context;
+    }
 
     public void addAll(List<FindCollectBean> list) {
         this.list.addAll(list);
@@ -73,6 +78,14 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
                 getCheckId();
             }
         });
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickListener != null) {
+                    onClickListener.OnClick(findCollectBean.getInfoId());
+                }
+            }
+        });
         //如果商品为选中状态（1）则为true
         if (findCollectBean.isClick()) {
             vh.radio.setChecked(true);
@@ -110,5 +123,15 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
             }
         }
         return mPosition;
+    }
+
+    public onClickListener onClickListener;
+
+    public void setOnClickListener(CollectRecycleAdapter.onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void OnClick(int id);
     }
 }

@@ -48,7 +48,7 @@ public class SearchType extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         Intent intent = getIntent();
         xrecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         zxxRecyAdapter = new ZXXRecyAdapter(this);

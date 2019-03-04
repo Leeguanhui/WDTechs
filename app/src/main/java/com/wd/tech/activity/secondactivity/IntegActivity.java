@@ -1,12 +1,11 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -54,7 +53,7 @@ public class IntegActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         findContinuousPresenter = new FindContinuousPresenter(new FindContinuResult());
         findContinuousPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
@@ -72,9 +71,9 @@ public class IntegActivity extends WDActivity implements CustomAdapt {
                 mPage = 1;
                 mIntegRecycleAdapter.deleteAll();
                 integralRecordPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
-
             }
         });
+        mRefreshLayout.setFooterHeight(1);
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

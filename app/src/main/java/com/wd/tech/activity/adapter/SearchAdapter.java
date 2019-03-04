@@ -45,11 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public void setList(List<String> list) {
-        if (list.size()!=0){
-            this.list.clear();
-            this.list.addAll(list);
-            notifyDataSetChanged();
-        }
+            this.list=list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

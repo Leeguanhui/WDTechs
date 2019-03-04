@@ -140,11 +140,11 @@ public class NewsDetails extends WDActivity {
 
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         dialog = new Dialog(this);
-       initP();
+        initP();
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +158,7 @@ public class NewsDetails extends WDActivity {
         }
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
-        Log.e("qwer", id +"");
+        Log.e("qwer", id + "");
         newsDetails_presenter.request(userId, sessionId, id);
         detailsCommentsPresenter.request(userId, sessionId, id, 1, 10);
         comments.setLayoutManager(new LinearLayoutManager(NewsDetails.this, LinearLayoutManager.VERTICAL, false));
@@ -166,7 +166,7 @@ public class NewsDetails extends WDActivity {
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userInfo !=null){
+                if (userInfo != null) {
                     EventBus.getDefault().postSticky(String.valueOf(id));
                     ZxComments zxComments = new ZxComments(NewsDetails.this);
                     Window window = zxComments.getWindow();
@@ -180,7 +180,7 @@ public class NewsDetails extends WDActivity {
                             detailsCommentsPresenter.request(userId, sessionId, id, 1, 10);
                         }
                     });
-                }else {
+                } else {
                     Toast.makeText(NewsDetails.this, "请先登录", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -198,51 +198,53 @@ public class NewsDetails extends WDActivity {
     }
 
     @OnClick(R.id.great)
-    public void Great(){
+    public void Great() {
         if (userInfo != null) {
-            if (whetherGreat==1){
-                cancelGreat.request(userId,sessionId,id);
-            }else{
-                addGreat.request(userId,sessionId,id);
+            if (whetherGreat == 1) {
+                cancelGreat.request(userId, sessionId, id);
+            } else {
+                addGreat.request(userId, sessionId, id);
             }
-        }else{
-            Toast.makeText(this,"请先登录",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_LONG).show();
         }
 
-   }
-   //点击分享
-   @OnClick(R.id.shape)
-   public void ClickShare(){
-       View inflate = View.inflate(this, R.layout.share, null);
-       final Dialog dialog = new Dialog(this);
-       Window dialogWindow = dialog.getWindow();
-       dialogWindow.setGravity(Gravity.CENTER);
-       dialog.setContentView(inflate);
-       dialog.show();
-       RelativeLayout back=inflate.findViewById(R.id.a);
-       RelativeLayout wxq=inflate.findViewById(R.id.wxq);
-       back.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               dialog.dismiss();
-           }
-       });
-       wxq.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-                 wechatShare(1);
+    }
 
-           }
-       });
-   }
+    //点击分享
+    @OnClick(R.id.shape)
+    public void ClickShare() {
+        View inflate = View.inflate(this, R.layout.share, null);
+        final Dialog dialog = new Dialog(this);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.CENTER);
+        dialog.setContentView(inflate);
+        dialog.show();
+        RelativeLayout back = inflate.findViewById(R.id.a);
+        RelativeLayout wxq = inflate.findViewById(R.id.wxq);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        wxq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wechatShare(1);
+            }
+        });
+    }
+
     /**
      * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
+     *
      * @param flag(0:分享到微信好友，1：分享到微信朋友圈)
      */
-    private void wechatShare(int flag){
-        IWXAPI api= WXAPIFactory.createWXAPI(NewsDetails.this, "wx4c96b6b8da494224",false);
+    private void wechatShare(int flag) {
+        IWXAPI api = WXAPIFactory.createWXAPI(NewsDetails.this, "wx4c96b6b8da494224", false);
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "www.baidu.com";
+        webpage.webpageUrl = "www.hooxiao.com";
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = title1;
         msg.description = summary;
@@ -253,12 +255,13 @@ public class NewsDetails extends WDActivity {
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = msg;
-        req.scene = flag==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
         api.sendReq(req);
     }
+
     @OnClick(R.id.fufei)
-    public void Pay(){
-        if (userInfo !=null){
+    public void Pay() {
+        if (userInfo != null) {
             dialog.setCanceledOnTouchOutside(true);
             final View inflate = View.inflate(this, R.layout.dia_pay_type, null);
             dialog.setContentView(inflate);
@@ -275,8 +278,8 @@ public class NewsDetails extends WDActivity {
             dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
             dialog.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
             dialog.show();
-            RelativeLayout mJf=inflate.findViewById(R.id.r);
-            RelativeLayout mVip=inflate.findViewById(R.id.t);
+            RelativeLayout mJf = inflate.findViewById(R.id.r);
+            RelativeLayout mVip = inflate.findViewById(R.id.t);
             mJf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -288,14 +291,14 @@ public class NewsDetails extends WDActivity {
                     long releaseTime = result.getReleaseTime();
                     int praise = result.getPraise();
                     Intent intent = new Intent(NewsDetails.this, IntergralExchange.class);
-                    intent.putExtra("integralCost",integralCost);
-                    intent.putExtra("id",id);
-                    intent.putExtra("thumbnail",thumbnail);
-                    intent.putExtra("title",title);
-                    intent.putExtra("source",source);
-                    intent.putExtra("releaseTime",releaseTime);
-                    intent.putExtra("praise",praise);
-                    intent.putExtra("summary",result.getSummary());
+                    intent.putExtra("integralCost", integralCost);
+                    intent.putExtra("id", id);
+                    intent.putExtra("thumbnail", thumbnail);
+                    intent.putExtra("title", title);
+                    intent.putExtra("source", source);
+                    intent.putExtra("releaseTime", releaseTime);
+                    intent.putExtra("praise", praise);
+                    intent.putExtra("summary", result.getSummary());
                     startActivity(intent);
                 }
             });
@@ -304,32 +307,35 @@ public class NewsDetails extends WDActivity {
             mVip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(NewsDetails.this,DredgeVip.class));
+                    startActivity(new Intent(NewsDetails.this, DredgeVip.class));
                 }
             });
             dialog.show();
-        }else {
+        } else {
             Toast.makeText(NewsDetails.this, "请先登录", Toast.LENGTH_SHORT).show();
         }
     }
+
     public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         return height;
     }
+
     @OnClick(R.id.like)
-    public void userLike(){
+    public void userLike() {
         if (userInfo != null) {
-            if (whetherCollection==2){
-                addCollectionPresenter.request(userId,sessionId,id);
-            }else{
-                cancelCollectionPresenter.request(userId,sessionId,String.valueOf(id));
+            if (whetherCollection == 2) {
+                addCollectionPresenter.request(userId, sessionId, id);
+            } else {
+                cancelCollectionPresenter.request(userId, sessionId, String.valueOf(id));
             }
-        }else{
-            Toast.makeText(this,"请先登录",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_LONG).show();
         }
 
     }
+
     @Override
     protected void destoryData() {
 
@@ -351,15 +357,15 @@ public class NewsDetails extends WDActivity {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             result = data.getResult();
             whetherCollection = data.getResult().getWhetherCollection();
-            if (whetherCollection ==2){
+            if (whetherCollection == 2) {
                 like.setImageResource(R.mipmap.collect_n);
-            }else{
+            } else {
                 like.setImageResource(R.mipmap.collect_s);
             }
             whetherGreat = result.getWhetherGreat();
-            if (whetherGreat==1){
+            if (whetherGreat == 1) {
                 mBang.setImageResource(R.drawable.common_icon_p);
-            }else{
+            } else {
                 mBang.setImageResource(R.drawable.common_icon);
             }
             title1 = result.getTitle();
@@ -369,8 +375,8 @@ public class NewsDetails extends WDActivity {
             simple.setImageURI(result.getThumbnail());
             comment1 = data.getResult().getComment();
             praise = data.getResult().getPraise();
-            commentsnum.setText(data.getResult().getComment()+"");
-            likenum.setText(data.getResult().getPraise()+"");
+            commentsnum.setText(data.getResult().getComment() + "");
+            likenum.setText(data.getResult().getPraise() + "");
             String format = formatter.format(result.getReleaseTime());
             time.setText(format + "");
             writer.setText(result.getSource());
@@ -407,8 +413,8 @@ public class NewsDetails extends WDActivity {
 
         @Override
         public void success(Result<List<AllCommentBean>> data) {
-            Log.e("qwerrr",data.getResult().size()+"");
-            if (data.getResult().size()==0){
+            Log.e("qwerrr", data.getResult().size() + "");
+            if (data.getResult().size() == 0) {
                 b.setVisibility(View.GONE);
                 return;
             }
@@ -424,12 +430,12 @@ public class NewsDetails extends WDActivity {
     private class AddGreatBack implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-             if (data.getStatus().equals("0000")){
-                 Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
-                 newsDetails_presenter.request(userId, sessionId, id);
-             }else{
-                 Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
-             }
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
+                newsDetails_presenter.request(userId, sessionId, id);
+            } else {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -441,11 +447,11 @@ public class NewsDetails extends WDActivity {
     private class CancelBack implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
                 newsDetails_presenter.request(userId, sessionId, id);
-            }else{
-                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -458,9 +464,9 @@ public class NewsDetails extends WDActivity {
     private class CancelCollectionBack implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
 
-                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
                 newsDetails_presenter.request(userId, sessionId, id);
             }
         }
@@ -474,8 +480,8 @@ public class NewsDetails extends WDActivity {
     private class AddCollection implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
                 newsDetails_presenter.request(userId, sessionId, id);
             }
         }
