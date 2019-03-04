@@ -14,6 +14,6 @@ public class FindContinuousPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.findContinuousSignDays((int) args[0], (String) args[1], (int) args[2]);
+        return allUrls.findContinuousSignDays((int) args[0], (String) args[1]);
     }
 }

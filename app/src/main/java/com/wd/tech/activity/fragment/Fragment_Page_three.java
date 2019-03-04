@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.ReleasePostActivity;
@@ -110,7 +109,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
             //评论
             @Override
-            public void addCommunityComment(int id) {
+            public void addCommunityComment(int id, ImageView communityIv) {
                 ids = id;
                 show(pl);
             }

@@ -131,7 +131,7 @@ public class AddFriendlyActivity extends WDActivity {
             btnRMessage.setVisibility(View.GONE);
             CircularLoading.closeDialog(dialog);
         } else {
-//            checkMyFriendPresnter.request(userId, sessionId, userid1);
+            checkMyFriendPresnter.request(userId, sessionId, userid1);
         }
     }
 

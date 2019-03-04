@@ -1,5 +1,6 @@
 package com.wd.tech.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,16 +10,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
-import com.wd.tech.activity.adapter.CommunityListAdapter;
 import com.wd.tech.activity.adapter.UserPostByIdAdapter;
-import com.wd.tech.activity.fragment.Fragment_Page_three;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserVoBean;
@@ -34,6 +35,7 @@ import com.wd.tech.presenter.UserPostByIdPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
@@ -54,13 +56,17 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.xrecycler)
     RecyclerView recyclerView;
     private AddCommunityGreatPresenter addCommunityGreatPresenter;
-    private int ids;
     private View pl;
     private Dialog bottomDialog;
     private Dialog dialog;
     private AddCommunityCommentPresenter addCommunityCommentPresenter;
     private TextView button;
     private EditText editText;
+    @BindView(R.id.more)
+    ImageView more;
+    @BindView(R.id.linear)
+    LinearLayout linearLayout;
+    private int userIds;
 
 
     @Override
@@ -99,18 +105,16 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
                 communityListBean.setPraise(a);
                 community_praise.setText(String.valueOf(communityListBean.getPraise()));
             }
+
+            //评论
+            @Override
+            public void addCommunityComment(int id) {
+                show(pl);
+            }
         });
 
         //dialog
         bottomDialog = new Dialog(this, R.style.BottomDialog);
-
-        userPostByIdAdapter.setAddCommunityComment(new UserPostByIdAdapter.AddCommunityComment() {
-            @Override
-            public void addCommunityComment(int id) {
-                ids = id;
-                show(pl);
-            }
-        });
 
         //评论
         addCommunityCommentPresenter = new AddCommunityCommentPresenter(new AddCommunityComment());
@@ -118,14 +122,27 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         pl = LayoutInflater.from(this).inflate(R.layout.comment_popupwindow, null);
         editText = pl.findViewById(R.id.et_discuss);
         button = pl.findViewById(R.id.tv_confirm);
-        //评论
-        userPostByIdAdapter.setAddCommunityComment(new UserPostByIdAdapter.AddCommunityComment() {
-            @Override
-            public void addCommunityComment(int id) {
-                ids = id;
-                show(pl);
-            }
-        });
+
+    }
+
+    @OnClick(R.id.more)
+    public void more() {
+        more.setVisibility(View.GONE);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(linearLayout, "translationX", 0f, -400f);
+        animator.setDuration(1000);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.start();
+    }
+
+    @OnClick(R.id.friends)
+    public void friends() {
+        Intent intent = new Intent(this, AddFriendlyActivity.class);
+        intent.putExtra("userid1", userIds);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.attention)
+    public void attention() {
 
     }
 
@@ -150,6 +167,7 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
             List<CommunityListBean> result = (List<CommunityListBean>) data.getResult();
             for (int i = 0; i < result.size(); i++) {
                 CommunityUserVoBean communityUserVo = result.get(i).getCommunityUserVo();
+                userIds = communityUserVo.getUserId();
                 pic.setImageURI(Uri.parse(communityUserVo.getHeadPic()));
                 name.setText(communityUserVo.getNickName());
                 signature.setText(communityUserVo.getSignature());
