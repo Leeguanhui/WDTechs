@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
@@ -44,8 +48,11 @@ public class Fragment_Page_one extends WDFragment {
 
     @BindView(R.id.menu)
     ImageView menu;
+
     @BindView(R.id.xrecy)
     XRecyclerView xrecy;
+    @BindView(R.id.layout)
+    SmartRefreshLayout mLayout;
     private NewsBannderPresenter newsBannderPresenter;
     private List<String> mImages;
     private List<String> mItitles;
@@ -87,6 +94,28 @@ public class Fragment_Page_one extends WDFragment {
         xrecy.setPullRefreshEnabled(true);
         xrecy.setLoadingMoreEnabled(true);
         xrecy.refresh();
+        mLayout.setEnableRefresh(true);//启用刷新
+        mLayout.setEnableLoadmore(true);//启用加载
+        mLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                newsBannderPresenter.request();
+                NUM++;
+                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+                zxxRecyAdapter.notifyDataSetChanged();
+                mLayout.finishRefresh();
+            }
+        });
+        mLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                newsBannderPresenter.request();
+                NUM++;
+                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+                zxxRecyAdapter.notifyDataSetChanged();
+                mLayout.finishLoadmore();
+            }
+        });
         xrecy.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {

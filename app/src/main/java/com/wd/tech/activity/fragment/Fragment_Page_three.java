@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.ReleasePostActivity;
@@ -29,6 +28,7 @@ import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
+import com.wd.tech.presenter.CancelCommunityGreatPresenter;
 import com.wd.tech.presenter.CommunityListPresenter;
 import com.wd.tech.presenter.DoTheTaskPresenter;
 
@@ -64,6 +64,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     private Dialog bottomDialog;
     private int ids;
     private DoTheTaskPresenter doTheTaskPresenter;
+    private CancelCommunityGreatPresenter cancelCommunityGreatPresenter;
 
     @Override
     public String getPageName() {
@@ -100,20 +101,37 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
         //点赞
         addCommunityGreatPresenter = new AddCommunityGreatPresenter(new AddCommunityGreat());
+        //取消点赞
+        cancelCommunityGreatPresenter = new CancelCommunityGreatPresenter(new CancelCommunityGreat());
 
         communityListAdapter.setAddCommunityGreat(new CommunityListAdapter.addCommunityGreat() {
             @Override
             public void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean) {
-                addCommunityGreatPresenter.request(userId, sessionId, id);
-                addCommunityGreat.setImageResource(R.drawable.common_icon_p);
-                int a = Integer.parseInt(trim) + 1;
-                communityListBean.setPraise(a);
-                community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                if (userId == 0 | sessionId.equals("0")) {
+                    Toast.makeText(getContext(), "请先登录！！！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (communityListBean.isCheck()) {
+                    cancelCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon);
+                    int a = Integer.parseInt(trim) - 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(false);
+                } else {
+                    addCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+                    int a = Integer.parseInt(trim) + 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(true);
+                }
+
             }
 
             //评论
             @Override
-            public void addCommunityComment(int id) {
+            public void addCommunityComment(int id, ImageView communityIv) {
                 ids = id;
                 show(pl);
             }
@@ -229,7 +247,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             editText.setText(null);
             communityListAdapter.removeAll();
             communityListPresenter.request(userId, sessionId, 1, 1000);
-            doTheTaskPresenter.request(userId,sessionId,1002);
+            doTheTaskPresenter.request(userId, sessionId, 1002);
         }
 
         @Override
@@ -253,6 +271,18 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     private class DoTheResult implements ICoreInfe {
         @Override
         public void success(Object data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CancelCommunityGreat implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
 
         }
 

@@ -46,7 +46,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
     public interface addCommunityGreat {
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
-        void addCommunityComment(int id);
+
+        void addCommunityComment(int id, ImageView communityIv);
     }
 
     @NonNull
@@ -75,6 +76,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.content.setText(communityListBean.getContent());
         viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
         viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
+        //查看用户动态
         viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,8 +89,10 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         //判断是否点赞
         if (list.get(i).getWhetherGreat() == 1) {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+            list.get(i).setCheck(true);
         } else {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon);
+            list.get(i).setCheck(false);
         }
 
         //点赞
@@ -106,7 +110,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
-                addCommunityGreat.addCommunityComment(list.get(i).getId());
+                addCommunityGreat.addCommunityComment(list.get(i).getId(), viewHolder.communityIv);
             }
         });
 
