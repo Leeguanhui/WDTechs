@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,12 +27,16 @@ import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserVoBean;
 import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.bean.QueryFriendInformationBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
+import com.wd.tech.presenter.AddFollowPresenter;
+import com.wd.tech.presenter.CanceFollowPresenter;
+import com.wd.tech.presenter.QueryFriendInformationPresenter;
 import com.wd.tech.presenter.UserPostByIdPresenter;
 
 import java.util.List;
@@ -68,6 +74,22 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.linear)
     LinearLayout linearLayout;
     private int userIds;
+    private AddFollowPresenter addFollowPresenter;
+    @BindView(R.id.attention)
+    Button attention;
+    @BindView(R.id.friends)
+    Button friends;
+    private QueryFriendInformationPresenter queryFriendInformationPresenter;
+    private String phone;
+    private long birthday;
+    private String email;
+    private String headPic;
+    private int integral;
+    private String nickName;
+    private int sex;
+    private int whetherVip;
+    private String signature1;
+    private CanceFollowPresenter canceFollowPresenter;
 
 
     @Override
@@ -124,6 +146,10 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         editText = pl.findViewById(R.id.et_discuss);
         button = pl.findViewById(R.id.tv_confirm);
 
+        addFollowPresenter = new AddFollowPresenter(new AddFollow());
+        queryFriendInformationPresenter = new QueryFriendInformationPresenter(new QueryFriendInformation());
+
+        canceFollowPresenter = new CanceFollowPresenter(new CanceFollow());
     }
 
     @OnClick(R.id.more)
@@ -133,18 +159,38 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         animator.setDuration(1000);
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
+        queryFriendInformationPresenter.request(userId, sessionId, userIds);
     }
 
+    //加好友
     @OnClick(R.id.friends)
     public void friends() {
+        if (friends.getText().toString().trim().equals("已添加")) {
+            Toast.makeText(this, "已经添加过该好友了，不能重复添加", Toast.LENGTH_SHORT).show();
+        }
         Intent intent = new Intent(this, AddFriendlyActivity.class);
         intent.putExtra("userid1", userIds);
+        intent.putExtra("sss", phone);
+        intent.putExtra("phone", phone);
+        intent.putExtra("email", email);
+        intent.putExtra("nickName", nickName);
+        intent.putExtra("sex", sex);
+        intent.putExtra("headPic", headPic);
+        intent.putExtra("integral", integral);
+        intent.putExtra("signature", signature1);
+        intent.putExtra("birthday", birthday);
+        intent.putExtra("whetherVip", whetherVip);
         startActivity(intent);
     }
 
+    //关注
     @OnClick(R.id.attention)
     public void attention() {
-
+        if (attention.getText().toString().trim().equals("已关注")) {
+            canceFollowPresenter.request(userId, sessionId, userIds);
+        } else {
+            addFollowPresenter.request(userId, sessionId, userIds);
+        }
     }
 
     @Override
@@ -168,6 +214,12 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
             List<CommunityListBean> result = (List<CommunityListBean>) data.getResult();
             for (int i = 0; i < result.size(); i++) {
                 CommunityUserVoBean communityUserVo = result.get(i).getCommunityUserVo();
+                if (communityUserVo.getWhetherFollow() == 1) {
+                    attention.setText("已关注");
+                }
+                if (communityUserVo.getWhetherMyFriend() == 1) {
+                    friends.setText("已添加");
+                }
                 userIds = communityUserVo.getUserId();
                 pic.setImageURI(Uri.parse(communityUserVo.getHeadPic()));
                 name.setText(communityUserVo.getNickName());
@@ -225,4 +277,52 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         bottomDialog.show();
     }
 
+    private class AddFollow implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            attention.setText("已关注");
+            Toast.makeText(UserPostByIdActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    /**
+     * 查询好友信息
+     */
+    private class QueryFriendInformation implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            QueryFriendInformationBean result = (QueryFriendInformationBean) data.getResult();
+            phone = result.getPhone();
+            birthday = result.getBirthday();
+            email = result.getEmail();
+            headPic = result.getHeadPic();
+            integral = result.getIntegral();
+            nickName = result.getNickName();
+            sex = result.getSex();
+            whetherVip = result.getWhetherVip();
+            signature1 = result.getSignature();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CanceFollow implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            attention.setText("+关注");
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
 }

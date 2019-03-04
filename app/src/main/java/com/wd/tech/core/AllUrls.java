@@ -22,6 +22,7 @@ import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.NewsDetailsBean;
 import com.wd.tech.bean.NotifiListBean;
+import com.wd.tech.bean.QueryFriendInformationBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.bean.TypeBean;
 import com.wd.tech.bean.UserIntegralBean;
@@ -607,4 +608,20 @@ public interface AllUrls {
     Observable<Result> cancelFollow(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("focusId") int focusId);
+
+    /**
+     * 关注用户
+     */
+    @POST("user/verify/v1/addFollow")
+    Observable<Result> addFollow(@Header("userid") int userid,
+                                 @Header("sessionid") String sessionid,
+                                 @Query("focusId") int focusId);
+
+    /**
+     * 查询好友信息
+     */
+    @GET("user/verify/v1/queryFriendInformation")
+    Observable<Result<QueryFriendInformationBean>> queryFriendInformation(@Header("userid") int userid,
+                                                                          @Header("sessionid") String sessionid,
+                                                                          @Query("friend") int friend);
 }
