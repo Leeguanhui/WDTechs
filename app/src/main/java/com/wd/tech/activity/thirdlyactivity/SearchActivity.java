@@ -84,7 +84,7 @@ public class SearchActivity extends WDActivity implements XRecyclerView.LoadingL
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         searchRecycleAdapter = new SearchRecycleAdapter(this);
         Log.e("qwer", list.size() + "");
         /*if (list.size()!=0){
