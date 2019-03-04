@@ -16,8 +16,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
             android:paddingLeft="44dp"
+            android:numeric="integer"
             android:textSize="12sp"
+            android:inputType="number"
             android:hint="搜索"
+            android:maxLength="9"
+            android:maxEms="9"
             android:layout_marginLeft="12dp"
             android:background="@drawable/edtext_selector"/>
 

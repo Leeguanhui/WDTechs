@@ -18,6 +18,11 @@
             android:paddingLeft="44dp"
             android:textSize="12sp"
             android:hint="搜索"
+            android:inputType="phone|number"
+            android:maxLength="11"
+            android:maxEms="11"
+            android:numeric="integer"
+            android:singleLine="true"
             android:layout_marginLeft="12dp"
             android:background="@drawable/edtext_selector"/>
 

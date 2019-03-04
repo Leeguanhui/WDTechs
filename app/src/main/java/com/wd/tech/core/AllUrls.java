@@ -15,6 +15,7 @@ import com.wd.tech.bean.FindGroupsByCreate;
 import com.wd.tech.bean.FindGroupsByUserId;
 import com.wd.tech.bean.FindMyPostListBean;
 import com.wd.tech.bean.FindUserTaskListBean;
+import com.wd.tech.bean.FriendGroup;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
@@ -530,7 +531,7 @@ public interface AllUrls {
     Observable<Result> findContinuousSignDays(
             @Header("userid") int userid,
             @Header("sessionid") String sessionid
-             );
+    );
 
     /**
      * 社区评论
@@ -607,4 +608,74 @@ public interface AllUrls {
     Observable<Result> cancelFollow(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("focusId") int focusId);
+
+    /**
+     * 创建自定义好友分组
+     *
+     * @param userId
+     * @param sessionId
+     * @param groupName
+     * @return
+     */
+    @POST("chat/verify/v1/addFriendGroup")
+    @FormUrlEncoded
+    Observable<Result> addFriendGroup(@Header("userId") int userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Field("groupName") String groupName);
+
+    /**
+     * 删除好友聊天记录
+     *
+     * @param userId
+     * @param sessionId
+     * @param friendUid
+     * @return
+     */
+    @DELETE("chat/verify/v1/deleteChatRecord")
+    Observable<Result> deleteChatRecord(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("friendUid") int friendUid);
+
+    /**
+     * 查询个人群
+     *
+     * @param userId
+     * @param sessionId
+     * @return
+     */
+    @GET("chat/verify/v1/findFriendGroupList")
+    Observable<Result<List<FriendGroup>>> findFriendGroupList(@Header("userId") int userId,
+                                                              @Header("sessionId") String sessionId);
+
+    /**
+     * .删除用户好友分组
+     *
+     * @return
+     */
+    @DELETE("chat/verify/v1/deleteFriendGroup")
+    Observable<Result> deleteFriendGroup(@Header("userId") int userId,
+                                         @Header("sessionId") String sessionId,
+                                         @Query("groupId") int groupId);
+
+    /**
+     * .修改好友备注
+     *
+     * @return
+     */
+    @PUT("chat/verify/v1/modifyFriendRemark")
+    Observable<Result> modifyFriendRemark(@Header("userId") int userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Query("friendUid") int friendUid,
+                                          @Query("remarkName") String remarkName);
+
+    /**
+     * .修改好友分组名称
+     *
+     * @return
+     */
+    @PUT("chat/verify/v1/modifyGroupName")
+    Observable<Result> modifyGroupName(@Header("userId") int userId,
+                                       @Header("sessionId") String sessionId,
+                                       @Query("groupId") int groupId,
+                                       @Query("groupName") String groupName);
 }
