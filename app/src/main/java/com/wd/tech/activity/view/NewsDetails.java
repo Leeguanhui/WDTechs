@@ -242,7 +242,7 @@ public class NewsDetails extends WDActivity {
     private void wechatShare(int flag){
         IWXAPI api= WXAPIFactory.createWXAPI(NewsDetails.this, "wx4c96b6b8da494224",false);
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "www.baidu.com";
+        webpage.webpageUrl = "www.hooxiao.com";
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = title1;
         msg.description = summary;
