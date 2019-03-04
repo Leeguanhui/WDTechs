@@ -76,95 +76,14 @@
             android:layout_marginTop="20dp"
             android:text="热搜词" />
 
-        <com.wd.tech.activity.view.FlowLayout
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/flow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="12dp">
-
-            <TextView
-                android:id="@+id/one"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="区块链" />
-
-            <TextView
-                android:id="@+id/two"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="中年危机" />
-
-            <TextView
-                android:id="@+id/three"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="锤子科技" />
-
-            <TextView
-                android:id="@+id/four"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="子弹短信" />
-
-            <TextView
-                android:id="@+id/five"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="民营企业" />
-
-            <TextView
-                android:id="@+id/sex"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="特斯拉" />
-
-            <TextView
-                android:id="@+id/seven"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="支付宝" />
-
-            <TextView
-                android:id="@+id/eigth"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="资本市场" />
-
-            <TextView
-                android:id="@+id/night"
-                android:layout_width="88dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/edtext_selector"
-                android:gravity="center"
-                android:text="电视剧" />
-        </com.wd.tech.activity.view.FlowLayout>
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <LinearLayout

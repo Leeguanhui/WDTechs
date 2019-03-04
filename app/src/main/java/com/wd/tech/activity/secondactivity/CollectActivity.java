@@ -1,6 +1,7 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -68,7 +69,7 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollecResult());
         collectRecycleAdapter = new CollectRecycleAdapter();
@@ -117,11 +118,13 @@ public class CollectActivity extends WDActivity implements CustomAdapt {
             return;
         }
         String substring = checkId.substring(0, checkId.length() - 1);
-
         cancelCollectionPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), substring);
         dialog = CircularLoading.showLoadDialog(CollectActivity.this, "加载中...", true);
     }
-
+    @OnClick(R.id.back_imag)
+    public void back_imag(){
+        finish();
+    }
     @Override
     public boolean isBaseOnWidth() {
         return false;

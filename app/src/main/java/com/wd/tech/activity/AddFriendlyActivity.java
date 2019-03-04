@@ -20,7 +20,6 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.CheckMyFriendPresnter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddFriendlyActivity extends WDActivity {
@@ -63,14 +62,8 @@ public class AddFriendlyActivity extends WDActivity {
     protected int getLayoutId() {
         return R.layout.activity_add_friendly;
     }
-
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         LoginUserInfoBean infoBean = getUserInfo(this);
         if (infoBean != null) {
             sessionId = infoBean.getSessionId();
@@ -125,12 +118,12 @@ public class AddFriendlyActivity extends WDActivity {
         }
         userIntegral.setText("(" + integral + "积分)");
 
-        userPhone.setText(phone);
+        userPhone.setText(phone1);
         if (ss.equals(phone)) {
             btnRAdd.setVisibility(View.GONE);
             btnRMessage.setVisibility(View.GONE);
             CircularLoading.closeDialog(dialog);
-        } else {
+        } else if (ss.equals(phone1)){
             checkMyFriendPresnter.request(userId, sessionId, userid1);
         }
     }
@@ -170,6 +163,7 @@ public class AddFriendlyActivity extends WDActivity {
                     btnRAdd.setVisibility(View.GONE);
                     btnRMessage.setVisibility(View.VISIBLE);
                 } else if (flag == 2) {
+                    Toast.makeText(AddFriendlyActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                     btnRAdd.setVisibility(View.VISIBLE);
                     btnRMessage.setVisibility(View.GONE);
                 }

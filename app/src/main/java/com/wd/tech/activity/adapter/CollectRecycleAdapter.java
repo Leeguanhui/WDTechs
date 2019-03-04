@@ -27,7 +27,7 @@ import java.util.List;
 public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAdapter.Vh> {
     List<FindCollectBean> list = new ArrayList<>();
     List<CheckBox> checkBoxes = new ArrayList<>();
-    private FindCollectBean findCollectBean;
+
 
     public void addAll(List<FindCollectBean> list) {
         this.list.addAll(list);
@@ -63,17 +63,23 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        findCollectBean = list.get(i);
+        final FindCollectBean findCollectBean = list.get(i);
         vh.qiandao.setImageURI(findCollectBean.getThumbnail());
         vh.date.setText(findCollectBean.getTitle());
-        // TODO: 2019/2/25 删除
-        vh.radio.setChecked(findCollectBean.isClick());
         vh.radio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 findCollectBean.setClick(isChecked);
+                getCheckId();
             }
         });
+        //如果商品为选中状态（1）则为true
+        if (findCollectBean.isClick()) {
+            vh.radio.setChecked(true);
+        } else {
+            vh.radio.setChecked(false);
+        }
+
     }
 
     @Override
@@ -96,11 +102,10 @@ public class CollectRecycleAdapter extends RecyclerView.Adapter<CollectRecycleAd
     //批量删除
     public String getCheckId() {
         String mPosition = "";
-        for (int i = 0; i < checkBoxes.size(); i++) {
-            CheckBox checkBox = checkBoxes.get(i);
-            boolean checked = checkBox.isChecked();
-            if (checked) {
-                int id = list.get(i).getInfoId();
+        for (int i = 0; i < list.size(); i++) {
+            FindCollectBean findCollectBean = list.get(i);
+            if (findCollectBean.isClick()) {
+                int id = findCollectBean.getInfoId();
                 mPosition += id + ",";
             }
         }

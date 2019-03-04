@@ -21,6 +21,7 @@
             android:text="我的关注" />
 
         <ImageView
+            android:id="@+id/back_btn"
             android:layout_width="8dp"
             android:layout_height="12dp"
             android:layout_centerVertical="true"
@@ -31,14 +32,13 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:background="#FFFFFF"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+        <com.baoyz.swipemenulistview.SwipeMenuListView
             android:id="@+id/xrecycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
-            android:layout_marginTop="10dp" />
+            android:fadingEdge="none" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

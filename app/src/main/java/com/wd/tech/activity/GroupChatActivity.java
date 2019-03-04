@@ -43,7 +43,7 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
 
         findGroupNoticePageListPresenter = new FindGroupNoticePageListPresenter(new GroupChatData());
         reviewGroupApplyPresenter = new ReviewGroupApplyPresenter(new Review());

@@ -62,7 +62,7 @@ public class DredgeVip extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

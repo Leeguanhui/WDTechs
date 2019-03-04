@@ -531,6 +531,7 @@ public interface AllUrls {
             @Header("userid") int userid,
             @Header("sessionid") String sessionid);
 
+
     /**
      * 社区评论
      */
@@ -598,4 +599,12 @@ public interface AllUrls {
     Observable<Result> bindWeChat(
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("code") String code);
+
+    /**
+     * 取消关注
+     */
+    @DELETE("user/verify/v1/cancelFollow")
+    Observable<Result> cancelFollow(
+            @Header("userid") int userid, @Header("sessionid") String sessionid,
+            @Query("focusId") int focusId);
 }

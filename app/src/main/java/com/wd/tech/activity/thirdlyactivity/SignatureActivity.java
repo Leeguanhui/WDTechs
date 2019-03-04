@@ -1,6 +1,7 @@
 package com.wd.tech.activity.thirdlyactivity;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class SignatureActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         mEditextsign.addTextChangedListener(new MyTextWatcher());
         modiftSignaturePresenter = new ModiftSignaturePresenter(new ModiftSignaResult());

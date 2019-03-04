@@ -29,6 +29,7 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.CommunityListPresenter;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     private EditText editText;
     private Dialog bottomDialog;
     private int ids;
+    private DoTheTaskPresenter doTheTaskPresenter;
 
     @Override
     public String getPageName() {
@@ -74,6 +76,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
     @Override
     protected void initView() {
+        doTheTaskPresenter = new DoTheTaskPresenter(new DoTheResult());
         AutoSizeConfig.getInstance().setCustomFragment(true);
         if (userInfo == null) {
             userId = 0;
@@ -225,6 +228,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             editText.setText(null);
             communityListAdapter.removeAll();
             communityListPresenter.request(userId, sessionId, 1, 1000);
+            doTheTaskPresenter.request(userId,sessionId,1002);
         }
 
         @Override
@@ -243,5 +247,17 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         bottomDialog.setCanceledOnTouchOutside(true);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         bottomDialog.show();
+    }
+
+    private class DoTheResult implements ICoreInfe {
+        @Override
+        public void success(Object data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

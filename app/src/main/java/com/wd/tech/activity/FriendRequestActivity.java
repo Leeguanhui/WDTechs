@@ -19,7 +19,6 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.AddFriendPresenter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FriendRequestActivity extends WDActivity {
@@ -47,7 +46,7 @@ public class FriendRequestActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         addFriendPresenter = new AddFriendPresenter(new AddFre());
         LoginUserInfoBean infoBean = getUserInfo(this);
         if (infoBean != null) {
@@ -80,7 +79,7 @@ public class FriendRequestActivity extends WDActivity {
                     Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                addFriendPresenter.request(userId, sessionId, userId, apply);
+                addFriendPresenter.request(userId, sessionId, userId1, apply);
                 break;
             case R.id.back:
                 finish();

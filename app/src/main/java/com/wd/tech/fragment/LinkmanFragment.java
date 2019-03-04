@@ -2,8 +2,6 @@ package com.wd.tech.fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,9 +38,7 @@ import com.wd.tech.presenter.TransferFriendGroupPresenter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by zxk
@@ -107,6 +103,8 @@ public class LinkmanFragment extends WDFragment {
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
 
+        }else {
+            exPandableListview.setVisibility(View.GONE);
         }
         listPresenter.request(userId, sessionId);
         getShow();
@@ -115,7 +113,6 @@ public class LinkmanFragment extends WDFragment {
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
 //                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
                 Intent intent = new Intent(getContext(), IMActivity.class);
-
                 intent.putExtra(EaseConstant.EXTRA_USER_ID,groupS.get(i).getFriendInfoList().get(i).getUserName());
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EMMessage.ChatType.Chat);
                 startActivity(intent);
@@ -153,11 +150,13 @@ public class LinkmanFragment extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
+        bean = getUserInfo(getContext());
         if (bean != null) {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
-
+        }else {
+            exPandableListview.setVisibility(View.GONE);
         }
     }
 

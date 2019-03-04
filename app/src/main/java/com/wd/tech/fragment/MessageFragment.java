@@ -4,8 +4,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wd.tech.R;
 import com.wd.tech.core.WDFragment;

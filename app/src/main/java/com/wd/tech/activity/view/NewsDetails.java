@@ -140,7 +140,7 @@ public class NewsDetails extends WDActivity {
 
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         dialog = new Dialog(this);
@@ -231,7 +231,6 @@ public class NewsDetails extends WDActivity {
            @Override
            public void onClick(View v) {
                  wechatShare(1);
-
            }
        });
    }
@@ -379,6 +378,9 @@ public class NewsDetails extends WDActivity {
                 a.setVisibility(View.INVISIBLE);
                 b.setVisibility(View.INVISIBLE);
             } else {
+                ralt.setVisibility(View.INVISIBLE);
+                a.setVisibility(View.VISIBLE);
+                b.setVisibility(View.VISIBLE);
                 WebSettings settings = coment.getSettings();
                 settings.setTextZoom(250); // 通过百分比来设置文字的大小，默认值是100。
                 settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);

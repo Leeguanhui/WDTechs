@@ -1,6 +1,7 @@
 package com.wd.tech.activity.secondactivity;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.wd.tech.presenter.SysNoticeListPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class NotificaActivity extends WDActivity implements CustomAdapt {
@@ -40,7 +42,7 @@ public class NotificaActivity extends WDActivity implements CustomAdapt {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         userInfo = getUserInfo(this);
         sysNoticeListPresenter = new SysNoticeListPresenter(new SysNotResult());
         sysNoticeListPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
@@ -55,6 +57,10 @@ public class NotificaActivity extends WDActivity implements CustomAdapt {
 
     }
 
+    @OnClick(R.id.back_imag)
+    public void back_imag(){
+        finish();
+    }
     @Override
     public boolean isBaseOnWidth() {
         return false;
