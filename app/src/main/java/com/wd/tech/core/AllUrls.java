@@ -623,4 +623,12 @@ public interface AllUrls {
     Observable<Result<QueryFriendInformationBean>> queryFriendInformation(@Header("userid") int userid,
                                                                           @Header("sessionid") String sessionid,
                                                                           @Query("friend") int friend);
+
+    /**
+     * 取消点赞
+     */
+    @DELETE("community/verify/v1/cancelCommunityGreat")
+    Observable<Result> cancelCommunityGreat(@Header("userid") int userid,
+                                            @Header("sessionid") String sessionid,
+                                            @Query("communityId") int communityId);
 }

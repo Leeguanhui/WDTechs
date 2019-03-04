@@ -155,8 +155,8 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.more)
     public void more() {
         more.setVisibility(View.GONE);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(linearLayout, "translationX", 0f, -400f);
-        animator.setDuration(1000);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(linearLayout, "translationX", 0f, -390f);
+        animator.setDuration(100);
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
         queryFriendInformationPresenter.request(userId, sessionId, userIds);
@@ -166,7 +166,12 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.friends)
     public void friends() {
         if (friends.getText().toString().trim().equals("已添加")) {
-            Toast.makeText(this, "已经添加过该好友了，不能重复添加", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "已经添加过该好友了，不能重复添加！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phone == null) {
+            Toast.makeText(this, "不能添加第三方为好友！！！", Toast.LENGTH_SHORT).show();
+            return;
         }
         Intent intent = new Intent(this, AddFriendlyActivity.class);
         intent.putExtra("userid1", userIds);

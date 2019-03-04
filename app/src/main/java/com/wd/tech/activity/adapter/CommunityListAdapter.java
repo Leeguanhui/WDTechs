@@ -89,8 +89,10 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         //判断是否点赞
         if (list.get(i).getWhetherGreat() == 1) {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+            list.get(i).setCheck(true);
         } else {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon);
+            list.get(i).setCheck(false);
         }
 
         //点赞
@@ -108,7 +110,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
-                addCommunityGreat.addCommunityComment(list.get(i).getId(),viewHolder.communityIv);
+                addCommunityGreat.addCommunityComment(list.get(i).getId(), viewHolder.communityIv);
             }
         });
 
