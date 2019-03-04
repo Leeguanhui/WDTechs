@@ -532,7 +532,6 @@ public interface AllUrls {
             @Header("userid") int userid,
             @Header("sessionid") String sessionid);
 
-
     /**
      * 社区评论
      */
