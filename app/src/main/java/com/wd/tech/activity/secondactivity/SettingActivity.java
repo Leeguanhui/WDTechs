@@ -171,12 +171,12 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     }
 
     @OnClick(R.id.my_face)
-    public void my_face() {
+    public void mFace() {
         startActivity(new Intent(this, FaceLoginActivity.class));
     }
 
     @OnClick(R.id.my_wx)
-    public void my_wx() {
+    public void mWeix() {
         type = 2;
         mWechatApi = WXAPIFactory.createWXAPI(SettingActivity.this, "wx4c96b6b8da494224", false);
         mWechatApi.registerApp("wx4c96b6b8da494224");
