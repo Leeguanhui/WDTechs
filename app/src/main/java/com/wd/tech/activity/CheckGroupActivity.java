@@ -64,7 +64,7 @@ public class CheckGroupActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         modifyGroupNamePresenter = new ModifyGroupNamePresenter(new Mo());
         deleteFriendGroupPresenter = new DeleteFriendGroupPresenter(new Dele());
         findUserJoinedGroupPresenter = new FindFriendGroupListPresenter(new FindFriendGroupList());

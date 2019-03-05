@@ -70,8 +70,9 @@ public class ChatSettingsActivity extends WDActivity {
         return R.layout.activity_chat_settings;
     }
 
+
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         parent = View.inflate(this, R.layout.activity_chat_settings, null);
         deleteChatRecordPresenter = new DeleteChatRecordPresenter(new DeleteChatRecord());
         modiftSignaturePresenter = new ModifyFriendRemarkPresenter(new Modif());

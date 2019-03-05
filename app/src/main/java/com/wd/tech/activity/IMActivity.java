@@ -38,7 +38,7 @@ public class IMActivity extends WDActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         EaseChatFragment chatFragment = new EaseChatFragment();
         chatFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.hx_ok, chatFragment).commit();
