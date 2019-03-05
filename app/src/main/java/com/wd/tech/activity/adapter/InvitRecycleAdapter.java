@@ -15,9 +15,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.bean.AttUserListBean;
 import com.wd.tech.bean.FindMyPostListBean;
+import com.wd.tech.core.utils.DateUtils;
 import com.wd.tech.core.utils.SpacingItemDecoration;
 import com.wd.tech.core.utils.StringUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,9 +63,16 @@ public class InvitRecycleAdapter extends RecyclerView.Adapter<InvitRecycleAdapte
         vh.item_post_textview.setText(findMyPostListBean.getContent());
         Date date = new Date();
         date.setTime(findMyPostListBean.getPublishTime());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = sdf.format(date);
-        vh.item_post_textviewtime.setText(format);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = df.parse(format);
+            String s = DateUtils.fromToday(d);
+            vh.item_post_textviewtime.setText(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         vh.item_post_textviewnumberone.setText(findMyPostListBean.getPraise() + "");
         vh.item_post_textviewnumbertwo.setText(findMyPostListBean.getComment() + "");
         if (StringUtils.isEmpty(findMyPostListBean.getFile())) {

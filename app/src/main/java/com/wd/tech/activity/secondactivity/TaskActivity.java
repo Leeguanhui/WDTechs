@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.MainActivity;
 import com.wd.tech.activity.ReleasePostActivity;
@@ -19,7 +22,9 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.FindUserTaskListPresenter;
+import com.wd.tech.presenter.WheWeChatPresenter;
 
 import java.util.List;
 
@@ -62,6 +67,8 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.weixin_text)
     TextView mWeixintext;
     private Dialog dialog;
+    private IWXAPI mWechatApi;
+    static int type = 1;
 
     @Override
     protected int getLayoutId() {
@@ -110,7 +117,17 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.weixin_bnt)
     public void mWeixin() {
+        type=2;
+        mWechatApi = WXAPIFactory.createWXAPI(TaskActivity.this, "wx4c96b6b8da494224", false);
+        mWechatApi.registerApp("wx4c96b6b8da494224");
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo";
+        mWechatApi.sendReq(req);
+    }
 
+    public static int getType() {
+        return type;
     }
 
     @OnClick(R.id.guanggao_bnt)
@@ -118,11 +135,13 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
         startActivity(new Intent(TaskActivity.this, MainActivity.class));
         finish();
     }
+
     @OnClick(R.id.fenxiang_bnt)
-    public void wFenXinag(){
+    public void wFenXinag() {
         startActivity(new Intent(TaskActivity.this, MainActivity.class));
         finish();
     }
+
     @Override
     protected void destoryData() {
 
@@ -251,4 +270,6 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
 
         }
     }
+
+
 }

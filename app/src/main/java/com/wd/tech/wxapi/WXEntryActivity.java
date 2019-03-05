@@ -27,6 +27,7 @@ import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.MainActivity;
 import com.wd.tech.activity.secondactivity.SettingActivity;
 import com.wd.tech.activity.secondactivity.SignCalendarActivity;
+import com.wd.tech.activity.secondactivity.TaskActivity;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
@@ -71,12 +72,11 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             case ConstantsAPI.COMMAND_SENDAUTH:
                 if (resp.errCode == BaseResp.ErrCode.ERR_OK) {//用户同意
                     final String code = ((SendAuth.Resp) resp).code;
-                    SettingActivity settingActivity = new SettingActivity();
-                    int type = settingActivity.getType();
-                    if (type == 2) {
-                        doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
-                        BindWeChatPresenter bindWeChatPresenter = new BindWeChatPresenter(new WeChatBindResult());
+                    int type = SettingActivity.getType();
+                    int type1 = TaskActivity.getType();
+                    if (type == 2 || type1 == 2) {
                         if (userInfoBean != null) {
+                            BindWeChatPresenter bindWeChatPresenter = new BindWeChatPresenter(new WeChatBindResult());
                             bindWeChatPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), code);
                         }
                     } else {
@@ -94,6 +94,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 }
             case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX: {
                 String result2 = null;
+                doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
                 doTheTaskPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1004);
                 finish();
                 break;
@@ -153,11 +154,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         @Override
         public void success(Result result) {
             Toast.makeText(WXEntryActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-            if (result.getStatus().equals("0000")) {
+            if (result.getStatus().equals("0000") || result.getMessage().equals("已绑定微信账号")) {
                 if (userInfoBean != null) {
+                    doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
                     doTheTaskPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1007);
                 }
             }
+            finish();
         }
 
         @Override
@@ -169,7 +172,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     private class TheTaskResult implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(WXEntryActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

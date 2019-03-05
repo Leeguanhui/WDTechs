@@ -69,7 +69,7 @@ public class SignatureActivity extends WDActivity {
         public void afterTextChanged(Editable s) {
             String content = mEditextsign.getText().toString();
             int length = content.length();
-            mTextnum.setText(length + "/40");
+            mTextnum.setText(length + "/20");
         }
     }
 

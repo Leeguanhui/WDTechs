@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.wd.tech.R;
 import com.wd.tech.activity.AddFriendsActivity;
 import com.wd.tech.activity.FlockActivity;
@@ -67,7 +68,7 @@ public class Fragment_Page_two extends WDFragment {
     @Override
     protected void initView() {
         list = new ArrayList<>();
-        list.add(new MessageFragment());
+        list.add(new EaseConversationListFragment());
         list.add(new LinkmanFragment());
         wdFragmentAdapter = new WDFragmentAdapter(getChildFragmentManager(), list);
         viewPager.setAdapter(wdFragmentAdapter);

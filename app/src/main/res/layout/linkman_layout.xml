@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,27 +11,31 @@
         android:id="@+id/x_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp">
+
                 <EditText
                     android:id="@+id/search_edit"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="12dp"
-                    android:paddingLeft="44dp"
-                    android:textSize="12sp"
+                    android:background="@drawable/edtext_selector"
                     android:hint="搜索好友/群"
-                    android:layout_marginLeft="12dp"
-                    android:background="@drawable/edtext_selector"/>
+                    android:paddingLeft="44dp"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/search_image"
@@ -45,71 +48,81 @@
                     android:padding="5dp"
                     android:src="@mipmap/search" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#f2f2f2"
-                />
+                android:background="#f2f2f2" />
+
             <LinearLayout
+                android:id="@+id/layout_newsyou"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/layout_newsyou"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/newfriendone"/>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/newfriendone" />
+
                 <TextView
                     android:id="@+id/news_peng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:textSize="14sp"
-                    android:text="新朋友"/>
+                    android:text="新朋友"
+                    android:textSize="14sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F2F2F2"/>
+                android:background="#F2F2F2" />
+
             <LinearLayout
+                android:id="@+id/qun_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/qun_layout"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/newtongzhisan"/>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/newtongzhisan" />
+
                 <TextView
                     android:id="@+id/qun_tong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:textSize="14sp"
-                    android:text="群通知"/>
+                    android:text="群通知"
+                    android:textSize="14sp" />
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F2F2F2"/>
+                android:background="#F2F2F2" />
+
             <LinearLayout
                 android:id="@+id/layout_qun"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal">
+
                 <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/newqunliaotwo"/>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/newqunliaotwo" />
 
                 <TextView
                     android:id="@+id/group"
@@ -120,16 +133,19 @@
                     android:text="群组"
                     android:textSize="14sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:background="#F2F2F2"/>
+                android:background="#F2F2F2" />
+
             <ExpandableListView
                 android:id="@+id/ex_pandable_listview"
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ExpandableListView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"></ExpandableListView>
         </LinearLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    >
 
 </LinearLayout>

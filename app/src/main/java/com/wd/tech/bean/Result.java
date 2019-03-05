@@ -15,6 +15,7 @@ public class Result <T> {
     T result;
     int groupId;
     int flag;
+    int bindStatus;
     private String appId;
     private String nonceStr;
     private String partnerId;
@@ -23,6 +24,14 @@ public class Result <T> {
     private String timeStamp;
     private String packageValue;
     String faceId;
+
+    public int getBindStatus() {
+        return bindStatus;
+    }
+
+    public void setBindStatus(int bindStatus) {
+        this.bindStatus = bindStatus;
+    }
 
     public String getFaceId() {
         return faceId;

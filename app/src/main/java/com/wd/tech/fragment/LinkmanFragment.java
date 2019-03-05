@@ -2,6 +2,7 @@ package com.wd.tech.fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +19,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.ClusterActivity;
 import com.wd.tech.activity.GroupChatActivity;
@@ -103,7 +106,7 @@ public class LinkmanFragment extends WDFragment {
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
 
-        }else {
+        } else {
             exPandableListview.setVisibility(View.GONE);
         }
         listPresenter.request(userId, sessionId);
@@ -111,10 +114,11 @@ public class LinkmanFragment extends WDFragment {
         exPandableListview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-//                UIUtils.showToastSafe(groupS.get(i).getFriendInfoList().get(i1).getFriendUid() + "");
                 Intent intent = new Intent(getContext(), IMActivity.class);
-                intent.putExtra(EaseConstant.EXTRA_USER_ID,groupS.get(i).getFriendInfoList().get(i).getUserName());
+                intent.putExtra(EaseConstant.EXTRA_USER_ID, groupS.get(i).getFriendInfoList().get(i1).getUserName());
+                FriendInfoList friendInfoList = groupS.get(i).getFriendInfoList().get(i1);
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EMMessage.ChatType.Chat);
+                intent.putExtra("friendInfoList", friendInfoList);
                 startActivity(intent);
 
                 return true;
@@ -144,6 +148,13 @@ public class LinkmanFragment extends WDFragment {
             }
 
         });
+        pullToRefreshScrollView.setEnableRefresh(true);
+        pullToRefreshScrollView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                listPresenter.request(userId, sessionId);
+            }
+        });
 
     }
 
@@ -155,7 +166,7 @@ public class LinkmanFragment extends WDFragment {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
-        }else {
+        } else {
             exPandableListview.setVisibility(View.GONE);
         }
     }
@@ -295,8 +306,8 @@ public class LinkmanFragment extends WDFragment {
             }
             FriendInfoList friendInfoList = groupS.get(groupPosition).getFriendInfoList().get(childPosition);
             holder.headric.setImageURI(friendInfoList.getHeadPic());
-            holder.qianming.setText(friendInfoList.getRemarkName());//单价
-            holder.name.setText(friendInfoList.getSignature());//单价
+            holder.qianming.setText(friendInfoList.getRemarkName());
+            holder.name.setText(friendInfoList.getSignature());
             return convertView;
         }
 
@@ -321,6 +332,8 @@ public class LinkmanFragment extends WDFragment {
             if (data.getStatus().equals("0000")) {
                 groupS = data.getResult();
                 exPandableListview.setAdapter(new MyExpandableListView());
+
+                pullToRefreshScrollView.finishRefresh();
             }
         }
 
