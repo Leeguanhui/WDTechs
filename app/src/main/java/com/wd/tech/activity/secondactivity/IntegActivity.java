@@ -73,7 +73,7 @@ public class IntegActivity extends WDActivity implements CustomAdapt {
                 integralRecordPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), mPage, mCount);
             }
         });
-        mRefreshLayout.setFooterHeight(0);
+        mRefreshLayout.setFooterHeight(1);
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

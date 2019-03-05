@@ -31,7 +31,7 @@
                     android:layout_height="30dp"
                     android:layout_weight="1"
                     android:button="@null"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:checked="true"
                     android:textColor="@drawable/comment_stu_bg"
                     android:background="@drawable/comment_stu_tv_bg"
@@ -45,7 +45,7 @@
                     android:layout_weight="1"
                     android:textColor="@drawable/comment_stu_bg"
                     android:background="@drawable/comment_stu_tv_bg"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:button="@null"
                     android:gravity="center"
                     android:text="联系人" />

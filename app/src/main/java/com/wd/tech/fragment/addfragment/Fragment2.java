@@ -92,10 +92,10 @@ public class Fragment2 extends WDFragment {
                 String s = fragment2SearchEdit.getText().toString();
                 if (TextUtils.isEmpty(s)) {
                     bbB.setVisibility(View.GONE);
+                    ccC.setVisibility(View.VISIBLE);
                     return;
                 }
                 Integer integer = Integer.valueOf(s);
-
                 findGroupInfoPresenter.request(userId, sessionId, integer);
                 break;
             case R.id.next:
