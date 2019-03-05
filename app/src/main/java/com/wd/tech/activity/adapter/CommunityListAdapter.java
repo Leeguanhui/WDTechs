@@ -1,7 +1,9 @@
 package com.wd.tech.activity.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.CommunityUserCommentActivity;
 import com.wd.tech.activity.UserPostByIdActivity;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
@@ -57,6 +60,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         communityListBean = list.get(i);
@@ -76,6 +80,33 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.content.setText(communityListBean.getContent());
         viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
         viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
+
+        if (communityUserPostVoList.size() > 0 && communityUserPostVoList.size() <= 3) {
+            viewHolder.pl.setText("没有更多评论了");
+            viewHolder.pl.setTextColor(R.color.list_itease_secondary_color);
+        }
+        if (list.get(i).getComment() > 3) {
+            viewHolder.pl.setTextColor(Color.BLUE);
+            viewHolder.pl.setText("点击查看更多评论");
+        }
+        if (communityUserPostVoList.size() == 0) {
+            viewHolder.pl.setText("快来评论呀");
+            viewHolder.pl.setTextColor(R.color.list_itease_secondary_color);
+        }
+
+        viewHolder.pl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewHolder.pl.getText().toString().trim().equals("点击查看更多评论")) {
+                    Intent intent = new Intent(context, CommunityUserCommentActivity.class);
+                    intent.putExtra("id", list.get(i).getId());
+                    intent.putExtra("headPic", list.get(i).getHeadPic());
+                    intent.putExtra("nickName", list.get(i).getNickName());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
         //查看用户动态
         viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
             @Override
