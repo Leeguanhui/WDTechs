@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
@@ -78,8 +80,14 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         // button to clear content in search bar
         clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
         errorItemContainer = (FrameLayout) getView().findViewById(R.id.fl_error_item);
+        setConversationListItemClickListener(new EaseConversationListItemClickListener() {
+            @Override
+            public void onListItemClicked(EMConversation conversation) {
+//                Toast.makeText(getContext(), "aaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    
+
     @Override
     protected void setUpView() {
         conversationList.addAll(loadConversationList());
@@ -127,6 +135,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 hideSoftKeyboard();
+
                 return false;
             }
         });

@@ -95,7 +95,6 @@
                     android:layout_below="@+id/view1"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:text="烤面筋"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -221,7 +220,6 @@
                     android:layout_below="@+id/view4"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:text="13366247385"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -250,7 +248,6 @@
                     android:layout_below="@+id/view5"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:text="1724959985@qq.com"
                     android:textColor="#999999"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -281,7 +278,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="120"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -309,7 +305,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view6"
                     android:layout_alignParentRight="true"
-                    android:text="否"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -337,7 +332,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view7"
                     android:layout_alignParentRight="true"
-                    android:text="点击绑定"
                     android:textColor="#999999"
                     android:textSize="12sp" />
                 <View
@@ -349,39 +343,12 @@
                     android:layout_marginBottom="10dp"
                     android:background="#D0D0D0D0" />
 
-                <TextView
-                    android:id="@+id/wx_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/view10"
-                    android:text="微信绑定"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/my_wx"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/view10"
-                    android:layout_alignParentRight="true"
-                    android:text="点击绑定"
-                    android:textColor="#999999"
-                    android:textSize="12sp" />
-
-                <View
-                    android:id="@+id/view8"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/my_wx"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#D0D0D0D0" />
 
                 <LinearLayout
                     android:id="@+id/linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/view8"
+                    android:layout_below="@+id/view10"
                     android:orientation="horizontal">
 
                     <TextView
