@@ -54,6 +54,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
 
         void addCommunityComment(int id, ImageView communityIv);
+
+        void onClick(int userId);
     }
 
     @NonNull
@@ -133,9 +135,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, UserPostByIdActivity.class);
-                intent.putExtra("id", list.get(i).getUserId());
-                context.startActivity(intent);
+                addCommunityGreat.onClick(list.get(i).getUserId());
             }
         });
 
