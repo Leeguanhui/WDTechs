@@ -68,6 +68,7 @@ public class WDApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         context = this;
         mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
         mImage = null;
@@ -98,7 +99,6 @@ public class WDApplication extends Application {
         EaseUI.getInstance().init(this, null);
         EMClient.getInstance().setDebugMode(true);
     }
-
     public void setCaptureImage(Uri uri) {
         mImage = uri;
     }

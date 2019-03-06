@@ -1,8 +1,10 @@
 package com.wd.tech.activity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -26,10 +28,11 @@ import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
+import com.wd.tech.core.WDApplication;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.RsaCoder;
 import com.wd.tech.core.utils.StringUtils;
-import com.wd.tech.face.FaceLoginActivity;
+import com.wd.tech.face.DetecterActivity;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
@@ -50,6 +53,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private IWXAPI mWechatApi;
     private Dialog dialog;
     private int id;
+    private static final int REQUEST_CODE_OP = 7;
 
     @Override
     protected int getLayoutId() {
@@ -136,7 +140,20 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.face_btn)
     public void mFaceBtn() {
-        startActivity(new Intent(this, FaceLoginActivity.class));
+        if (((WDApplication) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
+        } else {
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("请选择相机")
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startDetector(which);
+                        }
+                    })
+                    .show();
+        }
     }
 
     @OnClick(R.id.login_btn)
@@ -170,6 +187,12 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         return 720;
     }
 
+    private void startDetector(int camera) {
+        Intent it = new Intent(LoginActivity.this, DetecterActivity.class);
+        it.putExtra("Camera", camera);
+        startActivityForResult(it, REQUEST_CODE_OP);
+    }
+
     /**
      * 登录回调接口
      */
@@ -184,7 +207,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
-                EMClient.getInstance().login(loginUserInfoBean.getUserName(),loginUserInfoBean.getPwd(),new EMCallBack() {//回调
+                EMClient.getInstance().login(loginUserInfoBean.getUserName(), loginUserInfoBean.getPwd(), new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
                         EMClient.getInstance().groupManager().loadAllGroups();

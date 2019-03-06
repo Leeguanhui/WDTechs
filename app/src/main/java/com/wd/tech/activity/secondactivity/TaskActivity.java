@@ -129,7 +129,9 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     public static int getType() {
         return type;
     }
-
+    public static void setType() {
+        type = 1;
+    }
     @OnClick(R.id.guanggao_bnt)
     public void wGuang() {
         startActivity(new Intent(TaskActivity.this, MainActivity.class));

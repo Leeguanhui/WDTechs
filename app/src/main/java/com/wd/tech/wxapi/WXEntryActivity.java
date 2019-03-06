@@ -74,6 +74,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     final String code = ((SendAuth.Resp) resp).code;
                     int type = SettingActivity.getType();
                     int type1 = TaskActivity.getType();
+
                     if (type == 2 || type1 == 2) {
                         if (userInfoBean != null) {
                             BindWeChatPresenter bindWeChatPresenter = new BindWeChatPresenter(new WeChatBindResult());
@@ -160,6 +161,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     doTheTaskPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1007);
                 }
             }
+            TaskActivity.setType();
+            SettingActivity.setType();
             finish();
         }
 
