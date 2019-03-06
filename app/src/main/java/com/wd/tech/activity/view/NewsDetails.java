@@ -166,7 +166,7 @@ public class NewsDetails extends WDActivity {
         comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userInfo != null) {
+                if (userInfo!=null) {
                     EventBus.getDefault().postSticky(String.valueOf(id));
                     ZxComments zxComments = new ZxComments(NewsDetails.this);
                     Window window = zxComments.getWindow();
@@ -413,12 +413,16 @@ public class NewsDetails extends WDActivity {
 
         @Override
         public void success(Result<List<AllCommentBean>> data) {
-            Log.e("qwerrr", data.getResult().size() + "");
-            if (data.getResult().size() == 0) {
-                b.setVisibility(View.GONE);
-                return;
+            if (data.getStatus().equals("0000")){
+                if (data.getResult().size() == 0) {
+                    b.setVisibility(View.GONE);
+                    return;
+                }
+                detailsCommentAdapter.setList(data.getResult());
+            }else{
+                Toast.makeText(NewsDetails.this,data.getMessage(),Toast.LENGTH_LONG).show();
             }
-            detailsCommentAdapter.setList(data.getResult());
+
         }
 
         @Override
@@ -465,9 +469,10 @@ public class NewsDetails extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-
                 Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
                 newsDetails_presenter.request(userId, sessionId, id);
+            }else {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -483,6 +488,8 @@ public class NewsDetails extends WDActivity {
             if (data.getStatus().equals("0000")) {
                 Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
                 newsDetails_presenter.request(userId, sessionId, id);
+            }else {
+                Toast.makeText(NewsDetails.this, data.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 

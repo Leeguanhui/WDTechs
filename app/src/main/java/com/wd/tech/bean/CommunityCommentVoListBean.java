@@ -9,6 +9,15 @@ public class CommunityCommentVoListBean {
     private int id;
     private int praise;
     private int whetherGreat;
+    private boolean check;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public int getComment() {
         return comment;
