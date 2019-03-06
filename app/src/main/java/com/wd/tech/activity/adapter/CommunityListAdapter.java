@@ -153,7 +153,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
                 addCommunityGreat.addCommunityComment(list.get(i).getId(), viewHolder.communityIv);
             }
         });

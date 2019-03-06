@@ -90,7 +90,6 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
         viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
                 addCommunityGreat.addCommunityComment(list.get(i).getId());
             }
         });
