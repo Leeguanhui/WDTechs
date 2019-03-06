@@ -142,6 +142,12 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         dialog = CircularLoading.showLoadDialog(this, "加载", true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
+    }
+
     @OnClick(R.id.dropout)
     public void dropout() {
         AlertDialog.Builder alert = new AlertDialog.Builder(SettingActivity.this);

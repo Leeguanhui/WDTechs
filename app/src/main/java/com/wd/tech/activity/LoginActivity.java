@@ -49,6 +49,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private LoginUserInfoPresenter loginUserInfoPresenter;
     private IWXAPI mWechatApi;
     private Dialog dialog;
+    private int id;
 
     @Override
     protected int getLayoutId() {
@@ -57,6 +58,8 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
         loginUserInfoPresenter = new LoginUserInfoPresenter(new LoginResult());
         //跳转到注册页面
         mToreg.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +190,12 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
                         Log.d("main", "登录聊天服务器成功！");
+                        if (id==1){
+                            finish();
+                            return;
+                        }
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        finish();
 
                     }
 
@@ -201,8 +210,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                     }
                 });
             }
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            finish();
             CircularLoading.closeDialog(dialog);
         }
 
