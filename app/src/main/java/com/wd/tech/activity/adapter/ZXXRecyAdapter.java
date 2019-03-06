@@ -20,6 +20,7 @@ import com.wd.tech.R;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.bean.InfoRecommecndListBean;
+import com.wd.tech.core.TimeUtils;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -66,6 +67,8 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull XRecyclerView.ViewHolder viewHolder, final int i) {
         //int itemViewType = getItemViewType(i);
+        TimeUtils timeUtils = new TimeUtils();
+
         if (viewHolder instanceof ListViewHolder){
             int whetherCollection = list.get(i).getWhetherCollection();
             if (whetherCollection==2){
@@ -77,7 +80,8 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             ((ListViewHolder) viewHolder).title.setText(list.get(i).getTitle());
             ((ListViewHolder) viewHolder).content.setText(list.get(i).getSummary());
             ((ListViewHolder) viewHolder).writer.setText(list.get(i).getSource());
-            ((ListViewHolder) viewHolder).data.setText(list.get(i).getReleaseTime()+"");
+            String time = TimeUtils.getDescriptionTimeFromTimestamp(list.get(i).getReleaseTime());
+            ((ListViewHolder) viewHolder).data.setText(time);
             ((ListViewHolder) viewHolder).share.setText(list.get(i).getShare()+"");
             ((ListViewHolder) viewHolder).likenum.setText(list.get(i).getCollection()+"");
             ((ListViewHolder) viewHolder).itemView.setOnClickListener(new View.OnClickListener() {
