@@ -70,8 +70,10 @@ public class UserPostByIdAdapter extends RecyclerView.Adapter<UserPostByIdAdapte
         //判断是否点赞
         if (list.get(i).getWhetherGreat() == 1) {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+            list.get(i).setCheck(true);
         } else {
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon);
+            list.get(i).setCheck(false);
         }
 
         //点赞

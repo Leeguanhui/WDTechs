@@ -21,8 +21,10 @@ import com.wd.tech.presenter.CommunityUserCommentListPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class CommunityUserCommentActivity extends WDActivity {
+public class CommunityUserCommentActivity extends WDActivity implements CustomAdapt {
 
     private CommunityUserCommentListPresenter communityUserCommentListPresenter;
     private int userId;
@@ -71,9 +73,25 @@ public class CommunityUserCommentActivity extends WDActivity {
         recyclerView.setAdapter(communityUserCommentAdapter);
     }
 
+    @OnClick(R.id.usercommentlist_back)
+    public void usercommentlist_back() {
+        finish();
+    }
+
+
     @Override
     protected void destoryData() {
 
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 
     private class CommunityUserCommentList implements ICoreInfe<Result> {

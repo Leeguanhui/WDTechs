@@ -40,6 +40,7 @@ import com.wd.tech.presenter.DoTheTaskPresenter;
 import com.wd.tech.presenter.ReleasePostPresenter;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -137,9 +138,22 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
         cancel.setOnClickListener(this);
     }
 
+    //取消按钮
+    @OnClick(R.id.textView1)
+    public void textView1() {
+        finish();
+    }
+
+    //发布帖子
     @OnClick(R.id.textview2)
     public void textview2() {
-        releasePostPresenter.request(userId, sessionId, mText.getText().toString(), addCircleAdapter.getList());
+        String s = mText.getText().toString();
+        List<Object> list = addCircleAdapter.getList();
+        if (s.equals("") | s.equals(null) && list.size() <= 1) {
+            Toast.makeText(this, "请增加要发布的内容！！！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        releasePostPresenter.request(userId, sessionId, s, list);
     }
 
     @Override

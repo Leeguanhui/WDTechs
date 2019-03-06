@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.UserPostByIdAdapter;
+import com.wd.tech.activity.fragment.Fragment_Page_three;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserVoBean;
@@ -34,6 +35,7 @@ import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.AddFollowPresenter;
 import com.wd.tech.presenter.CanceFollowPresenter;
+import com.wd.tech.presenter.CancelCommunityGreatPresenter;
 import com.wd.tech.presenter.QueryFriendInformationPresenter;
 import com.wd.tech.presenter.UserPostByIdPresenter;
 
@@ -85,6 +87,7 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     private CanceFollowPresenter canceFollowPresenter;
     private String headPic1;
     private String nickName1;
+    private CancelCommunityGreatPresenter cancelCommunityGreatPresenter;
 
 
     @Override
@@ -113,15 +116,27 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
 
         //点赞
         addCommunityGreatPresenter = new AddCommunityGreatPresenter(new AddCommunityGreat());
+        //取消点赞
+        cancelCommunityGreatPresenter = new CancelCommunityGreatPresenter(new CancelCommunityGreat());
 
         userPostByIdAdapter.setAddCommunityGreat(new UserPostByIdAdapter.addCommunityGreat() {
             @Override
             public void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityCommentVoListBean communityListBean) {
-                addCommunityGreatPresenter.request(userId, sessionId, id);
-                addCommunityGreat.setImageResource(R.drawable.common_icon_p);
-                int a = Integer.parseInt(trim) + 1;
-                communityListBean.setPraise(a);
-                community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                if (communityListBean.isCheck()) {
+                    cancelCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon);
+                    int a = Integer.parseInt(trim) - 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(false);
+                } else {
+                    addCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+                    int a = Integer.parseInt(trim) + 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(true);
+                }
             }
 
             //评论
@@ -287,6 +302,18 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         @Override
         public void success(Result data) {
             attention.setText("+关注");
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CancelCommunityGreat implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+
         }
 
         @Override
