@@ -2,20 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wd.tech">
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="an droid.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="an droid.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
@@ -139,15 +141,13 @@
         <activity android:name=".activity.FriendRequestActivity" />
         <activity android:name=".activity.AddGroupActivity" />
         <activity android:name=".activity.ApplyForActivity" />
-        <activity android:name="com.wd.tech.activity.GroupChatActivity" />
-        <activity android:name=".activity.ClusterActivity"></activity>
-        <activity android:name=".face.RegisterActivity"></activity>
-        <activity android:name=".face.DetecterActivity"></activity>
-        <activity android:name=".face.FaceLoginActivity"></activity>
-        <activity android:name=".face.LoginActivity"></activity>
-        <activity android:name=".face.PermissionAcitivity" />
+        <activity android:name=".activity.GroupChatActivity" />
+        <activity android:name=".activity.ClusterActivity" />
         <activity android:name=".activity.IntergralExchange"></activity>
         <activity android:name=".activity.DredgeVip"></activity>
+        <activity android:name="com.wd.tech.activity.ChatSettingsActivity" />
+        <activity android:name="com.wd.tech.activity.CheckGroupActivity" />
+
         <activity android:name="com.wd.tech.activity.ChatSettingsActivity"/>
         <activity android:name="com.wd.tech.activity.CheckGroupActivity"/>
         <activity android:name="com.wd.tech.activity.IGActivity"/>
@@ -160,48 +160,48 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity"></activity>
-        <activity android:name="com.wd.tech.activity.IMActivity"/>
+
+        <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity" />
+        <activity android:name=".activity.IMActivity" />
         <!-- 设置环信应用的AppKey -->
 
-
-        <meta-data android:name="EASEMOB_APPKEY" android:value="1182180123115181#weixinandqq"/>
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1182180123115181#weixinandqq" />
 
         <!-- 声明SDK所需的service SDK核心功能 -->
 
-
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-
-        <service android:name="com.hyphenate.chat.EMJobService" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- 声明SDK所需的receiver -->
 
 
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
 
-        -<receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-        -<intent-filter>
+                <data android:scheme="package" />
+            </intent-filter>
 
-        <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-
-        <data android:scheme="package"/>
-
-    </intent-filter>
-
-        <!-- 可选filter -->
+            <!-- 可选filter -->
 
 
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
 
-        -<intent-filter>
-
-        <action android:name="android.intent.action.BOOT_COMPLETED"/>
-
-        <action android:name="android.intent.action.USER_PRESENT"/>
-
-    </intent-filter>
-
-    </receiver>
+        <activity android:name=".activity.CommunityUserCommentActivity"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package com.wd.tech.activity.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +17,16 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.activity.CommunityUserCommentActivity;
 import com.wd.tech.activity.UserPostByIdActivity;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
+import com.wd.tech.core.utils.DateUtils;
 import com.wd.tech.core.utils.SpacingItemDecoration;
 import com.wd.tech.core.utils.StringUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +54,8 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityListBean communityListBean);
 
         void addCommunityComment(int id, ImageView communityIv);
+
+        void onClick(int userId);
     }
 
     @NonNull
@@ -57,6 +65,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         communityListBean = list.get(i);
@@ -67,24 +76,25 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.communityUserCommentListAdapter.notifyDataSetChanged();
 
         viewHolder.nickName.setText(communityListBean.getNickName());
+        //设置发表时间
         Date date = new Date();
         date.setTime(communityListBean.getPublishTime());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        viewHolder.time.setText(sdf.format(date));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(date);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = df.parse(format);
+            String s = DateUtils.fromToday(d);
+            viewHolder.time.setText(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         viewHolder.signature.setText(communityListBean.getSignature());
         viewHolder.headPic.setImageURI(communityListBean.getHeadPic());
         viewHolder.content.setText(communityListBean.getContent());
         viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
         viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
-        //查看用户动态
-        viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, UserPostByIdActivity.class);
-                intent.putExtra("id", list.get(i).getUserId());
-                context.startActivity(intent);
-            }
-        });
 
         //判断是否点赞
         if (list.get(i).getWhetherGreat() == 1) {
@@ -94,6 +104,40 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
             viewHolder.addCommunityGreat.setImageResource(R.drawable.common_icon);
             list.get(i).setCheck(false);
         }
+
+        if (communityUserPostVoList.size() > 0 && communityUserPostVoList.size() <= 3) {
+            viewHolder.pl.setText("没有更多评论了");
+            viewHolder.pl.setTextColor(android.graphics.Color.parseColor("#666666"));
+        }
+        if (list.get(i).getComment() > 3) {
+            viewHolder.pl.setText("点击查看更多评论");
+            viewHolder.pl.setTextColor(android.graphics.Color.parseColor("#87CEFA"));
+        }
+        if (communityUserPostVoList.size() == 0) {
+            viewHolder.pl.setText("快来评论呀");
+            viewHolder.pl.setTextColor(android.graphics.Color.parseColor("#666666"));
+        }
+
+        viewHolder.pl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewHolder.pl.getText().toString().trim().equals("点击查看更多评论")) {
+                    Intent intent = new Intent(context, CommunityUserCommentActivity.class);
+                    intent.putExtra("id", list.get(i).getId());
+                    intent.putExtra("headPic", list.get(i).getHeadPic());
+                    intent.putExtra("nickName", list.get(i).getNickName());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
+        //查看用户动态
+        viewHolder.headPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addCommunityGreat.onClick(list.get(i).getUserId());
+            }
+        });
 
         //点赞
         viewHolder.addCommunityGreat.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +153,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         viewHolder.communityIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" + i, Toast.LENGTH_SHORT).show();
                 addCommunityGreat.addCommunityComment(list.get(i).getId(), viewHolder.communityIv);
             }
         });

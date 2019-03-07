@@ -7,10 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.UserPostByIdAdapter;
+import com.wd.tech.activity.fragment.Fragment_Page_three;
 import com.wd.tech.bean.CommunityCommentVoListBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserVoBean;
@@ -36,6 +35,7 @@ import com.wd.tech.presenter.AddCommunityCommentPresenter;
 import com.wd.tech.presenter.AddCommunityGreatPresenter;
 import com.wd.tech.presenter.AddFollowPresenter;
 import com.wd.tech.presenter.CanceFollowPresenter;
+import com.wd.tech.presenter.CancelCommunityGreatPresenter;
 import com.wd.tech.presenter.QueryFriendInformationPresenter;
 import com.wd.tech.presenter.UserPostByIdPresenter;
 
@@ -63,12 +63,7 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     @BindView(R.id.xrecycler)
     RecyclerView recyclerView;
     private AddCommunityGreatPresenter addCommunityGreatPresenter;
-    private View pl;
-    private Dialog bottomDialog;
-    private Dialog dialog;
     private AddCommunityCommentPresenter addCommunityCommentPresenter;
-    private TextView button;
-    private EditText editText;
     @BindView(R.id.more)
     ImageView more;
     @BindView(R.id.linear)
@@ -90,6 +85,9 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
     private int whetherVip;
     private String signature1;
     private CanceFollowPresenter canceFollowPresenter;
+    private String headPic1;
+    private String nickName1;
+    private CancelCommunityGreatPresenter cancelCommunityGreatPresenter;
 
 
     @Override
@@ -106,7 +104,7 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
             sessionId = userInfo.getSessionId();
         }
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         int id = intent.getIntExtra("id", 1);
         userPostByIdPresenter = new UserPostByIdPresenter(new UserPostById());
         userPostByIdPresenter.request(userId, sessionId, id, 1, 10);
@@ -118,33 +116,39 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
 
         //点赞
         addCommunityGreatPresenter = new AddCommunityGreatPresenter(new AddCommunityGreat());
+        //取消点赞
+        cancelCommunityGreatPresenter = new CancelCommunityGreatPresenter(new CancelCommunityGreat());
 
         userPostByIdAdapter.setAddCommunityGreat(new UserPostByIdAdapter.addCommunityGreat() {
             @Override
             public void addCommunityGreat(int id, ImageView addCommunityGreat, String trim, TextView community_praise, CommunityCommentVoListBean communityListBean) {
-                addCommunityGreatPresenter.request(userId, sessionId, id);
-                addCommunityGreat.setImageResource(R.drawable.common_icon_p);
-                int a = Integer.parseInt(trim) + 1;
-                communityListBean.setPraise(a);
-                community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                if (communityListBean.isCheck()) {
+                    cancelCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon);
+                    int a = Integer.parseInt(trim) - 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(false);
+                } else {
+                    addCommunityGreatPresenter.request(userId, sessionId, id);
+                    addCommunityGreat.setImageResource(R.drawable.common_icon_p);
+                    int a = Integer.parseInt(trim) + 1;
+                    communityListBean.setPraise(a);
+                    community_praise.setText(String.valueOf(communityListBean.getPraise()));
+                    communityListBean.setCheck(true);
+                }
             }
 
             //评论
             @Override
             public void addCommunityComment(int id) {
-                show(pl);
+                Intent intent1 = new Intent(UserPostByIdActivity.this, CommunityUserCommentActivity.class);
+                intent1.putExtra("headPic", headPic1);
+                intent1.putExtra("nickName", nickName1);
+                intent1.putExtra("id", id);
+                startActivity(intent1);
             }
         });
-
-        //dialog
-        bottomDialog = new Dialog(this, R.style.BottomDialog);
-
-        //评论
-        addCommunityCommentPresenter = new AddCommunityCommentPresenter(new AddCommunityComment());
-
-        pl = LayoutInflater.from(this).inflate(R.layout.comment_popupwindow, null);
-        editText = pl.findViewById(R.id.et_discuss);
-        button = pl.findViewById(R.id.tv_confirm);
 
         addFollowPresenter = new AddFollowPresenter(new AddFollow());
         queryFriendInformationPresenter = new QueryFriendInformationPresenter(new QueryFriendInformation());
@@ -226,8 +230,10 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
                     friends.setText("已添加");
                 }
                 userIds = communityUserVo.getUserId();
-                pic.setImageURI(Uri.parse(communityUserVo.getHeadPic()));
-                name.setText(communityUserVo.getNickName());
+                headPic1 = communityUserVo.getHeadPic();
+                pic.setImageURI(Uri.parse(headPic1));
+                nickName1 = communityUserVo.getNickName();
+                name.setText(nickName1);
                 signature.setText(communityUserVo.getSignature());
                 Glide.with(UserPostByIdActivity.this).load(communityUserVo.getHeadPic()).into(imageBg);
                 List<CommunityCommentVoListBean> communityUserPostVoList = result.get(i).getCommunityUserPostVoList();
@@ -253,33 +259,6 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         public void fail(ApiException e) {
 
         }
-    }
-
-    //评论
-    private class AddCommunityComment implements ICoreInfe<Result> {
-        @Override
-        public void success(Result data) {
-            bottomDialog.dismiss();
-            dialog.dismiss();
-            editText.setText(null);
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
-
-    //dialog
-    private void show(View contentViewss) {
-        bottomDialog.setContentView(contentViewss);
-        ViewGroup.LayoutParams layoutParams = contentViewss.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        contentViewss.setLayoutParams(layoutParams);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.setCanceledOnTouchOutside(true);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
     }
 
     private class AddFollow implements ICoreInfe<Result> {
@@ -323,6 +302,18 @@ public class UserPostByIdActivity extends WDActivity implements CustomAdapt {
         @Override
         public void success(Result data) {
             attention.setText("+关注");
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CancelCommunityGreat implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+
         }
 
         @Override

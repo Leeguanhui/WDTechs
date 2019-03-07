@@ -70,6 +70,7 @@ public class WDApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         context = this;
         mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
         mImage = null;
@@ -103,7 +104,6 @@ public class WDApplication extends Application {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
     }
-
     public void setCaptureImage(Uri uri) {
         mImage = uri;
     }

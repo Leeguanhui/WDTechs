@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
 import com.wd.tech.activity.ReleasePostActivity;
+import com.wd.tech.activity.UserPostByIdActivity;
 import com.wd.tech.activity.adapter.CommunityListAdapter;
 import com.wd.tech.activity.view.CircularLoading;
 import com.wd.tech.bean.CommunityListBean;
@@ -80,19 +81,12 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     protected void initView() {
         doTheTaskPresenter = new DoTheTaskPresenter(new DoTheResult());
         AutoSizeConfig.getInstance().setCustomFragment(true);
-        if (userInfo == null) {
-            userId = 0;
-            sessionId = "0";
-        } else {
-            userId = userInfo.getUserId();
-            sessionId = userInfo.getSessionId();
-        }
 
         //dialog
         bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
 
         communityListPresenter = new CommunityListPresenter(new CommunityList());
-        communityListPresenter.request(userId, sessionId, 1, 1000);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         communityListAdapter = new CommunityListAdapter(getContext());
@@ -134,6 +128,17 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             public void addCommunityComment(int id, ImageView communityIv) {
                 ids = id;
                 show(pl);
+            }
+
+            @Override
+            public void onClick(int userId) {
+                if (userInfo != null) {
+                    Intent intent = new Intent(getContext(), UserPostByIdActivity.class);
+                    intent.putExtra("id", userId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), "请先登录！！！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -587,13 +587,6 @@ public interface AllUrls {
             @Header("userid") int userid, @Header("sessionid") String sessionid,
             @Query("oldPwd") String oldPwd, @Query("newPwd") String newPwd);
 
-    /**
-     * 绑定Face
-     */
-    @PUT("user/verify/v1/bindingFaceId")
-    Observable<Result> bindingFaceId(
-            @Header("userid") int userid, @Header("sessionid") String sessionid,
-            @Query("featureInfo") String featureInfo);
 
     /**
      * 绑定微信
@@ -711,6 +704,19 @@ public interface AllUrls {
                                        @Header("sessionId") String sessionId,
                                        @Query("groupId") int groupId,
                                        @Query("groupName") String groupName);
+
+    //绑定
+    @PUT("user/verify/v1/bindingFaceId")
+    Observable<Result> bindingFaceId(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionId,
+                                     @Query("featureInfo") String featureInfo);
+
+    //人脸识别登陆
+    @FormUrlEncoded
+    @POST("user/v1/faceLogin")
+    Observable<Result<LoginUserInfoBean>> faceLogin(@Field("faceId") String time);
+
+}
 
     /**
      * .根据环信userNames批量查询会话列表需要的用户信息
