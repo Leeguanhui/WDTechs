@@ -97,6 +97,9 @@ public class MainActivity extends WDActivity {
     private int comment;
     @BindView(R.id.vip_btn)
     ImageView vip_btn;
+    private int lll = 0;
+    private int www = 0;
+    private LoginUserInfoBean userInfo;
 
     @Override
     protected int getLayoutId() {
@@ -106,7 +109,7 @@ public class MainActivity extends WDActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         closeSwipeBack();
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         comment = intent.getIntExtra("comment", 0);
         sharedPreferences = getSharedPreferences("mysign", MODE_PRIVATE);
         edit = sharedPreferences.edit();
@@ -148,16 +151,31 @@ public class MainActivity extends WDActivity {
                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                 switch (checkedId) {
                     case R.id.one:
+                        lll = 1;
                         trans.show(fragment_page_one);
                         trans.hide(fragment_page_two);
                         trans.hide(fragment_page_three);
                         break;
                     case R.id.two:
-                        trans.show(fragment_page_two);
-                        trans.hide(fragment_page_one);
-                        trans.hide(fragment_page_three);
+                        if (userInfo != null) {
+                            www = 1;
+                            trans.show(fragment_page_two);
+                            trans.hide(fragment_page_one);
+                            trans.hide(fragment_page_three);
+                        } else {
+                            //two.setChecked(false);
+                            www = 1;
+                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
+                            Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                            intent1.putExtra("id", 1);
+                            startActivity(intent1);
+                            trans.show(fragment_page_two);
+                            trans.hide(fragment_page_one);
+                            trans.hide(fragment_page_three);
+                        }
                         break;
                     case R.id.three:
+                        lll = 3;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
@@ -297,14 +315,62 @@ public class MainActivity extends WDActivity {
     @Override
     public void onResume() {
         super.onResume();
+        userInfo = getUserInfo(MainActivity.this);
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         LoginUserInfoBean userInfo = getUserInfo(this);
         if (userInfo != null) {
+            if (www == 1) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                two.setChecked(true);
+                /*two.setChecked(false);
+                one.setChecked(false);
+                three.setChecked(true);*/
+                //byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
+                /*fragmentTransaction.show(fragment_page_two);
+                fragmentTransaction.hide(fragment_page_one);
+                fragmentTransaction.hide(fragment_page_three);*/
+            }
             relat_one.setVisibility(View.VISIBLE);
             text_one.setVisibility(View.VISIBLE);
             listview.setVisibility(View.VISIBLE);
             login_bnt.setVisibility(View.GONE);
             byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         } else {
+
+            if (lll == 1 & www == 1) {
+                relat_one.setVisibility(View.GONE);
+                text_one.setVisibility(View.GONE);
+                listview.setVisibility(View.GONE);
+                login_bnt.setVisibility(View.VISIBLE);
+                one.setChecked(true);
+                trans.show(fragment_page_one);
+                trans.hide(fragment_page_three);
+                trans.hide(fragment_page_two);
+
+                return;
+            }
+            if (lll == 3 & www == 1) {
+                relat_one.setVisibility(View.GONE);
+                text_one.setVisibility(View.GONE);
+                listview.setVisibility(View.GONE);
+                login_bnt.setVisibility(View.VISIBLE);
+                three.setChecked(true);
+                trans.show(fragment_page_three);
+                trans.hide(fragment_page_one);
+                trans.hide(fragment_page_two);
+
+                return;
+            }
+            if (www == 1) {
+                relat_one.setVisibility(View.GONE);
+                text_one.setVisibility(View.GONE);
+                listview.setVisibility(View.GONE);
+                login_bnt.setVisibility(View.VISIBLE);
+                one.setChecked(true);
+
+                return;
+            }
             relat_one.setVisibility(View.GONE);
             text_one.setVisibility(View.GONE);
             listview.setVisibility(View.GONE);

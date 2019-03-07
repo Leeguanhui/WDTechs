@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="30dp"
-            android:maxLength="40"
+            android:maxLength="20"
             android:layout_marginTop="50dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/editext_shaper"

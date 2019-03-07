@@ -156,7 +156,6 @@ public class AddFriendlyActivity extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(AddFriendlyActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 int flag = data.getFlag();
                 if (flag == 1) {
                     Toast.makeText(AddFriendlyActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();

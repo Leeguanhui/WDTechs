@@ -180,6 +180,8 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 //                communityListPresenter.request(userId, sessionId, page, 1000);
 //            }
 //        });
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
     }
 
     @Override
@@ -285,6 +287,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         }
     }
 
+    //取消点赞
     private class CancelCommunityGreat implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {

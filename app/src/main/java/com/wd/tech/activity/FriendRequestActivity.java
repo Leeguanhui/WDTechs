@@ -96,7 +96,6 @@ public class FriendRequestActivity extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("1001")) {
-                Toast.makeText(FriendRequestActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

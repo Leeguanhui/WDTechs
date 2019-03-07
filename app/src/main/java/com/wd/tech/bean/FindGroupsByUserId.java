@@ -1,5 +1,6 @@
 package com.wd.tech.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * QQ:666666
  * Describe:
  */
-public class FindGroupsByUserId {
+public class FindGroupsByUserId implements Serializable {
 
 
     private int groupId;

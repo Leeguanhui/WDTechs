@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
+import com.wd.tech.bean.FindConversationList;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
@@ -54,7 +55,7 @@ public class ChatSettingsActivity extends WDActivity {
     private PopupWindow window;
     private PopupWindow clearWindow;
     private View inflate;
-    private FriendInfoList friendInfoList;
+    private FindConversationList findConversationList;
     private DeleteFriendRelationPresenter deleteFriendRelationPresenter;
     private String sessionId;
     private int userId;
@@ -78,12 +79,11 @@ public class ChatSettingsActivity extends WDActivity {
         modiftSignaturePresenter = new ModifyFriendRemarkPresenter(new Modif());
 
         Intent intent = getIntent();
-        friendInfoList = (FriendInfoList) intent.getSerializableExtra("friendInfoList");
-        chatSettingsIcon.setImageURI(friendInfoList.getHeadPic());
-        chatSettingsName.setText(friendInfoList.getRemarkName());
-        remarkName = friendInfoList.getRemarkName();
-        chatSettingsNickname.setText(friendInfoList.getNickName());
-        friendUid = friendInfoList.getFriendUid();
+        findConversationList = (FindConversationList) intent.getSerializableExtra("findConversationList");
+        chatSettingsIcon.setImageURI(findConversationList.getHeadPic());
+        chatSettingsName.setText(findConversationList.getNickName());
+        chatSettingsNickname.setText(findConversationList.getNickName());
+
         deleteFriendRelationPresenter = new DeleteFriendRelationPresenter(new DeleteFriendRelation());
 //        SharedPreferences share = WDApplication.getShare();
 //        userid = share.getInt("userid", 0);
@@ -115,7 +115,7 @@ public class ChatSettingsActivity extends WDActivity {
                 break;
             case R.id.chat_settings_group:
                 Intent intent = new Intent(ChatSettingsActivity.this, CheckGroupActivity.class);
-                intent.putExtra("friendId", friendInfoList.getFriendUid());
+                intent.putExtra("friendId", findConversationList.getUserId());
                 startActivity(intent);
                 break;
             case R.id.chat_settings_chatting_records:
@@ -153,7 +153,7 @@ public class ChatSettingsActivity extends WDActivity {
         popuClearChatOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteChatRecordPresenter.request(userId, sessionId, friendInfoList.getFriendUid());
+                deleteChatRecordPresenter.request(userId, sessionId, findConversationList.getUserId());
 
             }
         });
@@ -169,11 +169,11 @@ public class ChatSettingsActivity extends WDActivity {
         TextView popuDeleteMessage = inflate.findViewById(R.id.popu_delete_message);
         LinearLayout popuDeleteOk = inflate.findViewById(R.id.popu_delete_ok);
         LinearLayout popuDeleteNo = inflate.findViewById(R.id.popu_delete_no);
-        popuDeleteMessage.setText("将联系人 " + friendInfoList.getRemarkName() + " 删除，同时删除与该联系人的聊天记录");
+        popuDeleteMessage.setText("将联系人 " + findConversationList.getNickName() + " 删除，同时删除与该联系人的聊天记录");
         popuDeleteOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteFriendRelationPresenter.request(userId, sessionId, friendInfoList.getFriendUid());
+                deleteFriendRelationPresenter.request(userId, sessionId, findConversationList.getUserId());
             }
         });
         popuDeleteNo.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +249,6 @@ public class ChatSettingsActivity extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(ChatSettingsActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

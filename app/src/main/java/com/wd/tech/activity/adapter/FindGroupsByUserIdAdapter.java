@@ -46,10 +46,16 @@ public class FindGroupsByUserIdAdapter extends RecyclerView.Adapter<FindGroupsBy
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH vh, int i) {
-        FindGroupsByUserId groups = list.get(i);
+    public void onBindViewHolder(@NonNull VH vh, final int i) {
+        final FindGroupsByUserId groups = list.get(i);
         vh.image.setImageURI(groups.getGroupImage());
         vh.name.setText(groups.getGroupName());
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.OnClick(groups);
+            }
+        });
     }
 
     @Override
@@ -67,5 +73,14 @@ public class FindGroupsByUserIdAdapter extends RecyclerView.Adapter<FindGroupsBy
             image = itemView.findViewById(R.id.qun_iamge);
             name = itemView.findViewById(R.id.qun_name);
         }
+    }
+    public  onClickListener onClickListener;
+
+    public void setOnClickListener( onClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    public interface onClickListener {
+        void OnClick(FindGroupsByUserId findGroupsByUserId);
     }
 }

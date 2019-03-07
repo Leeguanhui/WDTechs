@@ -28,11 +28,12 @@ public class LoginUserInfoBean {
     private String sessionId;
     private int userId;
     private String userName;
+    private String headPic;
     private int whetherVip;
     private int whetherFaceId;
     private int statu;
-    @Generated(hash = 1933919439)
-    public LoginUserInfoBean(long gid, String nickName, String phone, String pwd, String sessionId, int userId, String userName, int whetherVip, int whetherFaceId, int statu) {
+    @Generated(hash = 1471506856)
+    public LoginUserInfoBean(long gid, String nickName, String phone, String pwd, String sessionId, int userId, String userName, String headPic, int whetherVip, int whetherFaceId, int statu) {
         this.gid = gid;
         this.nickName = nickName;
         this.phone = phone;
@@ -40,6 +41,7 @@ public class LoginUserInfoBean {
         this.sessionId = sessionId;
         this.userId = userId;
         this.userName = userName;
+        this.headPic = headPic;
         this.whetherVip = whetherVip;
         this.whetherFaceId = whetherFaceId;
         this.statu = statu;
@@ -88,6 +90,12 @@ public class LoginUserInfoBean {
     }
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    public String getHeadPic() {
+        return this.headPic;
+    }
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
     }
     public int getWhetherVip() {
         return this.whetherVip;

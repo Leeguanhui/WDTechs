@@ -8,6 +8,7 @@ import com.wd.tech.bean.ByTitleBean;
 import com.wd.tech.bean.CommunityListBean;
 import com.wd.tech.bean.CommunityUserCommentListBean;
 import com.wd.tech.bean.FindCollectBean;
+import com.wd.tech.bean.FindConversationList;
 import com.wd.tech.bean.FindFriendNoticePageList;
 import com.wd.tech.bean.FindGroupInfo;
 import com.wd.tech.bean.FindGroupNoticePageList;
@@ -17,6 +18,7 @@ import com.wd.tech.bean.FindMyPostListBean;
 import com.wd.tech.bean.FindUserTaskListBean;
 import com.wd.tech.bean.FriendGroup;
 import com.wd.tech.bean.FriendInfoList;
+import com.wd.tech.bean.GroupMember;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -714,4 +716,55 @@ public interface AllUrls {
     @POST("user/v1/faceLogin")
     Observable<Result<LoginUserInfoBean>> faceLogin(@Field("faceId") String time);
 
-}
+
+    /**
+     * .根据环信userNames批量查询会话列表需要的用户信息
+     *
+     * @return
+     */
+    @GET("user/verify/v1/findConversationList")
+    Observable<Result<List<FindConversationList>>> findConversationList(@Header("userId") int userId,
+                                                                        @Header("sessionId") String sessionId,
+                                                                        @Query("userNames") String userNames);
+    /**
+     * 移出群成员(管理员与群主才有的权限)
+     * @param userId
+     * @param sessionId
+     * @param friendUid
+     * @param groupUserId
+     * @return
+     */
+    @DELETE("group/verify/v1/removeGroupMember")
+    Observable<Result> removeGroupMember(@Header("userId") int userId,
+                                         @Header("sessionId")String sessionId,
+                                         @Query("groupId") int friendUid,
+                                         @Query("groupUserId") int groupUserId);
+    /**
+     * 查询群组内所有用户信息
+     * @param userId
+     * @param sessionId
+     * @param groupId
+     * @return
+     */
+    @GET("group/verify/v1/findGroupMemberList")
+    Observable<Result<List<GroupMember>>> findGroupMemberList(@Header("userId") int userId,
+                                                              @Header("sessionId") String sessionId,
+                                                              @Query("groupId") int groupId);
+    /**
+     * 调整群成员角色(群主才有的权限)
+     * @param userId
+     * @param sessionId
+     * @param groupId
+     * @param groupUserId
+     * @param role
+     * @return
+     */
+    @PUT("group/verify/v1/modifyPermission")
+    @FormUrlEncoded
+    Observable<Result> modifyPermission (@Header("userId") int userId,
+                                         @Header("sessionId")String sessionId,
+                                         @Field("groupId") int groupId,
+                                         @Field("groupUserId") int groupUserId,
+                                         @Field("role") int role );
+
+ }

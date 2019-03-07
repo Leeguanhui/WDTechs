@@ -31,9 +31,10 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
         public final static Property SessionId = new Property(4, String.class, "sessionId", false, "SESSION_ID");
         public final static Property UserId = new Property(5, int.class, "userId", false, "USER_ID");
         public final static Property UserName = new Property(6, String.class, "userName", false, "USER_NAME");
-        public final static Property WhetherVip = new Property(7, int.class, "whetherVip", false, "WHETHER_VIP");
-        public final static Property WhetherFaceId = new Property(8, int.class, "whetherFaceId", false, "WHETHER_FACE_ID");
-        public final static Property Statu = new Property(9, int.class, "statu", false, "STATU");
+        public final static Property HeadPic = new Property(7, String.class, "headPic", false, "HEAD_PIC");
+        public final static Property WhetherVip = new Property(8, int.class, "whetherVip", false, "WHETHER_VIP");
+        public final static Property WhetherFaceId = new Property(9, int.class, "whetherFaceId", false, "WHETHER_FACE_ID");
+        public final static Property Statu = new Property(10, int.class, "statu", false, "STATU");
     }
 
 
@@ -56,9 +57,10 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
                 "\"SESSION_ID\" TEXT," + // 4: sessionId
                 "\"USER_ID\" INTEGER NOT NULL ," + // 5: userId
                 "\"USER_NAME\" TEXT," + // 6: userName
-                "\"WHETHER_VIP\" INTEGER NOT NULL ," + // 7: whetherVip
-                "\"WHETHER_FACE_ID\" INTEGER NOT NULL ," + // 8: whetherFaceId
-                "\"STATU\" INTEGER NOT NULL );"); // 9: statu
+                "\"HEAD_PIC\" TEXT," + // 7: headPic
+                "\"WHETHER_VIP\" INTEGER NOT NULL ," + // 8: whetherVip
+                "\"WHETHER_FACE_ID\" INTEGER NOT NULL ," + // 9: whetherFaceId
+                "\"STATU\" INTEGER NOT NULL );"); // 10: statu
     }
 
     /** Drops the underlying database table. */
@@ -97,9 +99,14 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
         if (userName != null) {
             stmt.bindString(7, userName);
         }
-        stmt.bindLong(8, entity.getWhetherVip());
-        stmt.bindLong(9, entity.getWhetherFaceId());
-        stmt.bindLong(10, entity.getStatu());
+ 
+        String headPic = entity.getHeadPic();
+        if (headPic != null) {
+            stmt.bindString(8, headPic);
+        }
+        stmt.bindLong(9, entity.getWhetherVip());
+        stmt.bindLong(10, entity.getWhetherFaceId());
+        stmt.bindLong(11, entity.getStatu());
     }
 
     @Override
@@ -132,9 +139,14 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
         if (userName != null) {
             stmt.bindString(7, userName);
         }
-        stmt.bindLong(8, entity.getWhetherVip());
-        stmt.bindLong(9, entity.getWhetherFaceId());
-        stmt.bindLong(10, entity.getStatu());
+ 
+        String headPic = entity.getHeadPic();
+        if (headPic != null) {
+            stmt.bindString(8, headPic);
+        }
+        stmt.bindLong(9, entity.getWhetherVip());
+        stmt.bindLong(10, entity.getWhetherFaceId());
+        stmt.bindLong(11, entity.getStatu());
     }
 
     @Override
@@ -152,9 +164,10 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // sessionId
             cursor.getInt(offset + 5), // userId
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // userName
-            cursor.getInt(offset + 7), // whetherVip
-            cursor.getInt(offset + 8), // whetherFaceId
-            cursor.getInt(offset + 9) // statu
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // headPic
+            cursor.getInt(offset + 8), // whetherVip
+            cursor.getInt(offset + 9), // whetherFaceId
+            cursor.getInt(offset + 10) // statu
         );
         return entity;
     }
@@ -168,9 +181,10 @@ public class LoginUserInfoBeanDao extends AbstractDao<LoginUserInfoBean, Long> {
         entity.setSessionId(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setUserId(cursor.getInt(offset + 5));
         entity.setUserName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setWhetherVip(cursor.getInt(offset + 7));
-        entity.setWhetherFaceId(cursor.getInt(offset + 8));
-        entity.setStatu(cursor.getInt(offset + 9));
+        entity.setHeadPic(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setWhetherVip(cursor.getInt(offset + 8));
+        entity.setWhetherFaceId(cursor.getInt(offset + 9));
+        entity.setStatu(cursor.getInt(offset + 10));
      }
     
     @Override

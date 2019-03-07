@@ -48,6 +48,8 @@ public class AddFriendsActivity extends WDActivity {
         list.add("找群");
         courseSearchTablayout.setupWithViewPager(searchPager);
         searchPager.setAdapter(new AddYouAdapter(getSupportFragmentManager(), mFragments, list));
+        searchPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
 
     }
 

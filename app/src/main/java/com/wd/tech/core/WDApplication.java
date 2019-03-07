@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.facebook.cache.disk.DiskCacheConfig;
@@ -65,6 +66,7 @@ public class WDApplication extends Application {
 
     private static SharedPreferences sharedPreferences;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -97,6 +99,9 @@ public class WDApplication extends Application {
 
         EaseUI.getInstance().init(this, null);
         EMClient.getInstance().setDebugMode(true);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
     }
     public void setCaptureImage(Uri uri) {
         mImage = uri;
