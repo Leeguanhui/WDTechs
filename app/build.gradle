@@ -5,8 +5,8 @@ android {
         tech {
             keyAlias 'tech'
             keyPassword '123456'
-            storeFile file('C:/Users/admin/Desktop/tech.keystore')
             storePassword '123456'
+            storeFile file('C:/Users/LENOVO/Desktop/tech/tech.keystore')
         }
     }
     compileSdkVersion 28
@@ -85,7 +85,8 @@ dependencies {
 
     implementation project(':easeui')
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
-    //支付宝
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+//支付宝
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
-
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.2.3'
 }

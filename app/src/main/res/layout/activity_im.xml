@@ -31,7 +31,7 @@
                 android:id="@+id/im_iv_query_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="傻蛋"
+                android:text=""
                 android:textSize="16sp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

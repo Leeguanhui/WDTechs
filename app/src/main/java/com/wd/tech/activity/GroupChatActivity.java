@@ -144,7 +144,6 @@ public class GroupChatActivity extends WDActivity implements XRecyclerView.Loadi
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(GroupChatActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 findGroupNoticePageListPresenter.request(userId, sessionId, 1, 10);
             }
         }

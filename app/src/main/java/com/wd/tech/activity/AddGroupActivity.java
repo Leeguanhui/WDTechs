@@ -184,7 +184,6 @@ public class AddGroupActivity extends WDActivity {
         @Override
         public void success(Result data) {
                if (data.getStatus().equals("0000")){
-                   Toast.makeText(AddGroupActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                    findGroupsByCreatePresenter.request(userId,sessionId);
                    finish();
                }

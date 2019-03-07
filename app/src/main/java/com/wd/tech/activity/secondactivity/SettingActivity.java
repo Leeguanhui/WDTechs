@@ -87,8 +87,8 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     TextView mVip;
     @BindView(R.id.my_face)
     TextView mFace;
-    @BindView(R.id.my_wx)
-    TextView mWx;
+//    @BindView(R.id.my_wx)
+//    TextView mWx;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor edit;
@@ -219,17 +219,17 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     }
 
 
-    @OnClick(R.id.my_wx)
-    public void mWeix() {
-        type = 2;
-        mWechatApi = WXAPIFactory.createWXAPI(SettingActivity.this, "wx4c96b6b8da494224", false);
-        mWechatApi.registerApp("wx4c96b6b8da494224");
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_demo";
-        mWechatApi.sendReq(req);
-        finish();
-    }
+//    @OnClick(R.id.my_wx)
+//    public void mWeix() {
+//        type = 2;
+//        mWechatApi = WXAPIFactory.createWXAPI(SettingActivity.this, "wx4c96b6b8da494224", false);
+//        mWechatApi.registerApp("wx4c96b6b8da494224");
+//        final SendAuth.Req req = new SendAuth.Req();
+//        req.scope = "snsapi_userinfo";
+//        req.state = "wechat_sdk_demo";
+//        mWechatApi.sendReq(req);
+//        finish();
+//    }
 
     public static int getType() {
         return type;
@@ -511,9 +511,9 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             int bindStatus = result.getBindStatus();
 
             if (bindStatus == 1) {
-                mWx.setText("已绑定");
+//                mWx.setText("已绑定");
             } else {
-                mWx.setText("未绑定");
+//                mWx.setText("未绑定");
             }
         }
 

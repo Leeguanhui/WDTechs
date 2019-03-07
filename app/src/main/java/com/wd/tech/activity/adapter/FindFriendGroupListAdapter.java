@@ -64,30 +64,38 @@ public class FindFriendGroupListAdapter extends RecyclerView.Adapter<FindFriendG
         return list.size();
     }
 
-    public class VH extends RecyclerView.ViewHolder{
+    public class VH extends RecyclerView.ViewHolder {
         private final TextView textView;
         private final ImageView delete_imageaa;
+
         public VH(@NonNull View itemView) {
             super(itemView);
-            textView=itemView.findViewById(R.id.find_friend_groups_name);
-            delete_imageaa=itemView.findViewById(R.id.delete_imageaa);
+            textView = itemView.findViewById(R.id.find_friend_groups_name);
+            delete_imageaa = itemView.findViewById(R.id.delete_imageaa);
         }
     }
-    public interface ClickListener{
+
+    public interface ClickListener {
         void click(int id);
     }
-    public void setOnItemClickListener(ClickListener clickListener){
-      this.clickListener=clickListener;
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
-    public interface ClickListener1{
+
+    public interface ClickListener1 {
         void click1(int id);
     }
-    public void setOnItemClickListener1(ClickListener1 clickListener1){
-        this.clickListener1=clickListener1;
-    }public interface ClickListener2{
+
+    public void setOnItemClickListener1(ClickListener1 clickListener1) {
+        this.clickListener1 = clickListener1;
+    }
+
+    public interface ClickListener2 {
         void click2(int id);
     }
-    public void setOnItemClickListener2(ClickListener2 clickListener2){
-        this.clickListener2=clickListener2;
+
+    public void setOnItemClickListener2(ClickListener2 clickListener2) {
+        this.clickListener2 = clickListener2;
     }
 }

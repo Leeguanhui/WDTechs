@@ -79,7 +79,7 @@ public class Fragment_Page_one extends WDFragment {
 
     @Override
     protected void initView() {
-        userInfo = getUserInfo(getActivity());
+        userInfo = getUserInfo(getContext());
         if (userInfo!=null){
             userId = userInfo.getUserId();
             sessionId = userInfo.getSessionId();
@@ -158,6 +158,8 @@ public class Fragment_Page_one extends WDFragment {
                 startActivity(new Intent(getActivity(),Type.class));
             }
         });
+        xrecy.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
     }
     private void initJK() {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
