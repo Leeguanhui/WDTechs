@@ -232,8 +232,12 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         Log.d("main", "登录聊天服务器失败！");
                     }
                 });
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+                CircularLoading.closeDialog(dialog);
+
             }
-            CircularLoading.closeDialog(dialog);
+
         }
 
         @Override

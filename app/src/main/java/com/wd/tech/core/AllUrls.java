@@ -716,7 +716,7 @@ public interface AllUrls {
     @POST("user/v1/faceLogin")
     Observable<Result<LoginUserInfoBean>> faceLogin(@Field("faceId") String time);
 
-}
+
 
     /**
      * .根据环信userNames批量查询会话列表需要的用户信息
