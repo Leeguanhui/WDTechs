@@ -165,6 +165,7 @@ public class MainActivity extends WDActivity {
                         } else {
                             //two.setChecked(false);
                             www = 1;
+                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                             intent1.putExtra("id", 1);
                             startActivity(intent1);
