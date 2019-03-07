@@ -80,7 +80,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden" android:launchMode="singleTask" />
         <activity
             android:name=".activity.secondactivity.InvitActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -196,6 +196,8 @@
         </receiver>
 
         <activity android:name=".activity.CommunityUserCommentActivity"></activity>
+        <activity android:name=".face.RegisterActivity" android:launchMode="singleTask"/>
+        <activity android:name=".face.DetecterActivity" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

@@ -42,7 +42,6 @@ import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.WDApplication;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.StringUtils;
-import com.wd.tech.face.DetecterActivity;
 import com.wd.tech.face.RegisterActivity;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 import com.wd.tech.presenter.ModifyNickNamePresenter;
@@ -645,10 +644,5 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         startActivityForResult(it, REQUEST_CODE_OP);
     }
 
-    private void startDetector(int camera) {
-        Intent it = new Intent(SettingActivity.this, DetecterActivity.class);
-        it.putExtra("Camera", camera);
-        startActivityForResult(it, REQUEST_CODE_OP);
-    }
 
 }
