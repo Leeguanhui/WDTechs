@@ -164,6 +164,7 @@ public class MainActivity extends WDActivity {
                             trans.hide(fragment_page_three);
                         }else{
                             //two.setChecked(false);
+                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
                             www=1;
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                             intent1.putExtra("id",1);
