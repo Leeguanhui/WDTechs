@@ -287,6 +287,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         }
     }
 
+    //取消点赞
     private class CancelCommunityGreat implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
