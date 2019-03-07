@@ -234,6 +234,8 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 });
             }
             CircularLoading.closeDialog(dialog);
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
         }
 
         @Override
