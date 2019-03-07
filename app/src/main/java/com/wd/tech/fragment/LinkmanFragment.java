@@ -118,9 +118,8 @@ public class LinkmanFragment extends WDFragment {
                 intent.putExtra(EaseConstant.EXTRA_USER_ID, groupS.get(i).getFriendInfoList().get(i1).getUserName());
                 FriendInfoList friendInfoList = groupS.get(i).getFriendInfoList().get(i1);
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EMMessage.ChatType.Chat);
-                intent.putExtra("friendInfoList", friendInfoList);
+                intent.putExtra("userNames", friendInfoList.getUserName());
                 startActivity(intent);
-
                 return true;
             }
         });
@@ -155,7 +154,7 @@ public class LinkmanFragment extends WDFragment {
                 listPresenter.request(userId, sessionId);
             }
         });
-
+        exPandableListview.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     @Override
@@ -290,6 +289,8 @@ public class LinkmanFragment extends WDFragment {
             return convertView;
         }
 
+
+
         //子布局
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -306,7 +307,7 @@ public class LinkmanFragment extends WDFragment {
             }
             FriendInfoList friendInfoList = groupS.get(groupPosition).getFriendInfoList().get(childPosition);
             holder.headric.setImageURI(friendInfoList.getHeadPic());
-            holder.qianming.setText(friendInfoList.getRemarkName());
+            holder.qianming.setText(friendInfoList.getNickName());
             holder.name.setText(friendInfoList.getSignature());
             return convertView;
         }
@@ -347,7 +348,6 @@ public class LinkmanFragment extends WDFragment {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
                 listPresenter.request(userId, sessionId);
             }
         }
@@ -362,7 +362,6 @@ public class LinkmanFragment extends WDFragment {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
                 listPresenter.request(userId, sessionId);
 
             }

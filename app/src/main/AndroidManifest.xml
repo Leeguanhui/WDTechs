@@ -118,6 +118,9 @@
         <activity
             android:name=".activity.UserPostByIdActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name="com.wd.tech.activity.GroupDetailsSettingsActivity"/>
+        <activity android:name="com.wd.tech.activity.GroupMemberActivity"/>
+
         <activity
             android:name=".activity.thirdlyactivity.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -147,6 +150,7 @@
         <activity android:name=".activity.DredgeVip"></activity>
         <activity android:name="com.wd.tech.activity.ChatSettingsActivity"/>
         <activity android:name="com.wd.tech.activity.CheckGroupActivity"/>
+        <activity android:name="com.wd.tech.activity.IGActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.zz.fileprovider"

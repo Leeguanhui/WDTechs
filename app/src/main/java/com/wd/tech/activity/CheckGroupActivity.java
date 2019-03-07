@@ -45,7 +45,7 @@ public class CheckGroupActivity extends WDActivity {
     RecyclerView checkGroupRecycle;
     @BindView(R.id.check_group_smart)
     SmartRefreshLayout checkGroupSmart;
-//    private int userId;
+    //    private int userId;
 //    private String sessionId;
     private FindFriendGroupListPresenter findUserJoinedGroupPresenter;
     private FindFriendGroupListAdapter findFriendGroupListAdapter;
@@ -63,8 +63,9 @@ public class CheckGroupActivity extends WDActivity {
         return R.layout.activity_check_group;
     }
 
+
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         modifyGroupNamePresenter = new ModifyGroupNamePresenter(new Mo());
         deleteFriendGroupPresenter = new DeleteFriendGroupPresenter(new Dele());
         findUserJoinedGroupPresenter = new FindFriendGroupListPresenter(new FindFriendGroupList());
@@ -102,7 +103,7 @@ public class CheckGroupActivity extends WDActivity {
         findFriendGroupListAdapter.setOnItemClickListener1(new FindFriendGroupListAdapter.ClickListener1() {
             @Override
             public void click1(int id) {
-                deleteFriendGroupPresenter.request(userId,sessionId,id);
+                deleteFriendGroupPresenter.request(userId, sessionId, id);
             }
         });
         findFriendGroupListAdapter.setOnItemClickListener2(new FindFriendGroupListAdapter.ClickListener2() {
@@ -118,7 +119,7 @@ public class CheckGroupActivity extends WDActivity {
                                 if (TextUtils.isEmpty(input)) {
                                     UIUtils.showToastSafe("分组不能为空");
                                 } else {
-                                    modifyGroupNamePresenter.request(userId,sessionId,id,et.getText().toString());
+                                    modifyGroupNamePresenter.request(userId, sessionId, id, et.getText().toString());
 
                                 }
                             }
@@ -165,7 +166,6 @@ public class CheckGroupActivity extends WDActivity {
     }
 
 
-
     class FindFriendGroupList implements ICoreInfe<Result<List<FriendGroup>>> {
 
         @Override
@@ -189,7 +189,6 @@ public class CheckGroupActivity extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                UIUtils.showToastSafe(data.getMessage());
                 findUserJoinedGroupPresenter.request(userId, sessionId);
                 findFriendGroupListAdapter.notifyDataSetChanged();
             }
@@ -216,8 +215,7 @@ public class CheckGroupActivity extends WDActivity {
     private class Dele implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(CheckGroupActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
                 findUserJoinedGroupPresenter.request(userId, sessionId);
                 findFriendGroupListAdapter.notifyDataSetChanged();
             }
@@ -232,11 +230,10 @@ public class CheckGroupActivity extends WDActivity {
     private class Mo implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(CheckGroupActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
                 findUserJoinedGroupPresenter.request(userId, sessionId);
                 findFriendGroupListAdapter.notifyDataSetChanged();
-           }
+            }
         }
 
         @Override

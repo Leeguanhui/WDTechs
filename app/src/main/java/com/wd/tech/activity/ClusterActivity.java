@@ -1,6 +1,7 @@
 package com.wd.tech.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.hyphenate.easeui.EaseConstant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -50,6 +52,8 @@ public class ClusterActivity extends WDActivity {
     private FindGroupsByUserIdPresenter findGroupsByUserIdPresenter;
     private FindGroupsByUserIdAdapter findGroupsByUserIdAdapter;
     private List<FindGroupsByUserId> userIdList;
+    private FindGroupsByUserIdPresenter presenter;
+    private String hxGroupId;
 
     @Override
     protected int getLayoutId() {
@@ -79,6 +83,16 @@ public class ClusterActivity extends WDActivity {
                 smarT.finishRefresh();
             }
         });
+        findGroupsByUserIdAdapter.setOnClickListener(new FindGroupsByUserIdAdapter.onClickListener() {
+            @Override
+            public void OnClick(FindGroupsByUserId findGroupsByUserId) {
+                Intent intent = new Intent(getApplicationContext(), IGActivity.class);
+                intent.putExtra(EaseConstant.EXTRA_USER_ID,findGroupsByUserId.getHxGroupId());
+                intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
+                intent.putExtra("userNames",findGroupsByUserId.getHxGroupId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -105,7 +119,6 @@ public class ClusterActivity extends WDActivity {
         public void success(Result<List<FindGroupsByUserId>> data) {
             if (data.getStatus().equals("0000")){
                 userIdList = data.getResult();
-                Toast.makeText(ClusterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 findGroupsByUserIdAdapter.addItem(userIdList);
                 findGroupsByUserIdAdapter.notifyDataSetChanged();
              }
@@ -116,4 +129,5 @@ public class ClusterActivity extends WDActivity {
 
         }
     }
+
 }

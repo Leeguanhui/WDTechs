@@ -182,7 +182,6 @@ public class IntergralExchange extends WDActivity {
         @Override
         public void success(Result data) {
            if (data.getStatus().equals("0000")){
-               Toast.makeText(IntergralExchange.this,data.getMessage(),Toast.LENGTH_LONG).show();
                View inflate = View.inflate(IntergralExchange.this, R.layout.exchange_fill, null);
            final Dialog dialog = new Dialog(IntergralExchange.this);
            dialog.setContentView(inflate);

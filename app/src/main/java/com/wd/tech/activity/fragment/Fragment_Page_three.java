@@ -175,6 +175,8 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 //                communityListPresenter.request(userId, sessionId, page, 1000);
 //            }
 //        });
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
     }
 
     @Override

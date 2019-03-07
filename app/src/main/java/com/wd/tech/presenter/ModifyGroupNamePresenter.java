@@ -21,7 +21,7 @@ public class ModifyGroupNamePresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         AllUrls allUrls = NotWorkUtils.getInstance().create(AllUrls.class);
-        return allUrls.modifyGroupName((int)args[0],(String)args[1],(int) args[2],(String)args[3]);
+        return allUrls.modifyGroupName((int) args[0], (String) args[1], (int) args[2], (String) args[3]);
     }
 
 

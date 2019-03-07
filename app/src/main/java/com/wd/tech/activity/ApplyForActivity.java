@@ -74,7 +74,6 @@ public class ApplyForActivity extends WDActivity {
         @Override
         public void success(Result data) {
              if (data.getStatus().equals("0000")){
-                 Toast.makeText(ApplyForActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                  finish();
              }
         }

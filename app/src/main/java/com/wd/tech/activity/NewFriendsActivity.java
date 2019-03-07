@@ -127,7 +127,6 @@ public class NewFriendsActivity extends WDActivity implements XRecyclerView.Load
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(NewFriendsActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 listPresenter.request(userId, sessionId, 1, 10);
             }
         }
