@@ -85,9 +85,6 @@ public class IGActivity extends WDActivity {
     }
 
 
-
-
-
     private class Qun implements ICoreInfe<Result<List<FindGroupsByUserId>>> {
         @Override
         public void success(Result<List<FindGroupsByUserId>> data) {

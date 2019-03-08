@@ -53,6 +53,7 @@ public class GroupDetailsSettingsActivity extends WDActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
         LoginUserInfoBean infoBean = getUserInfo(this);
         if (infoBean != null) {
             session1d = infoBean.getSessionId();

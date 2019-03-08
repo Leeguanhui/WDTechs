@@ -97,8 +97,8 @@ public class MainActivity extends WDActivity {
     private int comment;
     @BindView(R.id.vip_btn)
     ImageView vip_btn;
-    private int lll=0;
-    private int www=0;
+    private int lll = 0;
+    private int www = 0;
     private LoginUserInfoBean userInfo;
 
     @Override
@@ -151,23 +151,23 @@ public class MainActivity extends WDActivity {
                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                 switch (checkedId) {
                     case R.id.one:
-                        lll=1;
+                        lll = 1;
                         trans.show(fragment_page_one);
                         trans.hide(fragment_page_two);
                         trans.hide(fragment_page_three);
                         break;
                     case R.id.two:
-                        if (userInfo!=null){
-                            www=1;
+                        if (userInfo != null) {
+                            www = 1;
                             trans.show(fragment_page_two);
                             trans.hide(fragment_page_one);
                             trans.hide(fragment_page_three);
-                        }else{
+                        } else {
                             //two.setChecked(false);
+                            www = 1;
                             Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
-                            www=1;
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
-                            intent1.putExtra("id",1);
+                            intent1.putExtra("id", 1);
                             startActivity(intent1);
                             trans.show(fragment_page_two);
                             trans.hide(fragment_page_one);
@@ -175,7 +175,7 @@ public class MainActivity extends WDActivity {
                         }
                         break;
                     case R.id.three:
-                        lll=3;
+                        lll = 3;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
@@ -319,10 +319,9 @@ public class MainActivity extends WDActivity {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         LoginUserInfoBean userInfo = getUserInfo(this);
         if (userInfo != null) {
-            if (www==1){
+            if (www == 1) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                lll=0;
-                www=0;
+
                 two.setChecked(true);
                 /*two.setChecked(false);
                 one.setChecked(false);
@@ -339,7 +338,7 @@ public class MainActivity extends WDActivity {
             byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         } else {
 
-            if (lll==1&www==1){
+            if (lll == 1 & www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
@@ -348,11 +347,10 @@ public class MainActivity extends WDActivity {
                 trans.show(fragment_page_one);
                 trans.hide(fragment_page_three);
                 trans.hide(fragment_page_two);
-                lll=0;
-                www=0;
+
                 return;
             }
-            if (lll==3&www==1){
+            if (lll == 3 & www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
@@ -361,18 +359,16 @@ public class MainActivity extends WDActivity {
                 trans.show(fragment_page_three);
                 trans.hide(fragment_page_one);
                 trans.hide(fragment_page_two);
-                lll=0;
-                www=0;
+
                 return;
             }
-            if (www==1){
+            if (www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
                 login_bnt.setVisibility(View.VISIBLE);
                 one.setChecked(true);
-                lll=0;
-                www=0;
+
                 return;
             }
             relat_one.setVisibility(View.GONE);
