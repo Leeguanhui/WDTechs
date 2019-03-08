@@ -196,7 +196,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             sessionId = userInfo.getSessionId();
         }
 
-        dialog = CircularLoading.showLoadDialog(getContext(), "加载中...", true);
+//        dialog = CircularLoading.showLoadDialog(getContext(), "加载中...", true);
 
         communityListAdapter.removeAll();
         communityListPresenter.request(userId, sessionId, 1, 1000);
@@ -211,7 +211,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             communityListAdapter.notifyDataSetChanged();
             refreshLayout.finishRefresh();//结束刷新
             refreshLayout.finishLoadmore();//结束加载
-            CircularLoading.closeDialog(dialog);
+//            CircularLoading.closeDialog(dialog);
         }
 
         @Override
