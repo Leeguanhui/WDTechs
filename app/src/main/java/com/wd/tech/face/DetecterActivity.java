@@ -439,15 +439,12 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
         @Override
         public void success(Result<LoginUserInfoBean> result) {
             if (result.getStatus().equals("0000")) {
-                Toast.makeText(DetecterActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                 LoginUserInfoBean userInfoBean = result.getResult();
                 DaoSession daoSession = DaoMaster.newDevSession(DetecterActivity.this, LoginUserInfoBeanDao.TABLENAME);
                 LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
                 loginUserInfoBeanDao.deleteAll();
                 LoginUserInfoBean loginUserInfoBean = result.getResult();
                 loginUserInfoBean.setStatu(1);
-                long l = loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
-                Toast.makeText(DetecterActivity.this, "" + userInfoBean.getPhone() + l, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DetecterActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
