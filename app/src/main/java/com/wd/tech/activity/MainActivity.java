@@ -366,7 +366,6 @@ public class MainActivity extends WDActivity {
                 listview.setVisibility(View.GONE);
                 login_bnt.setVisibility(View.VISIBLE);
                 one.setChecked(true);
-
                 return;
             }
             relat_one.setVisibility(View.GONE);
