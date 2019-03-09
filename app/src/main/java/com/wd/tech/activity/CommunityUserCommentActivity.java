@@ -53,8 +53,13 @@ public class CommunityUserCommentActivity extends WDActivity implements CustomAd
     protected void initView(Bundle savedInstanceState) {
 
         userInfo = getUserInfo(this);
-        userId = userInfo.getUserId();
-        sessionId = userInfo.getSessionId();
+        if (userInfo!=null){
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }else {
+            userId = 0;
+            sessionId = "0";
+        }
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 1);

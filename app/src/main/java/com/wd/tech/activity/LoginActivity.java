@@ -5,12 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +15,6 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.EaseUI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -213,11 +209,11 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
                         Log.d("main", "登录聊天服务器成功！");
-                        if (id==1){
+                        if (id == 1) {
                             finish();
                             return;
                         }
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
 
                     }
@@ -232,7 +228,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         Log.d("main", "登录聊天服务器失败！");
                     }
                 });
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
                 CircularLoading.closeDialog(dialog);
 

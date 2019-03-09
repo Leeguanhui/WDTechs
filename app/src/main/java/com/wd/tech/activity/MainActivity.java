@@ -176,6 +176,7 @@ public class MainActivity extends WDActivity {
                         break;
                     case R.id.three:
                         lll = 3;
+                        www = 0;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
