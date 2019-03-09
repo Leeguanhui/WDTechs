@@ -136,10 +136,10 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.face_btn)
     public void mFaceBtn() {
-        if (((WDApplication) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
+        if( ((WDApplication)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
+            Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
         } else {
-            new AlertDialog.Builder(LoginActivity.this)
+            new AlertDialog.Builder(this)
                     .setTitle("请选择相机")
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {

@@ -158,7 +158,7 @@ public class MainActivity extends WDActivity {
                         break;
                     case R.id.two:
                         if (userInfo != null) {
-                            www = 1;
+                            www = 2;
                             trans.show(fragment_page_two);
                             trans.hide(fragment_page_one);
                             trans.hide(fragment_page_three);
@@ -322,7 +322,6 @@ public class MainActivity extends WDActivity {
         if (userInfo != null) {
             if (www == 1) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
                 two.setChecked(true);
                 /*two.setChecked(false);
                 one.setChecked(false);
@@ -338,7 +337,6 @@ public class MainActivity extends WDActivity {
             login_bnt.setVisibility(View.GONE);
             byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         } else {
-
             if (lll == 1 & www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
@@ -363,13 +361,12 @@ public class MainActivity extends WDActivity {
 
                 return;
             }
-            if (www == 1) {
+            if (www == 2) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
                 login_bnt.setVisibility(View.VISIBLE);
                 one.setChecked(true);
-
                 return;
             }
             relat_one.setVisibility(View.GONE);

@@ -223,16 +223,6 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         communityListPresenter.request(userId, sessionId, 1, 1000);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            //相当于Fragment的onResume
-        } else {
-            //相当于Fragment的onPause
-        }
-    }
-
     private class CommunityList implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
