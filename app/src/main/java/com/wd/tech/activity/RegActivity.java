@@ -89,8 +89,8 @@ public class RegActivity extends WDActivity {
         public void success(Result result) {
 
             if (result.getStatus().equals("0000")) {
-
                 startActivity(new Intent(RegActivity.this, LoginActivity.class));
+                finish();
             }
         }
 

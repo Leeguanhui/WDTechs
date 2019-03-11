@@ -21,6 +21,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +45,6 @@ import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.WDApplication;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.StringUtils;
-import com.wd.tech.face.DetecterActivity;
 import com.wd.tech.face.RegisterActivity;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 import com.wd.tech.presenter.ModifyNickNamePresenter;
@@ -88,7 +89,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
     TextView mVip;
     @BindView(R.id.my_face)
     TextView mFace;
-//    @BindView(R.id.my_wx)
+    //    @BindView(R.id.my_wx)
 //    TextView mWx;
     private ByIdUserInfoPresenter byIdUserInfoPresenter;
     private SharedPreferences sharedPreferences;
@@ -187,13 +188,13 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                 .setItems(new String[]{"打开图片", "拍摄照片"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case 1:
                                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                                 ContentValues values = new ContentValues(1);
                                 values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
                                 Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                ((WDApplication)(SettingActivity.this.getApplicationContext())).setCaptureImage(uri);
+                                ((WDApplication) (SettingActivity.this.getApplicationContext())).setCaptureImage(uri);
                                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                                 startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
                                 break;
@@ -203,7 +204,8 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                                 getImageByalbum.setType("image/jpeg");
                                 startActivityForResult(getImageByalbum, REQUEST_CODE_IMAGE_OP);
                                 break;
-                            default:;
+                            default:
+                                ;
                         }
                     }
                 })
@@ -254,6 +256,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.my_header)
     public void my_header() {
+
         show(contentView);
     }
 
@@ -345,7 +348,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             Uri mPath = intent.getData();
             String file = getPath(mPath);
             Bitmap bmp = WDApplication.decodeImage(file);
-            if (bmp == null || bmp.getWidth() <= 0 || bmp.getHeight() <= 0 ) {
+            if (bmp == null || bmp.getWidth() <= 0 || bmp.getHeight() <= 0) {
                 Log.e(TAG, "error");
             } else {
                 Log.i(TAG, "bmp [" + bmp.getWidth() + "," + bmp.getHeight());
@@ -358,9 +361,9 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
             }
             Bundle bundle = intent.getExtras();
             String path = bundle.getString("imagePath");
-            Log.i(TAG, "path="+path);
+            Log.i(TAG, "path=" + path);
         } else if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
-            Uri mPath = ((WDApplication)(SettingActivity.this.getApplicationContext())).getCaptureImage();
+            Uri mPath = ((WDApplication) (SettingActivity.this.getApplicationContext())).getCaptureImage();
             String file = getPath(mPath);
             Bitmap bmp = WDApplication.decodeImage(file);
             startRegister(bmp, file);
@@ -486,6 +489,10 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.setCanceledOnTouchOutside(true);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        Window window = bottomDialog.getWindow();
+        window.requestFeature(Window.FEATURE_NO_TITLE);
+        window.setGravity(Gravity.BOTTOM); //此处可以设置dialog显示的位置
+        window.getDecorView().setPadding(0, 0, 0, 0);
         bottomDialog.show();
     }
 
@@ -565,7 +572,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                     }
 
                     final String selection = "_id=?";
-                    final String[] selectionArgs = new String[] {
+                    final String[] selectionArgs = new String[]{
                             split[1]
                     };
 
@@ -573,7 +580,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                 }
             }
         }
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor actualimagecursor = this.getContentResolver().query(uri, proj, null, null, null);
         int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         actualimagecursor.moveToFirst();
@@ -613,9 +620,9 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
@@ -653,10 +660,5 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         startActivityForResult(it, REQUEST_CODE_OP);
     }
 
-    private void startDetector(int camera) {
-        Intent it = new Intent(SettingActivity.this, DetecterActivity.class);
-        it.putExtra("Camera", camera);
-        startActivityForResult(it, REQUEST_CODE_OP);
-    }
 
 }

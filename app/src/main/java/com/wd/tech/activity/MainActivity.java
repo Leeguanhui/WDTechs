@@ -45,6 +45,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DrawLayoutEdge;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
 import java.nio.BufferUnderflowException;
@@ -97,8 +98,8 @@ public class MainActivity extends WDActivity {
     private int comment;
     @BindView(R.id.vip_btn)
     ImageView vip_btn;
-    private int lll=0;
-    private int www=0;
+    private int lll = 0;
+    private int www = 0;
     private LoginUserInfoBean userInfo;
 
     @Override
@@ -151,23 +152,23 @@ public class MainActivity extends WDActivity {
                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                 switch (checkedId) {
                     case R.id.one:
-                        lll=1;
+                        lll = 1;
                         trans.show(fragment_page_one);
                         trans.hide(fragment_page_two);
                         trans.hide(fragment_page_three);
                         break;
                     case R.id.two:
-                        if (userInfo!=null){
-                            www=1;
+                        if (userInfo != null) {
+                            www = 2;
                             trans.show(fragment_page_two);
                             trans.hide(fragment_page_one);
                             trans.hide(fragment_page_three);
-                        }else{
+                        } else {
                             //two.setChecked(false);
-                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
-                            www=1;
+                            www = 1;
+                            Toast.makeText(MainActivity.this, "请登录！", Toast.LENGTH_LONG).show();
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
-                            intent1.putExtra("id",1);
+                            intent1.putExtra("id", 1);
                             startActivity(intent1);
                             trans.show(fragment_page_two);
                             trans.hide(fragment_page_one);
@@ -175,7 +176,8 @@ public class MainActivity extends WDActivity {
                         }
                         break;
                     case R.id.three:
-                        lll=3;
+                        lll = 3;
+                        www = 0;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
@@ -197,7 +199,6 @@ public class MainActivity extends WDActivity {
                 left.setTranslationX(-width + width * slideOffset);               //底布局跟着移动
                 right.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);   //主界面布局移动，移动长度等于抽屉的移动长度
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
             }
@@ -212,6 +213,7 @@ public class MainActivity extends WDActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
+        DrawLayoutEdge.setLeftEdgeSize(this,main_drawer_layout,0.4f);
         //列表赋值
         for (int i = 0; i < 7; i++) {
             switch (i) {
@@ -282,7 +284,6 @@ public class MainActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
             }
         });
         //点击头像跳转
@@ -319,10 +320,8 @@ public class MainActivity extends WDActivity {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         LoginUserInfoBean userInfo = getUserInfo(this);
         if (userInfo != null) {
-            if (www==1){
+            if (www == 1) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                lll=0;
-                www=0;
                 two.setChecked(true);
                 /*two.setChecked(false);
                 one.setChecked(false);
@@ -338,8 +337,7 @@ public class MainActivity extends WDActivity {
             login_bnt.setVisibility(View.GONE);
             byIdUserInfoPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
         } else {
-
-            if (lll==1&www==1){
+            if (lll == 1 & www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
@@ -348,11 +346,10 @@ public class MainActivity extends WDActivity {
                 trans.show(fragment_page_one);
                 trans.hide(fragment_page_three);
                 trans.hide(fragment_page_two);
-                lll=0;
-                www=0;
+
                 return;
             }
-            if (lll==3&www==1){
+            if (lll == 3 & www == 1) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
@@ -361,18 +358,15 @@ public class MainActivity extends WDActivity {
                 trans.show(fragment_page_three);
                 trans.hide(fragment_page_one);
                 trans.hide(fragment_page_two);
-                lll=0;
-                www=0;
+
                 return;
             }
-            if (www==1){
+            if (www == 2) {
                 relat_one.setVisibility(View.GONE);
                 text_one.setVisibility(View.GONE);
                 listview.setVisibility(View.GONE);
                 login_bnt.setVisibility(View.VISIBLE);
                 one.setChecked(true);
-                lll=0;
-                www=0;
                 return;
             }
             relat_one.setVisibility(View.GONE);

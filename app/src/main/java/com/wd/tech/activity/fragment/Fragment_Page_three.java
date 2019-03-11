@@ -1,9 +1,12 @@
 package com.wd.tech.activity.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +69,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
     private int ids;
     private DoTheTaskPresenter doTheTaskPresenter;
     private CancelCommunityGreatPresenter cancelCommunityGreatPresenter;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public String getPageName() {
@@ -79,6 +83,12 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
 
     @Override
     protected void initView() {
+
+        sharedPreferences = getActivity().getSharedPreferences("hh", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("a", 1);
+        edit.commit();
+
         doTheTaskPresenter = new DoTheTaskPresenter(new DoTheResult());
         AutoSizeConfig.getInstance().setCustomFragment(true);
 
@@ -86,6 +96,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
 
         communityListPresenter = new CommunityListPresenter(new CommunityList());
+        communityListPresenter.request(userId, sessionId, 1, 1000);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -127,7 +138,11 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             @Override
             public void addCommunityComment(int id, ImageView communityIv) {
                 ids = id;
-                show(pl);
+                if (userInfo!=null){
+                    show(pl);
+                }else {
+                    Toast.makeText(getContext(), "请先登录！！！", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -197,6 +212,12 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         }
 
         dialog = CircularLoading.showLoadDialog(getContext(), "加载中...", true);
+        if (sharedPreferences.getInt("a", 0) == 1) {
+            dialog.dismiss();
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putInt("a", 2);
+            edit.commit();
+        }
 
         communityListAdapter.removeAll();
         communityListPresenter.request(userId, sessionId, 1, 1000);
@@ -254,7 +275,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             editText.setText(null);
             communityListAdapter.removeAll();
             communityListPresenter.request(userId, sessionId, 1, 1000);
-            doTheTaskPresenter.request(userId, sessionId, 1002);
+            doTheTaskPresenter.request(userId, sessionId, 1000);
         }
 
         @Override
@@ -287,6 +308,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
         }
     }
 
+    //取消点赞
     private class CancelCommunityGreat implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {

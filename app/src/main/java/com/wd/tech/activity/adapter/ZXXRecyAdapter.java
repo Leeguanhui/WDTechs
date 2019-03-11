@@ -1,32 +1,43 @@
 package com.wd.tech.activity.adapter;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.view.NewsDetails;
 import com.wd.tech.bean.InfoRecommecndListBean;
+import com.wd.tech.bean.LoginUserInfoBean;
+import com.wd.tech.bean.Result;
+import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.TimeUtils;
-import com.zhouwei.mzbanner.MZBannerView;
-import com.zhouwei.mzbanner.holder.MZHolderCreator;
-import com.zhouwei.mzbanner.holder.MZViewHolder;
+import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.AddCollectionPresenter;
+import com.wd.tech.presenter.CancelCollectionPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.wd.tech.core.utils.UIUtils.getResources;
 
 /**
  * 作者：夏洪武
@@ -36,6 +47,7 @@ import java.util.List;
  */
 public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     private final FragmentActivity context;
+    private LoginUserInfoBean userInfo;
 
     private List<InfoRecommecndListBean> list;
     //广告
@@ -43,10 +55,11 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     //不是广告
     public static final int TYPE_THREE = 2;
     private View view;
-
+    private int num=0;
     public ZXXRecyAdapter(FragmentActivity activity) {
         this.context=activity;
         this.list=new ArrayList<>();
+       // this.userInfo=userInfo;
     }
 
     @NonNull
@@ -65,23 +78,54 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull XRecyclerView.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final XRecyclerView.ViewHolder viewHolder, final int i) {
         //int itemViewType = getItemViewType(i);
         TimeUtils timeUtils = new TimeUtils();
-
         if (viewHolder instanceof ListViewHolder){
-            int whetherCollection = list.get(i).getWhetherCollection();
+            final int whetherCollection = list.get(i).getWhetherCollection();
             if (whetherCollection==2){
                 ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_n);
             }else{
                 ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_s);
             }
+
+            ((ListViewHolder) viewHolder).like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        ClickCollect.ok(i,list.get(i).getId(),whetherCollection,list.get(i).getCollection(),((ListViewHolder) viewHolder).like,((ListViewHolder) viewHolder).likenum);
+                }
+            });
             ((ListViewHolder) viewHolder).simple.setImageURI(list.get(i).getThumbnail());
             ((ListViewHolder) viewHolder).title.setText(list.get(i).getTitle());
             ((ListViewHolder) viewHolder).content.setText(list.get(i).getSummary());
             ((ListViewHolder) viewHolder).writer.setText(list.get(i).getSource());
             String time = TimeUtils.getDescriptionTimeFromTimestamp(list.get(i).getReleaseTime());
             ((ListViewHolder) viewHolder).data.setText(time);
+            ((ListViewHolder) viewHolder).sharewith.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    View inflate = View.inflate(context, R.layout.share, null);
+                    final Dialog dialog = new Dialog(context);
+                    Window dialogWindow = dialog.getWindow();
+                    dialogWindow.setGravity(Gravity.CENTER);
+                    dialog.setContentView(inflate);
+                    dialog.show();
+                    RelativeLayout back = inflate.findViewById(R.id.a);
+                    RelativeLayout wxq = inflate.findViewById(R.id.wxq);
+                    back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    wxq.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            wechatShare(i);
+                        }
+                    });
+                }
+            });
             ((ListViewHolder) viewHolder).share.setText(list.get(i).getShare()+"");
             ((ListViewHolder) viewHolder).likenum.setText(list.get(i).getCollection()+"");
             ((ListViewHolder) viewHolder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +152,28 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
 
         }
        }
+    /**
+     * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
+     *
+     * @param flag(0:分享到微信好友，1：分享到微信朋友圈)
+     */
+    private void wechatShare(int flag) {
+        IWXAPI api = WXAPIFactory.createWXAPI(context, "wx4c96b6b8da494224", false);
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "www.hooxiao.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = list.get(flag).getTitle();
+        msg.description = list.get(flag).getSummary();
+        //这里替换一张自己工程里的图片资源
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.wxshare);
+        msg.setThumbImage(thumb);
 
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
     @Override
     public int getItemCount() {
         return list.size();
@@ -126,15 +191,21 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
 
     public void setList(List<InfoRecommecndListBean> result) {
         if (result!=null){
+            this.list.clear();
             this.list.addAll(result);
+            notifyDataSetChanged();
         }
+    }
+
+    public void setUser(LoginUserInfoBean userInfo) {
+        this.userInfo=userInfo;
     }
 
 
     private class ListViewHolder extends XRecyclerView.ViewHolder {
         SimpleDraweeView simple;
         TextView title,content,writer,data,share,likenum;
-        ImageView like;
+        ImageView like,sharewith;
         public ListViewHolder(View view) {
             super(view);
             simple=view.findViewById(R.id.simple);
@@ -145,6 +216,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             share=view.findViewById(R.id.share);
             likenum=view.findViewById(R.id.likenum);
             like=view.findViewById(R.id.like);
+            sharewith=view.findViewById(R.id.sharewith);
         }
     }
 
@@ -157,4 +229,15 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             connect=view.findViewById(R.id.connect);
         }
     }
+
+
+
+    public interface Collect{
+        void ok(int i,int id,int whetherCollection,int num,ImageView image,TextView textView);
+    }
+    private Collect ClickCollect;
+    public void setOnItemClickLisenter(Collect clickCollect){
+        this.ClickCollect=clickCollect;
+    }
+
 }

@@ -362,6 +362,7 @@ public class NewsDetails extends WDActivity {
             } else {
                 like.setImageResource(R.mipmap.collect_s);
             }
+
             whetherGreat = result.getWhetherGreat();
             if (whetherGreat == 1) {
                 mBang.setImageResource(R.drawable.common_icon_p);

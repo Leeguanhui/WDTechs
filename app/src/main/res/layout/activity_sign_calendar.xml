@@ -7,20 +7,21 @@
     <RelativeLayout
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="95dp"
         android:background="#F0F0F0">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="签到" />
 
         <ImageView
             android:id="@+id/back_bnt"
-            android:layout_width="8dp"
-            android:layout_height="12dp"
+            android:layout_width="14dp"
+            android:layout_height="16dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/common_icon_back_n" />
