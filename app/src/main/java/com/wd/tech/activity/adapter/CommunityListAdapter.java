@@ -81,9 +81,9 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
         date.setTime(communityListBean.getPublishTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = sdf.format(date);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date d = df.parse(format);
+            Date d = sdf.parse(format);
             String s = DateUtils.fromToday(d);
             viewHolder.time.setText(s);
         } catch (ParseException e) {

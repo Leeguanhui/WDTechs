@@ -166,7 +166,7 @@ public class MainActivity extends WDActivity {
                         } else {
                             //two.setChecked(false);
                             www = 1;
-                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "请登录！", Toast.LENGTH_LONG).show();
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                             intent1.putExtra("id", 1);
                             startActivity(intent1);
@@ -177,6 +177,7 @@ public class MainActivity extends WDActivity {
                         break;
                     case R.id.three:
                         lll = 3;
+                        www = 0;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
@@ -283,7 +284,6 @@ public class MainActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
             }
         });
         //点击头像跳转
