@@ -187,6 +187,9 @@ public class GroupMemberActivity extends WDActivity {
                 finish();
                 break;
             case R.id.group_member_add:
+                Intent intent = new Intent(getApplicationContext(), InviteFriendsActivity.class);
+                intent.putExtra("groupId",groupId);
+                startActivity(intent);
 
                 break;
         }

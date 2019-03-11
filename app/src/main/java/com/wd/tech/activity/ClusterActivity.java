@@ -1,6 +1,5 @@
 package com.wd.tech.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.hyphenate.easeui.EaseConstant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -24,13 +22,11 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
-import com.wd.tech.presenter.FindGroupInfoPresenter;
 import com.wd.tech.presenter.FindGroupsByUserIdPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ClusterActivity extends WDActivity {
@@ -52,8 +48,8 @@ public class ClusterActivity extends WDActivity {
     private FindGroupsByUserIdPresenter findGroupsByUserIdPresenter;
     private FindGroupsByUserIdAdapter findGroupsByUserIdAdapter;
     private List<FindGroupsByUserId> userIdList;
-    private FindGroupsByUserIdPresenter presenter;
     private String hxGroupId;
+    private String substring;
 
     @Override
     protected int getLayoutId() {
@@ -68,16 +64,16 @@ public class ClusterActivity extends WDActivity {
             sessionId = infoBean.getSessionId();
             userId = infoBean.getUserId();
         }
-        findGroupsByUserIdPresenter.request(userId,sessionId);
+        findGroupsByUserIdPresenter.request(userId, sessionId);
         findGroupsByUserIdAdapter = new FindGroupsByUserIdAdapter(this);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         receylView.setLayoutManager(layoutManager);
         receylView.setAdapter(findGroupsByUserIdAdapter);
         smarT.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                findGroupsByUserIdPresenter.request(userId,sessionId);
+                findGroupsByUserIdPresenter.request(userId, sessionId);
                 findGroupsByUserIdAdapter.addItem(userIdList);
                 findGroupsByUserIdAdapter.notifyDataSetChanged();
                 smarT.finishRefresh();
@@ -87,9 +83,9 @@ public class ClusterActivity extends WDActivity {
             @Override
             public void OnClick(FindGroupsByUserId findGroupsByUserId) {
                 Intent intent = new Intent(getApplicationContext(), IGActivity.class);
-                intent.putExtra(EaseConstant.EXTRA_USER_ID,findGroupsByUserId.getHxGroupId());
+                intent.putExtra(EaseConstant.EXTRA_USER_ID, findGroupsByUserId.getHxGroupId());
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
-                intent.putExtra("userNames",findGroupsByUserId.getHxGroupId());
+                intent.putExtra("userNames", findGroupsByUserId.getHxGroupId());
                 startActivity(intent);
             }
         });
@@ -117,11 +113,12 @@ public class ClusterActivity extends WDActivity {
     private class GroupFind implements ICoreInfe<Result<List<FindGroupsByUserId>>> {
         @Override
         public void success(Result<List<FindGroupsByUserId>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 userIdList = data.getResult();
                 findGroupsByUserIdAdapter.addItem(userIdList);
                 findGroupsByUserIdAdapter.notifyDataSetChanged();
-             }
+
+            }
         }
 
         @Override

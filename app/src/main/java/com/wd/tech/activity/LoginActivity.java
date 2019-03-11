@@ -24,17 +24,20 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.view.CircularLoading;
+import com.wd.tech.bean.FindConversationList;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.WDApplication;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DaoUtils;
 import com.wd.tech.core.utils.RsaCoder;
 import com.wd.tech.core.utils.StringUtils;
 import com.wd.tech.face.DetecterActivity;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.FindConversationListDao;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
 
@@ -201,24 +204,32 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         public void success(Result data) {
             Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
+                LoginUserInfoBean result = (LoginUserInfoBean) data.getResult();
                 DaoSession daoSession = DaoMaster.newDevSession(LoginActivity.this, LoginUserInfoBeanDao.TABLENAME);
                 LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
                 loginUserInfoBeanDao.deleteAll();
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
+                FindConversationList findConversationList = new FindConversationList();
+                findConversationList.setUserName(result.getUserName().toLowerCase());
+                findConversationList.setHeadPic(result.getHeadPic());
+                findConversationList.setNickName(result.getNickName());
+                findConversationList.setUserId(result.getUserId());
+                DaoUtils.getInstance().getConversationDao().insertOrReplaceInTx(findConversationList);
+
                 EMClient.getInstance().login(loginUserInfoBean.getUserName(), loginUserInfoBean.getPwd(), new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
                         Log.d("main", "登录聊天服务器成功！");
-                        if (id==1){
+                        if (id == 1) {
                             finish();
                             return;
                         }
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        finish();
+//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                        finish();
 
                     }
 
@@ -232,7 +243,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         Log.d("main", "登录聊天服务器失败！");
                     }
                 });
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
                 CircularLoading.closeDialog(dialog);
 

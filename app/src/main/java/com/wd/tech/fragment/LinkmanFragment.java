@@ -1,6 +1,8 @@
 package com.wd.tech.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.wd.tech.activity.ClusterActivity;
 import com.wd.tech.activity.GroupChatActivity;
 import com.wd.tech.activity.IMActivity;
 import com.wd.tech.activity.NewFriendsActivity;
+import com.wd.tech.bean.FindConversationList;
 import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
@@ -33,8 +36,13 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DaoUtils;
 import com.wd.tech.core.utils.UIUtils;
+import com.wd.tech.greendao.DaoMaster;
+import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.FindConversationListDao;
 import com.wd.tech.presenter.DeleteFriendRelationPresenter;
+import com.wd.tech.presenter.FindConversationListPresenter;
 import com.wd.tech.presenter.InitFriendListPresenter;
 import com.wd.tech.presenter.TransferFriendGroupPresenter;
 
@@ -84,6 +92,8 @@ public class LinkmanFragment extends WDFragment {
     private DeleteFriendRelationPresenter deleteFriendRelationPresenter;
     private TransferFriendGroupPresenter transferFriendGroupPresenter;
     private int black;
+    private String substring;
+    private FindConversationListPresenter findConversationListPresenter;
 
     @Override
     public String getPageName() {
@@ -97,16 +107,19 @@ public class LinkmanFragment extends WDFragment {
 
     @Override
     protected void initView() {
+
         deleteFriendRelationPresenter = new DeleteFriendRelationPresenter(new Delet());
         transferFriendGroupPresenter = new TransferFriendGroupPresenter(new Tran());
+        findConversationListPresenter = new FindConversationListPresenter(new HUANXIN());
+
         listPresenter = new InitFriendListPresenter(new InitFr());
         bean = getUserInfo(getContext());
         if (bean != null) {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
-
-        } else {
+            exPandableListview.setVisibility(View.VISIBLE);
+        }else {
             exPandableListview.setVisibility(View.GONE);
         }
         listPresenter.request(userId, sessionId);
@@ -165,7 +178,8 @@ public class LinkmanFragment extends WDFragment {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
             listPresenter.request(userId, sessionId);
-        } else {
+            exPandableListview.setVisibility(View.VISIBLE);
+         }else {
             exPandableListview.setVisibility(View.GONE);
         }
     }
@@ -290,7 +304,6 @@ public class LinkmanFragment extends WDFragment {
         }
 
 
-
         //子布局
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -333,8 +346,17 @@ public class LinkmanFragment extends WDFragment {
             if (data.getStatus().equals("0000")) {
                 groupS = data.getResult();
                 exPandableListview.setAdapter(new MyExpandableListView());
+                StringBuffer userHxIds = new StringBuffer();
+                for (int i = 0; i < groupS.size(); i++) {
+                    for (int j = 0; j < groupS.get(i).getFriendInfoList().size(); j++) {
+                        userHxIds.append(groupS.get(i).getFriendInfoList().get(j).getUserName() + ",");
+                    }
+                }
+                substring = userHxIds.substring(0, userHxIds.length() - 1);
+                findConversationListPresenter.request(userId, sessionId, substring);
 
                 pullToRefreshScrollView.finishRefresh();
+
             }
         }
 
@@ -365,6 +387,25 @@ public class LinkmanFragment extends WDFragment {
                 listPresenter.request(userId, sessionId);
 
             }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class HUANXIN implements ICoreInfe<Result<List<FindConversationList>>> {
+        @Override
+        public void success(Result<List<FindConversationList>> data) {
+
+            List<FindConversationList> conversationList = data.getResult();
+            for (FindConversationList conversation : conversationList) {
+                conversation.setUserName(conversation.getUserName().toLowerCase());
+            }
+            DaoUtils.getInstance().getConversationDao().insertOrReplaceInTx(conversationList);
+
+
         }
 
         @Override

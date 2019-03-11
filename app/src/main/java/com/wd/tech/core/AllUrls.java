@@ -295,7 +295,7 @@ public interface AllUrls {
                                      @Field("remark") String remark);
 
     /**
-     * 查询我创建的群组
+     * 查询我所有加入的群组
      */
     @GET("group/verify/v1/findUserJoinedGroup")
     Observable<Result<List<FindGroupsByUserId>>> findGroupsByUserId(
@@ -717,7 +717,6 @@ public interface AllUrls {
     Observable<Result<LoginUserInfoBean>> faceLogin(@Field("faceId") String time);
 
 
-
     /**
      * .根据环信userNames批量查询会话列表需要的用户信息
      *
@@ -727,8 +726,10 @@ public interface AllUrls {
     Observable<Result<List<FindConversationList>>> findConversationList(@Header("userId") int userId,
                                                                         @Header("sessionId") String sessionId,
                                                                         @Query("userNames") String userNames);
+
     /**
      * 移出群成员(管理员与群主才有的权限)
+     *
      * @param userId
      * @param sessionId
      * @param friendUid
@@ -737,11 +738,13 @@ public interface AllUrls {
      */
     @DELETE("group/verify/v1/removeGroupMember")
     Observable<Result> removeGroupMember(@Header("userId") int userId,
-                                         @Header("sessionId")String sessionId,
+                                         @Header("sessionId") String sessionId,
                                          @Query("groupId") int friendUid,
                                          @Query("groupUserId") int groupUserId);
+
     /**
      * 查询群组内所有用户信息
+     *
      * @param userId
      * @param sessionId
      * @param groupId
@@ -751,8 +754,10 @@ public interface AllUrls {
     Observable<Result<List<GroupMember>>> findGroupMemberList(@Header("userId") int userId,
                                                               @Header("sessionId") String sessionId,
                                                               @Query("groupId") int groupId);
+
     /**
      * 调整群成员角色(群主才有的权限)
+     *
      * @param userId
      * @param sessionId
      * @param groupId
@@ -762,10 +767,21 @@ public interface AllUrls {
      */
     @PUT("group/verify/v1/modifyPermission")
     @FormUrlEncoded
-    Observable<Result> modifyPermission (@Header("userId") int userId,
-                                         @Header("sessionId")String sessionId,
-                                         @Field("groupId") int groupId,
-                                         @Field("groupUserId") int groupUserId,
-                                         @Field("role") int role );
+    Observable<Result> modifyPermission(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Field("groupId") int groupId,
+                                        @Field("groupUserId") int groupUserId,
+                                        @Field("role") int role);
 
- }
+    /**
+     * 批量邀请加群
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("group/verify/v1/batchInviteAddGroup")
+    Observable<Result> batchInviteAddGroup(@Header("userId") int userId,
+                                           @Header("sessionId") String sessionId,
+                                           @Field("groupId") int groupId,
+                                           @Field("receiverUids") int[] receiverUids);
+}

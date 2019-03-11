@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hyphenate.chat.EMClient;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -169,6 +170,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                 deleteUserInfo(SettingActivity.this);
                 edit.putString("mysign", "");
                 edit.commit();
+                EMClient.getInstance().logout(true);
                 finish();
             }
         });
