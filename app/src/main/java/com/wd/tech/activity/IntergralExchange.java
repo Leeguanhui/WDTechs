@@ -73,6 +73,7 @@ public class IntergralExchange extends WDActivity {
     private int userId;
     private String sessionId;
     private int id;
+    private String format;
 
     @Override
     protected int getLayoutId() {
@@ -107,10 +108,10 @@ public class IntergralExchange extends WDActivity {
        writer.setText(source);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String format = formatter.format(releaseTime);
+        format = formatter.format(releaseTime);
         data.setText(format);
         likenum.setText(praise+"");
-        mean.setOnClickListener(new View.OnClickListener() {
+        menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -121,7 +122,7 @@ public class IntergralExchange extends WDActivity {
     @OnClick(R.id.exchange)
     public void ExChange(){
        if (amount>=integralCost){
-           newsExChangePresenter.request(userId,sessionId,id,amount);
+           newsExChangePresenter.request(userId,sessionId,id,integralCost);
        }else{
            View inflate = View.inflate(this, R.layout.exchange_seccess, null);
            final Dialog dialog = new Dialog(this);

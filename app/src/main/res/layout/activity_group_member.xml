@@ -23,14 +23,16 @@
           android:layout_centerInParent="true"
           android:textSize="20sp"
           android:text="群成员"/>
+
       <ImageView
           android:id="@+id/group_member_add"
           android:layout_width="24dp"
           android:layout_height="24dp"
           android:layout_alignParentRight="true"
+
           android:layout_centerVertical="true"
-         android:src="@drawable/ease_blue_add"
-          android:layout_marginRight="18dp"/>
+          android:layout_marginRight="18dp"
+          android:src="@drawable/ease_blue_add" />
 
    </RelativeLayout>
    <LinearLayout

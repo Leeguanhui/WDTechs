@@ -57,11 +57,13 @@ public class AddFriendlyActivity extends WDActivity {
     private CheckMyFriendPresnter checkMyFriendPresnter;
     private String ss;
     private Dialog dialog;
+    private int flag;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_friendly;
     }
+
     @Override
     protected void initView(Bundle savedInstanceState) {
         LoginUserInfoBean infoBean = getUserInfo(this);
@@ -123,9 +125,10 @@ public class AddFriendlyActivity extends WDActivity {
             btnRAdd.setVisibility(View.GONE);
             btnRMessage.setVisibility(View.GONE);
             CircularLoading.closeDialog(dialog);
-        } else if (ss.equals(phone1)){
+        } else if (ss.equals(phone1)) {
             checkMyFriendPresnter.request(userId, sessionId, userid1);
         }
+
     }
 
     @Override
@@ -146,7 +149,11 @@ public class AddFriendlyActivity extends WDActivity {
                 break;
 
             case R.id.btn_r_message:
-
+//                if (flag == 1) {
+//                    Intent intent1 = new Intent(getApplicationContext(), IMActivity.class);
+//                    intent1.putExtra("userNames", nickName);
+//                    startActivity(intent1);
+//                }
                 break;
         }
 
@@ -156,13 +163,11 @@ public class AddFriendlyActivity extends WDActivity {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                int flag = data.getFlag();
+                flag = data.getFlag();
                 if (flag == 1) {
-                    Toast.makeText(AddFriendlyActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                     btnRAdd.setVisibility(View.GONE);
                     btnRMessage.setVisibility(View.VISIBLE);
                 } else if (flag == 2) {
-                    Toast.makeText(AddFriendlyActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                     btnRAdd.setVisibility(View.VISIBLE);
                     btnRMessage.setVisibility(View.GONE);
                 }

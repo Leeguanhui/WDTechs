@@ -65,6 +65,10 @@ public class ChatSettingsActivity extends WDActivity {
     private ModifyFriendRemarkPresenter modiftSignaturePresenter;
     private int friendUid;
     private String remarkName;
+    private String userId1;
+    private String nickName;
+    private String headPic;
+    private String userName;
 
     @Override
     protected int getLayoutId() {
@@ -79,15 +83,16 @@ public class ChatSettingsActivity extends WDActivity {
         modiftSignaturePresenter = new ModifyFriendRemarkPresenter(new Modif());
 
         Intent intent = getIntent();
-        findConversationList = (FindConversationList) intent.getSerializableExtra("findConversationList");
-        chatSettingsIcon.setImageURI(findConversationList.getHeadPic());
-        chatSettingsName.setText(findConversationList.getNickName());
-        chatSettingsNickname.setText(findConversationList.getNickName());
+        userId1 = intent.getStringExtra("userId1");
+        nickName = intent.getStringExtra("nickName");
+        headPic = intent.getStringExtra("headPic");
+        userName = intent.getStringExtra("userName");
+
+        chatSettingsIcon.setImageURI(headPic);
+        chatSettingsName.setText(nickName);
+        chatSettingsNickname.setText(nickName);
 
         deleteFriendRelationPresenter = new DeleteFriendRelationPresenter(new DeleteFriendRelation());
-//        SharedPreferences share = WDApplication.getShare();
-//        userid = share.getInt("userid", 0);
-//        session1d = share.getString("sessionid", "");
         bean = getUserInfo(this);
         if (bean != null) {
             sessionId = bean.getSessionId();
@@ -115,7 +120,7 @@ public class ChatSettingsActivity extends WDActivity {
                 break;
             case R.id.chat_settings_group:
                 Intent intent = new Intent(ChatSettingsActivity.this, CheckGroupActivity.class);
-                intent.putExtra("friendId", findConversationList.getUserId());
+                intent.putExtra("userId1",userId1);
                 startActivity(intent);
                 break;
             case R.id.chat_settings_chatting_records:
@@ -153,7 +158,7 @@ public class ChatSettingsActivity extends WDActivity {
         popuClearChatOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteChatRecordPresenter.request(userId, sessionId, findConversationList.getUserId());
+                deleteChatRecordPresenter.request(userId, sessionId,userId1);
 
             }
         });
@@ -169,11 +174,11 @@ public class ChatSettingsActivity extends WDActivity {
         TextView popuDeleteMessage = inflate.findViewById(R.id.popu_delete_message);
         LinearLayout popuDeleteOk = inflate.findViewById(R.id.popu_delete_ok);
         LinearLayout popuDeleteNo = inflate.findViewById(R.id.popu_delete_no);
-        popuDeleteMessage.setText("将联系人 " + findConversationList.getNickName() + " 删除，同时删除与该联系人的聊天记录");
+        popuDeleteMessage.setText("将联系人 " +nickName + " 删除，同时删除与该联系人的聊天记录");
         popuDeleteOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteFriendRelationPresenter.request(userId, sessionId, findConversationList.getUserId());
+                deleteFriendRelationPresenter.request(userId, sessionId,userId1);
             }
         });
         popuDeleteNo.setOnClickListener(new View.OnClickListener() {

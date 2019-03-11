@@ -45,6 +45,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DrawLayoutEdge;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
 import java.nio.BufferUnderflowException;
@@ -198,7 +199,6 @@ public class MainActivity extends WDActivity {
                 left.setTranslationX(-width + width * slideOffset);               //底布局跟着移动
                 right.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);   //主界面布局移动，移动长度等于抽屉的移动长度
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
             }
@@ -213,6 +213,7 @@ public class MainActivity extends WDActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
+        DrawLayoutEdge.setLeftEdgeSize(this,main_drawer_layout,0.4f);
         //列表赋值
         for (int i = 0; i < 7; i++) {
             switch (i) {

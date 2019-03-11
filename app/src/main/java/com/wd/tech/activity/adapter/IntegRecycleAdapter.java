@@ -61,7 +61,7 @@ public class IntegRecycleAdapter extends RecyclerView.Adapter<IntegRecycleAdapte
         if (direction == 1) {
             vh.jifen.setText("+" + userIntegralListBean.getAmount());
         } else {
-            vh.jifen.setText("-" + userIntegralListBean.getAmount());
+            vh.jifen.setText("" + userIntegralListBean.getAmount());
         }
         int type = userIntegralListBean.getType();
         switch (type) {

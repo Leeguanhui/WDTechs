@@ -22,7 +22,6 @@ import com.wd.tech.presenter.ZxInformationPresenter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SearchType extends WDActivity {
 
