@@ -5,37 +5,39 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.EaseUI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wd.tech.R;
 import com.wd.tech.activity.view.CircularLoading;
+import com.wd.tech.bean.FindConversationList;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.WDApplication;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DaoUtils;
 import com.wd.tech.core.utils.RsaCoder;
 import com.wd.tech.core.utils.StringUtils;
 import com.wd.tech.face.DetecterActivity;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
+import com.wd.tech.greendao.FindConversationListDao;
 import com.wd.tech.greendao.LoginUserInfoBeanDao;
 import com.wd.tech.presenter.LoginUserInfoPresenter;
 
@@ -55,8 +57,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private Dialog dialog;
     private int id;
     private static final int REQUEST_CODE_OP = 7;
-    boolean canSee = false;
-
 
     @Override
     protected int getLayoutId() {
@@ -144,9 +144,9 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     @OnClick(R.id.face_btn)
     public void mFaceBtn() {
         if (((WDApplication) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
-            Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
         } else {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(LoginActivity.this)
                     .setTitle("请选择相机")
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {
@@ -156,19 +156,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         }
                     })
                     .show();
-        }
-    }
-
-    @OnClick(R.id.pwd_eyes)
-    public void mPwdeyes() {
-        if (canSee == false) {
-            //如果是不能看到密码的情况下，
-            mUserPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            canSee = true;
-        } else {
-            //如果是能看到密码的状态下
-            mUserPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            canSee = false;
         }
     }
 
@@ -217,12 +204,20 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
         public void success(Result data) {
             Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
+                LoginUserInfoBean result = (LoginUserInfoBean) data.getResult();
                 DaoSession daoSession = DaoMaster.newDevSession(LoginActivity.this, LoginUserInfoBeanDao.TABLENAME);
                 LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
                 loginUserInfoBeanDao.deleteAll();
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) data.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
+                FindConversationList findConversationList = new FindConversationList();
+                findConversationList.setUserName(result.getUserName().toLowerCase());
+                findConversationList.setHeadPic(result.getHeadPic());
+                findConversationList.setNickName(result.getNickName());
+                findConversationList.setUserId(result.getUserId());
+                DaoUtils.getInstance().getConversationDao().insertOrReplaceInTx(findConversationList);
+
                 EMClient.getInstance().login(loginUserInfoBean.getUserName(), loginUserInfoBean.getPwd(), new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
@@ -234,7 +229,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                             return;
                         }
 //                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+//                        finish();
 
                     }
 
@@ -248,7 +243,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                         Log.d("main", "登录聊天服务器失败！");
                     }
                 });
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
                 CircularLoading.closeDialog(dialog);
 

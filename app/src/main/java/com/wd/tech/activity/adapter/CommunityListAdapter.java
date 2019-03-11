@@ -92,7 +92,12 @@ public class CommunityListAdapter extends RecyclerView.Adapter<CommunityListAdap
 
         viewHolder.signature.setText(communityListBean.getSignature());
         viewHolder.headPic.setImageURI(communityListBean.getHeadPic());
-        viewHolder.content.setText(communityListBean.getContent());
+        if (communityListBean.getContent() != null) {
+            viewHolder.content.setVisibility(View.VISIBLE);
+            viewHolder.content.setText(communityListBean.getContent());
+        } else {
+            viewHolder.content.setVisibility(View.GONE);
+        }
         viewHolder.comment.setText(String.valueOf(communityListBean.getComment()));
         viewHolder.praise.setText(String.valueOf(communityListBean.getPraise()));
 

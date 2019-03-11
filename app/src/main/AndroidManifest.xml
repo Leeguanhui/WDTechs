@@ -30,7 +30,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name=".core.WDApplication"
         android:allowBackup="true"
@@ -38,6 +38,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.GroupProfileActivity"></activity>
+        <activity android:name=".activity.InviteFriendsActivity" />
+        <activity android:name=".activity.GroupMembersActivity" />
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,7 +83,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden" android:launchMode="singleTask" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.secondactivity.InvitActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -120,9 +123,8 @@
         <activity
             android:name=".activity.UserPostByIdActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name="com.wd.tech.activity.GroupDetailsSettingsActivity"/>
-        <activity android:name="com.wd.tech.activity.GroupMemberActivity"/>
-
+        <activity android:name=".activity.GroupDetailsSettingsActivity" />
+        <activity android:name=".activity.GroupMemberActivity" />
         <activity
             android:name=".activity.thirdlyactivity.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -143,14 +145,14 @@
         <activity android:name=".activity.ApplyForActivity" />
         <activity android:name=".activity.GroupChatActivity" />
         <activity android:name=".activity.ClusterActivity" />
-        <activity android:name=".activity.IntergralExchange"></activity>
-        <activity android:name=".activity.DredgeVip"></activity>
-        <activity android:name="com.wd.tech.activity.ChatSettingsActivity" />
-        <activity android:name="com.wd.tech.activity.CheckGroupActivity" />
+        <activity android:name=".activity.IntergralExchange" />
+        <activity android:name=".activity.DredgeVip" />
+        <activity android:name=".activity.ChatSettingsActivity" />
+        <activity android:name=".activity.CheckGroupActivity" />
+        <activity android:name=".activity.ChatSettingsActivity" />
+        <activity android:name=".activity.CheckGroupActivity" />
+        <activity android:name=".activity.IGActivity" />
 
-        <activity android:name="com.wd.tech.activity.ChatSettingsActivity"/>
-        <activity android:name="com.wd.tech.activity.CheckGroupActivity"/>
-        <activity android:name="com.wd.tech.activity.IGActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.zz.fileprovider"
@@ -162,31 +164,20 @@
         </provider>
 
         <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity" />
-        <activity android:name=".activity.IMActivity" />
-        <!-- 设置环信应用的AppKey -->
-
+        <activity android:name=".activity.IMActivity" /> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1182180123115181#weixinandqq" />
-
-        <!-- 声明SDK所需的service SDK核心功能 -->
-
+            android:value="1182180123115181#weixinandqq" /> <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
         <service
             android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 声明SDK所需的receiver -->
-
-
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
                 <data android:scheme="package" />
@@ -194,16 +185,13 @@
 
             <!-- 可选filter -->
 
-
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.CommunityUserCommentActivity"></activity>
-        <activity android:name=".face.RegisterActivity" android:launchMode="singleTask"/>
-        <activity android:name=".face.DetecterActivity" android:launchMode="singleTask"/>
+        <activity android:name=".activity.CommunityUserCommentActivity" />
     </application>
 
 </manifest>

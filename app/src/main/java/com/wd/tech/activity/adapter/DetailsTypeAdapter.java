@@ -75,4 +75,6 @@ public class DetailsTypeAdapter extends RecyclerView.Adapter<DetailsTypeAdapter.
             text=itemView.findViewById(R.id.text);
         }
     }
+
+
 }

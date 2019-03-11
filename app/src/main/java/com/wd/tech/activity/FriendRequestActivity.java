@@ -75,10 +75,10 @@ public class FriendRequestActivity extends WDActivity {
         switch (view.getId()) {
             case R.id.send:
                 String apply = applyFor.getText().toString();
-                if (TextUtils.isEmpty(apply)) {
-                    Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (TextUtils.isEmpty(apply)) {
+//                    Toast.makeText(this, "不能为空", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 addFriendPresenter.request(userId, sessionId, userId1, apply);
                 break;
             case R.id.back:

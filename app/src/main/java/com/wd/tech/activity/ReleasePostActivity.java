@@ -98,7 +98,7 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
         //发布帖子
         releasePostPresenter = new ReleasePostPresenter(new ReleasePost());
         //计算输入框数量
-        textView.setText(String.valueOf("0/400"));
+        textView.setText(String.valueOf("0/140"));
         mText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -110,8 +110,8 @@ public class ReleasePostActivity extends WDActivity implements View.OnClickListe
 
             @Override
             public void afterTextChanged(Editable s) {
-                textView.setText(String.valueOf(s.length()) + "/400");
-                if (s.length() >= 400) {
+                textView.setText(String.valueOf(s.length()) + "/140");
+                if (s.length() >= 140) {
                     Toast.makeText(ReleasePostActivity.this, "上限了，亲", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -78,7 +78,7 @@ public class CheckGroupActivity extends WDActivity {
             userId = bean.getUserId();
         }
         Intent intent = getIntent();
-        friendId = intent.getIntExtra("friendId", 0);
+        friendId = intent.getIntExtra("userId1", 0);
 
         checkGroupSmart.setEnableRefresh(true);//启用刷新
         checkGroupSmart.setEnableLoadmore(false);//启用加载
