@@ -45,6 +45,7 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.core.utils.DrawLayoutEdge;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
 import java.nio.BufferUnderflowException;
@@ -165,7 +166,7 @@ public class MainActivity extends WDActivity {
                         } else {
                             //two.setChecked(false);
                             www = 1;
-                            Toast.makeText(MainActivity.this,"请登录！",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "请登录！", Toast.LENGTH_LONG).show();
                             Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                             intent1.putExtra("id", 1);
                             startActivity(intent1);
@@ -176,6 +177,7 @@ public class MainActivity extends WDActivity {
                         break;
                     case R.id.three:
                         lll = 3;
+                        www = 0;
                         trans.show(fragment_page_three);
                         trans.hide(fragment_page_one);
                         trans.hide(fragment_page_two);
@@ -197,7 +199,6 @@ public class MainActivity extends WDActivity {
                 left.setTranslationX(-width + width * slideOffset);               //底布局跟着移动
                 right.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);   //主界面布局移动，移动长度等于抽屉的移动长度
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
             }
@@ -212,6 +213,7 @@ public class MainActivity extends WDActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
+        DrawLayoutEdge.setLeftEdgeSize(this,main_drawer_layout,0.4f);
         //列表赋值
         for (int i = 0; i < 7; i++) {
             switch (i) {
@@ -282,7 +284,6 @@ public class MainActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
             }
         });
         //点击头像跳转

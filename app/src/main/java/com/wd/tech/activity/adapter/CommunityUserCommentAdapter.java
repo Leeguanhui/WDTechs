@@ -11,8 +11,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.bean.CommunityUserCommentListBean;
+import com.wd.tech.core.utils.DateUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommunityUserCommentAdapter extends RecyclerView.Adapter<CommunityUserCommentAdapter.ViewHolder> {
@@ -33,6 +37,19 @@ public class CommunityUserCommentAdapter extends RecyclerView.Adapter<CommunityU
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        //设置发表时间
+        Date date = new Date();
+        date.setTime(list.get(i).getCommentTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(date);
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = sdf.parse(format);
+            String s = DateUtils.fromToday(d);
+            viewHolder.textView2.setText(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         viewHolder.simpleDraweeView.setImageURI(list.get(i).getHeadPic());
         viewHolder.textView1.setText(list.get(i).getNickName());
 //        viewHolder.textView2.setText(list.get(i).getCommentTime());

@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.bean.NotifiListBean;
+import com.wd.tech.core.utils.DateUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +57,14 @@ public class NofitiRecycleAdapter extends RecyclerView.Adapter<NofitiRecycleAdap
         date.setTime(notifiListBean.getCreateTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String format = sdf.format(date);
-        vh.nofiti_time.setText(format);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = df.parse(format);
+            String s = DateUtils.fromToday(d);
+            vh.nofiti_time.setText(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         vh.nofiti_content.setText(notifiListBean.getContent());
     }
 

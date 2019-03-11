@@ -11,20 +11,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="95dp"
         android:background="#F0F0F0">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
             android:text="个人设置" />
 
         <ImageView
             android:id="@+id/back_bnt"
-            android:layout_width="8dp"
-            android:layout_height="12dp"
+            android:layout_width="14dp"
+            android:layout_height="16dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:src="@drawable/common_icon_back_n" />
@@ -95,7 +96,6 @@
                     android:layout_below="@+id/view1"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:text="烤面筋"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -282,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="120"
-                    android:textColor="#999999"
+                    android:textColor="#333333"
                     android:textSize="12sp" />
 
                 <View
