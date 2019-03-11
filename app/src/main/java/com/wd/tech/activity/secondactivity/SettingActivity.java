@@ -487,10 +487,6 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.setCanceledOnTouchOutside(true);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        Window window = bottomDialog.getWindow();
-        window.requestFeature(Window.FEATURE_NO_TITLE);
-        window.setGravity(Gravity.BOTTOM); //此处可以设置dialog显示的位置
-        window.getDecorView().setPadding(0, 0, 0, 0);
         bottomDialog.show();
     }
 
