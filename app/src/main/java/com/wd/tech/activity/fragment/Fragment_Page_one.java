@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -28,6 +29,8 @@ import com.wd.tech.bean.Result;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
+import com.wd.tech.presenter.AddCollectionPresenter;
+import com.wd.tech.presenter.CancelCollectionPresenter;
 import com.wd.tech.presenter.NewsBannderPresenter;
 import com.wd.tech.presenter.ZxInformationPresenter;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -66,7 +69,11 @@ public class Fragment_Page_one extends WDFragment {
     private int userId;
     private String sessionId;
     private List<NewsBannder> result;
-
+    private AddCollectionPresenter addCollectionPresenter;
+    private CancelCollectionPresenter cancelCollectionPresenter;
+    private List<InfoRecommecndListBean> result1;
+    private int addi;
+    private int LikeNum;
     @Override
     public String getPageName() {
         return null;
@@ -100,7 +107,6 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 newsBannderPresenter.request();
-                NUM++;
                 zxInformationPresenter.request(userId, sessionId,0,NUM,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 mLayout.finishRefresh();
@@ -159,10 +165,41 @@ public class Fragment_Page_one extends WDFragment {
             }
         });
         xrecy.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
+        zxxRecyAdapter.setOnItemClickLisenter(new ZXXRecyAdapter.Collect() {
+            @Override
+            public void ok(int i, int id, int whetherCollection,int num,ImageView image,TextView textView) {
+                Log.e("qwer",i+"qqq"+id+"qqq"+whetherCollection);
+                addi = i;
+                LikeNum=num;
+                if (userInfo==null){
+                    Toast.makeText(getActivity(),"不登陆就想点？？？怎么回事小老弟",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (whetherCollection==2){
+                    // ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_n);
+                    addCollectionPresenter.request(userId,sessionId,id);
+                    result1.get(i).setWhetherCollection(1);
+                    image.setImageResource(R.mipmap.collect_s);
+                    result1.get(i).setCollection(num+1);
+                    textView.setText(String.valueOf(num+1));
+                    xrecy.notifyItemChanged(i);
+                }else{
+                    result1.get(i).setWhetherCollection(2);
+                    //((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_s);
+                    cancelCollectionPresenter.request(userId, sessionId, String.valueOf(id));
+                    image.setImageResource(R.mipmap.collect_n);
+                    result1.get(i).setCollection(num-1);
+                    textView.setText(String.valueOf(num-1));
+                   xrecy.notifyItemChanged(i);
+                    //zxxRecyAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
     private void initJK() {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
+        addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
+        cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         zxInformationPresenter = new ZxInformationPresenter(new InforMationList());
         zxInformationPresenter.request(userId, sessionId,0,NUM,10);
@@ -179,10 +216,41 @@ public class Fragment_Page_one extends WDFragment {
     @Override
     public void onResume() {
         super.onResume();
+        userInfo = getUserInfo(getContext());
+        if (userInfo!=null){
+            userId = userInfo.getUserId();
+            sessionId = userInfo.getSessionId();
+        }
+        zxxRecyAdapter.setUser(userInfo);
         zxInformationPresenter.request(userId, sessionId,0,NUM,10);
         banner.start();
     }
 
+
+    private class AddCollection implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class CancelCollectionBack implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+           Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
     private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
         @Override
         public void success(final Result<List<NewsBannder>> data) {
@@ -229,8 +297,13 @@ public class Fragment_Page_one extends WDFragment {
         @Override
         public void success(Result<List<InfoRecommecndListBean>> data) {
             newsBannderPresenter.request();
-            List<InfoRecommecndListBean> result = data.getResult();
-            zxxRecyAdapter.setList(result);
+            result1 = data.getResult();
+            if (result1.size()==0){
+                //Toast.makeText(getActivity(),"没有更多数据了",Toast.LENGTH_LONG).show();
+                return;
+            }
+            zxxRecyAdapter.setUser(userInfo);
+            zxxRecyAdapter.setList(result1);
             Log.e("aaaa", data.getResult()+"");
         }
 
