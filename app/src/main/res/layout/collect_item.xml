@@ -7,11 +7,11 @@
 
     <CheckBox
         android:id="@+id/radio"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_marginLeft="5dp"
         android:visibility="gone"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="13dp"
         android:background="@drawable/radio_selector"
         android:button="@null" />
 

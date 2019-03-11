@@ -130,8 +130,10 @@
             android:layout_toRightOf="@+id/ICON_Lock"
             android:background="@null"
             android:hint="登录密码"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="#FFFFFF"
+            android:maxLength="16"
             android:textColorHint="#FFFFFF"
             android:textSize="14sp" />
 
