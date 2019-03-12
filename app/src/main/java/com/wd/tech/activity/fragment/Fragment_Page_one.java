@@ -107,7 +107,8 @@ public class Fragment_Page_one extends WDFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 newsBannderPresenter.request();
-                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+                zxxRecyAdapter.GetList();
+                zxInformationPresenter.request(userId, sessionId,0,1,10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 mLayout.finishRefresh();
             }
@@ -122,7 +123,7 @@ public class Fragment_Page_one extends WDFragment {
                 mLayout.finishLoadmore();
             }
         });
-        xrecy.setLoadingListener(new XRecyclerView.LoadingListener() {
+        /*xrecy.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 newsBannderPresenter.request();
@@ -140,7 +141,7 @@ public class Fragment_Page_one extends WDFragment {
                 zxxRecyAdapter.notifyDataSetChanged();
                 xrecy.loadMoreComplete();
             }
-        });
+        });*/
         banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
@@ -222,7 +223,7 @@ public class Fragment_Page_one extends WDFragment {
             sessionId = userInfo.getSessionId();
         }
         zxxRecyAdapter.setUser(userInfo);
-        zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+        zxInformationPresenter.request(userId, sessionId,0,1,10);
         banner.start();
     }
 
