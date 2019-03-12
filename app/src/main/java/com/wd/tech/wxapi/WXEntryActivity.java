@@ -146,7 +146,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 LoginUserInfoBean loginUserInfoBean = (LoginUserInfoBean) result.getResult();
                 loginUserInfoBean.setStatu(1);
                 loginUserInfoBeanDao.insertOrReplace(loginUserInfoBean);
-                startActivity(new Intent(WXEntryActivity.this, MainActivity.class));
                 finish();
             }
         }

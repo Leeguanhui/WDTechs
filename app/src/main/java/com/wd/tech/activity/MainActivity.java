@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -101,6 +102,18 @@ public class MainActivity extends WDActivity {
     private int lll = 0;
     private int www = 0;
     private LoginUserInfoBean userInfo;
+    /**
+     * 点击返回按钮两次退出
+     */
+    private static boolean isExit = false;
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -199,6 +212,7 @@ public class MainActivity extends WDActivity {
                 left.setTranslationX(-width + width * slideOffset);               //底布局跟着移动
                 right.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);   //主界面布局移动，移动长度等于抽屉的移动长度
             }
+
             @Override
             public void onDrawerOpened(View drawerView) {
             }
@@ -213,7 +227,7 @@ public class MainActivity extends WDActivity {
             public void onDrawerStateChanged(int newState) {
             }
         });
-        DrawLayoutEdge.setLeftEdgeSize(this,main_drawer_layout,0.4f);
+        DrawLayoutEdge.setLeftEdgeSize(this, main_drawer_layout, 0.4f);
         //列表赋值
         for (int i = 0; i < 7; i++) {
             switch (i) {
@@ -287,6 +301,29 @@ public class MainActivity extends WDActivity {
             }
         });
         //点击头像跳转
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     //签到

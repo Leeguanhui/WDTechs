@@ -39,17 +39,16 @@ public class IMActivity extends WDActivity {
     TextView imIvQueryName;
     @BindView(R.id.im_iv_query_ziliao)
     ImageView imIvQueryZiliao;
-    private FriendInfoList friendInfoList;
     private int userId;
     private String sessionId;
-    private InitFriendListPresenter presenter;
     private FindConversationList findConversationList;
-    private FindConversationListPresenter findConversationListPresenter;
     private LoginUserInfoBean bean;
-    private String headPic;
-    private String nickName;
-    private String userName;
     private String userNames;
+    private FindConversationListPresenter findConversationListPresenter;
+    private String nickName;
+    private String headPic;
+    private long userId1;
+    private String userName;
 
     @Override
     protected int getLayoutId() {
@@ -61,20 +60,17 @@ public class IMActivity extends WDActivity {
         findConversationListPresenter = new FindConversationListPresenter(new OB());
         EaseChatFragment chatFragment = new EaseChatFragment();
         chatFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(R.id.hx_ok, chatFragment).commit();
+        Intent intent = getIntent();
         bean = getUserInfo(this);
         if (bean != null) {
             sessionId = bean.getSessionId();
             userId = bean.getUserId();
-            nickName = bean.getNickName();
-            userName = bean.getUserName();
-            headPic = bean.getHeadPic();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.hx_ok, chatFragment).commit();
-        Intent intent = getIntent();
-        friendInfoList = (FriendInfoList) intent.getSerializableExtra("friendInfoList");
         userNames = intent.getStringExtra("userNames");
 
         findConversationListPresenter.request(userId, sessionId, userNames);
+
     }
 
     @Override
@@ -82,29 +78,6 @@ public class IMActivity extends WDActivity {
 
     }
 
-    private void setEaseUser() {
-        EaseUI easeUI = EaseUI.getInstance();
-        easeUI.setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
-            @Override
-            public EaseUser getUser(String username) {
-                return getUserInfo(username);
-            }
-        });
-    }
-
-    private EaseUser getUserInfo(String username) {
-        EaseUser easeUser = new EaseUser(username);
-        if (username.equals(userName.toLowerCase())) {
-            easeUser.setNickname(nickName);
-            easeUser.setAvatar(headPic);
-        } else {
-            easeUser.setNickname(findConversationList.getNickName());
-            easeUser.setAvatar(findConversationList.getHeadPic());
-        }
-        return easeUser;
-    }
-
-    //即可正常显示头像昵称
     @OnClick({R.id.im_iv_query_finsh, R.id.im_iv_query_ziliao})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -113,34 +86,27 @@ public class IMActivity extends WDActivity {
                 break;
             case R.id.im_iv_query_ziliao:
                 Intent intent = new Intent(this, ChatSettingsActivity.class);
-                intent.putExtra("findConversationList", findConversationList);
+                intent.putExtra("userId1", userId1);
+                intent.putExtra("nickName", nickName);
+                intent.putExtra("headPic", headPic);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
                 break;
         }
     }
 
-
-    private class Qura implements ICoreInfe<Result> {
-        @Override
-        public void success(Result data) {
-            if (data.getStatus().equals("0000")) {
-
-            }
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
-
     private class OB implements ICoreInfe<Result<List<FindConversationList>>> {
+
+
         @Override
         public void success(Result<List<FindConversationList>> data) {
             if (data.getStatus().equals("0000")) {
                 findConversationList = data.getResult().get(0);
+                nickName = findConversationList.getNickName();
+                headPic = findConversationList.getHeadPic();
+                userId1 = findConversationList.getUserId();
+                userName = findConversationList.getUserName();
                 imIvQueryName.setText(findConversationList.getNickName());
-                setEaseUser();
             }
         }
 
@@ -149,4 +115,6 @@ public class IMActivity extends WDActivity {
 
         }
     }
+
+
 }

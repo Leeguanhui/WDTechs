@@ -9,6 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/fuxuankuang"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_child"
             android:layout_width="24dp"
@@ -35,8 +40,6 @@
                 android:textSize="12sp"
                 android:layout_margin="2dp"
                 android:textColor="#9c9b9b"
-                android:maxLength="6"
-                android:maxEms="6"
                 android:layout_height="wrap_content"
                 android:text="item text" />
 

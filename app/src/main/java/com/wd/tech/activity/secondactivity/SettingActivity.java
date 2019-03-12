@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hyphenate.chat.EMClient;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -170,6 +171,7 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
                 deleteUserInfo(SettingActivity.this);
                 edit.putString("mysign", "");
                 edit.commit();
+                EMClient.getInstance().logout(true);
                 finish();
             }
         });
@@ -487,10 +489,6 @@ public class SettingActivity extends WDActivity implements CustomAdapt {
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.setCanceledOnTouchOutside(true);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        Window window = bottomDialog.getWindow();
-        window.requestFeature(Window.FEATURE_NO_TITLE);
-        window.setGravity(Gravity.BOTTOM); //此处可以设置dialog显示的位置
-        window.getDecorView().setPadding(0, 0, 0, 0);
         bottomDialog.show();
     }
 
