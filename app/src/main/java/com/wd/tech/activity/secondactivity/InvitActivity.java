@@ -61,7 +61,7 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
         dialog = CircularLoading.showLoadDialog(this, "", true);
         deletePostPresnter = new DeletePostPresnter(new DeleteResult());
         findMyPostPresnter = new FindMyPostPresnter(new FindMyPostResult());
-        pop = new PopupWindow(view, (LinearLayout.LayoutParams.WRAP_CONTENT), (LinearLayout.LayoutParams.WRAP_CONTENT), false);
+        pop = new PopupWindow(view, ((LinearLayout.LayoutParams.WRAP_CONTENT)), ((LinearLayout.LayoutParams.WRAP_CONTENT)), false);
         pop.setContentView(view);
         pop.setOutsideTouchable(true);
         pop.setFocusable(true);
@@ -86,7 +86,6 @@ public class InvitActivity extends WDActivity implements CustomAdapt {
                 pop.dismiss();
             }
         });
-
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

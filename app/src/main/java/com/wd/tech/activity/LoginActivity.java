@@ -75,6 +75,7 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 startActivity(new Intent(LoginActivity.this, RegActivity.class));
             }
         });
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         //输入框不能空格
         mUserphone.addTextChangedListener(new TextWatcher() {
             @Override

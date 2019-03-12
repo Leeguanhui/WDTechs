@@ -66,16 +66,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:padding="10dp"
-        android:text="123123123213123123123123123123123123123123123123123123123123123123123123123123123123123123132123" />
+        android:layout_marginRight="10dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/community_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
