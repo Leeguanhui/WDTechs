@@ -72,10 +72,10 @@ public class FlockActivity extends WDActivity {
                     Toast.makeText(this, "群名不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(contenT)) {
-                    Toast.makeText(this, "介绍不能为空", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (TextUtils.isEmpty(contenT)) {
+//                    Toast.makeText(this, "介绍不能为空", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 if (!checkNameChese(namE)) {
                     Toast.makeText(this, "群名必须为中文", Toast.LENGTH_SHORT).show();
                     return;

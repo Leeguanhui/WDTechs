@@ -193,6 +193,7 @@ public class WDApplication extends Application {
 
             }
         });
+
     }
 
     public void setCaptureImage(Uri uri) {

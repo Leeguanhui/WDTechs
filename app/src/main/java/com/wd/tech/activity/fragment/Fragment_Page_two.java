@@ -160,7 +160,7 @@ public class Fragment_Page_two extends WDFragment {
                 startActivity(intent);
             }
         });
-        popupWindow.showAsDropDown(addition, 0, 55);
+        popupWindow.showAsDropDown(addition, 0, 35);
     }
 
 }
