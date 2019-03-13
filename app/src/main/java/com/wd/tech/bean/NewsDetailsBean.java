@@ -46,7 +46,7 @@ public class NewsDetailsBean {
         private String title;
         private int whetherCollection;
         private int whetherGreat;
-        private int yuanCost;
+        private double yuanCost;
         private List<InformationListBean> informationList;
         private List<PlateBean> plate;
 
@@ -170,11 +170,11 @@ public class NewsDetailsBean {
             this.whetherGreat = whetherGreat;
         }
 
-        public int getYuanCost() {
+        public double getYuanCost() {
             return yuanCost;
         }
 
-        public void setYuanCost(int yuanCost) {
+        public void setYuanCost(double yuanCost) {
             this.yuanCost = yuanCost;
         }
 

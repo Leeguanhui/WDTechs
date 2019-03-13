@@ -147,7 +147,6 @@ public class AddFriendlyActivity extends WDActivity {
                 intent.putExtra("userid1", userid1);
                 startActivity(intent);
                 break;
-
             case R.id.btn_r_message:
 //                if (flag == 1) {
 //                    Intent intent1 = new Intent(getApplicationContext(), IMActivity.class);

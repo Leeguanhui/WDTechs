@@ -784,4 +784,16 @@ public interface AllUrls {
                                            @Header("sessionId") String sessionId,
                                            @Field("groupId") int groupId,
                                            @Field("receiverUids") int[] receiverUids);
+    @FormUrlEncoded
+    @PUT("group/verify/v1/modifyGroupDescription")
+    Observable<Result> modifyGroupDescription(@Header("userId") int userId,
+                                              @Header("sessionId") String sessionId,
+                                              @Field("groupId") int groupId,
+                                              @Field("description")String description);
+    @FormUrlEncoded
+    @POST("group/verify/v1/uploadGroupHeadPic")
+    Observable<Result> uploadGroupHeadPic(@Header("userId") int userId,
+                                          @Header("sessionId") String sessionId,
+                                          @Field("groupId") int groupId,
+                                          @Body MultipartBody body);
 }

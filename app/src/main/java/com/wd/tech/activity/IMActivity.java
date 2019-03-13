@@ -71,7 +71,6 @@ public class IMActivity extends WDActivity {
 
         findConversationListPresenter.request(userId, sessionId, userNames);
 
-//        imIvQueryName.setText(friendInfoList.getRemarkName());
     }
 
     @Override
@@ -90,7 +89,6 @@ public class IMActivity extends WDActivity {
                 intent.putExtra("userId1", userId1);
                 intent.putExtra("nickName", nickName);
                 intent.putExtra("headPic", headPic);
-                intent.putExtra("userName", userName);
                 intent.putExtra("userName", userName);
                 startActivity(intent);
                 break;

@@ -68,19 +68,27 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (list.size() > 0) {
             userInfoBean = list.get(0);
         }
-        switch (resp.getType()) {
-            case ConstantsAPI.COMMAND_SENDAUTH:
-                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {//用户同意
+        if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){//分享
+            Log.i("ansen","微信分享操作.....");
+            Log.e("qw","123");
+//            WeiXin weiXin=new WeiXin(2,resp.errCode,"");
+//            EventBus.getDefault().post(weiXin);
+            finish();
+        }else if(resp.getType()==ConstantsAPI.COMMAND_SENDAUTH){
+            Log.e("qw","321");
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
                     final String code = ((SendAuth.Resp) resp).code;
                     int type = SettingActivity.getType();
                     int type1 = TaskActivity.getType();
-
+                    Log.e("qw","1");
                     if (type == 2 || type1 == 2) {
                         if (userInfoBean != null) {
                             BindWeChatPresenter bindWeChatPresenter = new BindWeChatPresenter(new WeChatBindResult());
                             bindWeChatPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), code);
                         }
                     } else {
+                        Log.e("qw","2");
                         try {
                             String versionName = getVersionName(WXEntryActivity.this);
                             WeChatLoginPresenter weChatLoginPresenter = new WeChatLoginPresenter(new WeChatLoginResult());
@@ -89,6 +97,21 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                             e.printStackTrace();
                         }
                     }
+                    break;
+                case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX:
+                    // 只是做了简单的finish操作
+                    finish();
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        /*switch (resp.getType()) {
+            case ConstantsAPI.COMMAND_SENDAUTH:
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {//用户同意
+
                 } else {
                     Log.e("LKing", "授权登录失败\n\n自动返回");
                     finish();
@@ -102,7 +125,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             }
             default:
                 break;
-        }
+        }*/
     }
 
     @Override
