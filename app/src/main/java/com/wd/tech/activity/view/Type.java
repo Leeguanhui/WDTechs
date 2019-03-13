@@ -45,13 +45,6 @@ public class Type extends WDActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     private class AllType implements ICoreInfe<Result<List<TypeBean>>> {
         @Override
         public void success(Result<List<TypeBean>> data) {
