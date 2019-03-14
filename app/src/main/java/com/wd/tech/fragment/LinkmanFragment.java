@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,6 +35,7 @@ import com.wd.tech.bean.FriendInfoList;
 import com.wd.tech.bean.InitFriendlist;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.Result;
+import com.wd.tech.core.FileSaveUtills;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
@@ -46,6 +49,7 @@ import com.wd.tech.presenter.FindConversationListPresenter;
 import com.wd.tech.presenter.InitFriendListPresenter;
 import com.wd.tech.presenter.TransferFriendGroupPresenter;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.BindView;
@@ -353,6 +357,9 @@ public class LinkmanFragment extends WDFragment {
                     }
                 }
                 substring = userHxIds.substring(0, userHxIds.length() - 1);
+                String s = new Gson().toJson(groupS);
+                FileSaveUtills.saveDataToFile(getContext(), s, "initfriendslist");
+
                 findConversationListPresenter.request(userId, sessionId, substring);
 
                 pullToRefreshScrollView.finishRefresh();
@@ -362,7 +369,17 @@ public class LinkmanFragment extends WDFragment {
 
         @Override
         public void fail(ApiException e) {
+            String initfriendslist = FileSaveUtills.loadDataFromFile(getContext(), "initfriendslist");
+            if (initfriendslist != null) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<InitFriendlist>>() {
+                }.getType();
+                groupS = gson.fromJson(initfriendslist, type);
 
+                exPandableListview.setAdapter(new MyExpandableListView());
+
+
+            }
         }
     }
 

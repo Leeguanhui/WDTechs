@@ -57,6 +57,12 @@ public class ClusterActivity extends WDActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        findGroupsByUserIdPresenter.request(userId, sessionId);
+    }
+
+    @Override
     protected void initView(Bundle savedInstanceState) {
         LoginUserInfoBean infoBean = getUserInfo(this);
         findGroupsByUserIdPresenter = new FindGroupsByUserIdPresenter(new GroupFind());

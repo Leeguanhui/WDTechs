@@ -141,7 +141,7 @@ public class Fragment_Page_two extends WDFragment {
     public void onViewClicked() {
         View view = View.inflate(getContext(), R.layout.append_popwind, null);
         popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setTouchable(true);
+        popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setOutsideTouchable(true);
         TextView text_you = view.findViewById(R.id.text_you);

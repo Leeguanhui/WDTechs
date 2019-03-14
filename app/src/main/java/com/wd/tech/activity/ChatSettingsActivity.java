@@ -65,7 +65,7 @@ public class ChatSettingsActivity extends WDActivity {
     private ModifyFriendRemarkPresenter modiftSignaturePresenter;
     private int friendUid;
     private String remarkName;
-    private String userId1;
+    private int userId1;
     private String nickName;
     private String headPic;
     private String userName;
@@ -83,7 +83,7 @@ public class ChatSettingsActivity extends WDActivity {
         modiftSignaturePresenter = new ModifyFriendRemarkPresenter(new Modif());
 
         Intent intent = getIntent();
-        userId1 = intent.getStringExtra("userId1");
+        userId1 = intent.getIntExtra("userId1",0);
         nickName = intent.getStringExtra("nickName");
         headPic = intent.getStringExtra("headPic");
         userName = intent.getStringExtra("userName");
