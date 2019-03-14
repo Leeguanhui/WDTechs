@@ -198,7 +198,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
     private class LoginResult implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 LoginUserInfoBean result = (LoginUserInfoBean) data.getResult();
                 DaoSession daoSession = DaoMaster.newDevSession(LoginActivity.this, LoginUserInfoBeanDao.TABLENAME);
@@ -243,6 +242,8 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 finish();
                 CircularLoading.closeDialog(dialog);
 
+            }else{
+                Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         }

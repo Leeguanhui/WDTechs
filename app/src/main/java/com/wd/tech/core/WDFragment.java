@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.greendao.DaoMaster;
 import com.wd.tech.greendao.DaoSession;
@@ -47,7 +50,7 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         AutoSizeConfig.getInstance().setCustomFragment(true);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //沉浸式状态栏
@@ -59,11 +62,12 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
         }
         // 每次ViewPager要展示该页面时，均会调用该方法获取显示的View
         long time = System.currentTimeMillis();
-        View view = inflater.inflate(getLayoutId(),container,false);
-        unbinder = ButterKnife.bind(this,view);
+        View view = inflater.inflate(getLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this, view);
         initView();
         return view;
     }
+
     /**
      * 数据库
      */
@@ -87,6 +91,22 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
         LoginUserInfoBeanDao loginUserInfoBeanDao = daoSession.getLoginUserInfoBeanDao();
         loginUserInfoBeanDao.deleteAll();
     }
+
+    /**
+     * 提示请先登录
+     */
+
+    public void notLogin(View view) {
+        Snackbar.make(view, "请先登录", Snackbar.LENGTH_SHORT)
+                .setAction("立即登录", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getContext(), LoginActivity.class));
+                    }
+                })
+                .show();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -109,16 +129,20 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
             }
         });
     }
+
     //取消操作：请求或者其他
     public void cancelLoadDialog() {
 
     }
+
     /**
      * 设置页面名字 用于友盟统计
      */
     public abstract String getPageName();
+
     /**
      * 设置layoutId
+     *
      * @return
      */
     protected abstract int getLayoutId();
@@ -127,6 +151,7 @@ public abstract class WDFragment extends Fragment implements CustomAdapt {
      * 初始化视图
      */
     protected abstract void initView();
+
     @Override
     public boolean isBaseOnWidth() {
         return false;

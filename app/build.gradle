@@ -87,4 +87,5 @@ dependencies {
     //支付宝
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
     implementation 'com.yanzhenjie:recyclerview-swipe:1.2.3'
+    implementation 'com.android.support:design:23.4.0'
 }
