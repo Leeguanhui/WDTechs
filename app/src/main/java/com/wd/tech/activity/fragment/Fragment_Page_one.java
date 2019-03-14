@@ -2,6 +2,7 @@ package com.wd.tech.activity.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -154,7 +155,13 @@ public class Fragment_Page_one extends WDFragment {
                 }else{
                     Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
                     intent.putExtra("id",result.get(i).getJumpUrl());
+                    Log.e("网址",result.get(i).getJumpUrl());
                     startActivity(intent);
+                    /*Intent intent= new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(result.get(i).getJumpUrl());
+                    intent.setData(content_url);
+                    startActivity(intent);*/
                 }
 
             }

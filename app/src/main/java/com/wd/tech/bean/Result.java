@@ -24,6 +24,33 @@ public class Result <T> {
     private String timeStamp;
     private String packageValue;
     String faceId;
+    private int prizeId;
+    private String prizeName;
+    private String prizePic;
+
+    public int getPrizeId() {
+        return prizeId;
+    }
+
+    public void setPrizeId(int prizeId) {
+        this.prizeId = prizeId;
+    }
+
+    public String getPrizeName() {
+        return prizeName;
+    }
+
+    public void setPrizeName(String prizeName) {
+        this.prizeName = prizeName;
+    }
+
+    public String getPrizePic() {
+        return prizePic;
+    }
+
+    public void setPrizePic(String prizePic) {
+        this.prizePic = prizePic;
+    }
 
     public int getBindStatus() {
         return bindStatus;

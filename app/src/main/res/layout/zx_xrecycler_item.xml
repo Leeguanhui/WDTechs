@@ -106,7 +106,7 @@
             android:id="@+id/like"
             android:src="@mipmap/collect_s"
             android:layout_below="@id/content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             />
         <TextView
             android:layout_width="30dp"

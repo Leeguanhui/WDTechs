@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +20,7 @@ import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDActivity;
 import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.presenter.DoTheTaskPresenter;
+import com.wd.tech.presenter.Raffle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,7 @@ public class InfoAdvertisingVo extends WDActivity {
     ProgressBar prog;
     private DoTheTaskPresenter doTheTaskPresenter;
     private LoginUserInfoBean userInfo;
+    private Raffle raffle;
 
     @Override
     protected int getLayoutId() {
@@ -38,7 +41,11 @@ public class InfoAdvertisingVo extends WDActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //raffle = new Raffle(new RaffleCallBack());
         userInfo = getUserInfo(this);
+        /*if(userInfo!=null){
+            raffle.request(userInfo.getUserId(),userInfo.getSessionId());
+        }*/
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         doTheTaskPresenter = new DoTheTaskPresenter(new DoTheResult());
@@ -69,6 +76,7 @@ public class InfoAdvertisingVo extends WDActivity {
         webview.setVerticalScrollbarOverlay(true);
         /* 设置滚动条的样式 */
         webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webview.addJavascriptInterface(new JsInteration(), "btnStart");
         /* 这个不用说了,重写WebChromeClient监听网页加载的进度,从而实现进度条 */
         webview.setWebChromeClient(new WebChromeClient() {
 
@@ -118,6 +126,7 @@ public class InfoAdvertisingVo extends WDActivity {
         }
     }
 
+
     @Override
     protected void destoryData() {
 
@@ -137,6 +146,34 @@ public class InfoAdvertisingVo extends WDActivity {
         @Override
         public void success(Result result) {
 
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+    /**
+     * js调用android的方法
+     */
+    class JsInteration {
+        @JavascriptInterface
+        public void toastMessage(String message) {
+            //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "评价成功", Toast.LENGTH_LONG).show();
+            // startActivity(new Intent(DetailsActivity.this, MainActivity.class));
+        }
+
+        @JavascriptInterface
+        public void onSumResult(int result) {
+            Toast.makeText(getApplicationContext(), "我是android调用js方法(4.4前)，入参是1和2，js返回结果是" + result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class RaffleCallBack implements ICoreInfe<Result> {
+        @Override
+        public void success(Result data) {
+             Toast.makeText(InfoAdvertisingVo.this,data.getPrizeName(),Toast.LENGTH_LONG).show();
         }
 
         @Override
