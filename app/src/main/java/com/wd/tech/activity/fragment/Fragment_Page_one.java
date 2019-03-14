@@ -2,6 +2,7 @@ package com.wd.tech.activity.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wd.tech.R;
+import com.wd.tech.activity.LoginActivity;
 import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.thirdlyactivity.SearchActivity;
@@ -61,7 +63,7 @@ public class Fragment_Page_one extends WDFragment {
     private List<String> mItitles;
     private ZXXRecyAdapter zxxRecyAdapter;
     private ZxInformationPresenter zxInformationPresenter;
-    private int NUM=1;
+    private int NUM = 1;
     private MZBannerView banner;
     private SimpleDraweeView mImageView;
     private TextView title;
@@ -74,6 +76,7 @@ public class Fragment_Page_one extends WDFragment {
     private List<InfoRecommecndListBean> result1;
     private int addi;
     private int LikeNum;
+
     @Override
     public String getPageName() {
         return null;
@@ -87,7 +90,7 @@ public class Fragment_Page_one extends WDFragment {
     @Override
     protected void initView() {
         userInfo = getUserInfo(getContext());
-        if (userInfo!=null){
+        if (userInfo != null) {
             userId = userInfo.getUserId();
             sessionId = userInfo.getSessionId();
         }
@@ -108,7 +111,7 @@ public class Fragment_Page_one extends WDFragment {
             public void onRefresh(RefreshLayout refreshlayout) {
                 newsBannderPresenter.request();
                 zxxRecyAdapter.GetList();
-                zxInformationPresenter.request(userId, sessionId,0,1,10);
+                zxInformationPresenter.request(userId, sessionId, 0, 1, 10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 mLayout.finishRefresh();
             }
@@ -118,7 +121,7 @@ public class Fragment_Page_one extends WDFragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 newsBannderPresenter.request();
                 NUM++;
-                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
+                zxInformationPresenter.request(userId, sessionId, 0, NUM, 10);
                 zxxRecyAdapter.notifyDataSetChanged();
                 mLayout.finishLoadmore();
             }
@@ -147,13 +150,13 @@ public class Fragment_Page_one extends WDFragment {
             public void onPageClick(View view, int i) {
                 String jumpUrl = result.get(i).getJumpUrl();
                 String[] split = jumpUrl.split(":");
-                if (split[0].equals("wd")){
-                    Intent intent = new Intent(getActivity(),NewsDetails.class);
-                    intent.putExtra("id",1);
+                if (split[0].equals("wd")) {
+                    Intent intent = new Intent(getActivity(), NewsDetails.class);
+                    intent.putExtra("id", 1);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(getActivity(),InfoAdvertisingVo.class);
-                    intent.putExtra("id",result.get(i).getJumpUrl());
+                } else {
+                    Intent intent = new Intent(getActivity(), InfoAdvertisingVo.class);
+                    intent.putExtra("id", result.get(i).getJumpUrl());
                     startActivity(intent);
                 }
 
@@ -162,68 +165,69 @@ public class Fragment_Page_one extends WDFragment {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Type.class));
+                startActivity(new Intent(getActivity(), Type.class));
             }
         });
         xrecy.setOverScrollMode(View.OVER_SCROLL_NEVER);
         zxxRecyAdapter.setOnItemClickLisenter(new ZXXRecyAdapter.Collect() {
             @Override
-            public void ok(int i, int id, int whetherCollection,int num,ImageView image,TextView textView) {
-                Log.e("qwer",i+"qqq"+id+"qqq"+whetherCollection);
+            public void ok(int i, int id, int whetherCollection, int num, ImageView image, TextView textView) {
+                Log.e("qwer", i + "qqq" + id + "qqq" + whetherCollection);
                 addi = i;
-                LikeNum=num;
-                if (userInfo==null){
-                    Toast.makeText(getActivity(),"不登陆就想点？？？怎么回事小老弟",Toast.LENGTH_LONG).show();
+                LikeNum = num;
+                if (userInfo == null) {
+                    notLogin(xrecy);
                     return;
                 }
-                if (whetherCollection==2){
+                if (whetherCollection == 2) {
                     // ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_n);
-                    addCollectionPresenter.request(userId,sessionId,id);
+                    addCollectionPresenter.request(userId, sessionId, id);
                     result1.get(i).setWhetherCollection(1);
                     image.setImageResource(R.mipmap.collect_s);
-                    result1.get(i).setCollection(num+1);
-                    textView.setText(String.valueOf(num+1));
+                    result1.get(i).setCollection(num + 1);
+                    textView.setText(String.valueOf(num + 1));
                     xrecy.notifyItemChanged(i);
-                }else{
+                } else {
                     result1.get(i).setWhetherCollection(2);
                     //((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_s);
                     cancelCollectionPresenter.request(userId, sessionId, String.valueOf(id));
                     image.setImageResource(R.mipmap.collect_n);
-                    result1.get(i).setCollection(num-1);
-                    textView.setText(String.valueOf(num-1));
-                   xrecy.notifyItemChanged(i);
+                    result1.get(i).setCollection(num - 1);
+                    textView.setText(String.valueOf(num - 1));
+                    xrecy.notifyItemChanged(i);
                     //zxxRecyAdapter.notifyDataSetChanged();
                 }
             }
         });
     }
+
     private void initJK() {
         zxxRecyAdapter = new ZXXRecyAdapter(getActivity());
         addCollectionPresenter = new AddCollectionPresenter(new AddCollection());
         cancelCollectionPresenter = new CancelCollectionPresenter(new CancelCollectionBack());
         newsBannderPresenter = new NewsBannderPresenter(new Bannder());
         zxInformationPresenter = new ZxInformationPresenter(new InforMationList());
-        zxInformationPresenter.request(userId, sessionId,0,NUM,10);
-
+        zxInformationPresenter.request(userId, sessionId, 0, NUM, 10);
     }
 
     /**
      * 搜索
      */
     @OnClick(R.id.search)
-    public void search(){
-        startActivity(new Intent(getContext(),SearchActivity.class));
+    public void search() {
+        startActivity(new Intent(getContext(), SearchActivity.class));
     }
+
     @Override
     public void onResume() {
         super.onResume();
         userInfo = getUserInfo(getContext());
-        if (userInfo!=null){
+        if (userInfo != null) {
             userId = userInfo.getUserId();
             sessionId = userInfo.getSessionId();
         }
         zxxRecyAdapter.setUser(userInfo);
-        zxInformationPresenter.request(userId, sessionId,0,1,10);
+        zxInformationPresenter.request(userId, sessionId, 0, 1, 10);
         banner.start();
     }
 
@@ -243,7 +247,7 @@ public class Fragment_Page_one extends WDFragment {
     private class CancelCollectionBack implements ICoreInfe<Result> {
         @Override
         public void success(Result data) {
-           Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_LONG).show();
 
         }
 
@@ -252,6 +256,7 @@ public class Fragment_Page_one extends WDFragment {
 
         }
     }
+
     private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
         @Override
         public void success(final Result<List<NewsBannder>> data) {
@@ -263,15 +268,15 @@ public class Fragment_Page_one extends WDFragment {
                 mItitles.add(result.get(i).getTitle());
             }
             banner.setIndicatorVisible(false);
-            banner.setPages(mImages,new MZHolderCreator(){
+            banner.setPages(mImages, new MZHolderCreator() {
                 @Override
                 public MZViewHolder createViewHolder() {
                     return new MZViewHolder() {
                         @Override
                         public View createView(Context context) {
-                            View view = LayoutInflater.from(context).inflate(R.layout.banner_item,null);
+                            View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
                             mImageView = view.findViewById(R.id.simple);
-                            title=view.findViewById(R.id.title);
+                            title = view.findViewById(R.id.title);
                             return view;
                         }
 
@@ -299,13 +304,13 @@ public class Fragment_Page_one extends WDFragment {
         public void success(Result<List<InfoRecommecndListBean>> data) {
             newsBannderPresenter.request();
             result1 = data.getResult();
-            if (result1.size()==0){
+            if (result1.size() == 0) {
                 //Toast.makeText(getActivity(),"没有更多数据了",Toast.LENGTH_LONG).show();
                 return;
             }
             zxxRecyAdapter.setUser(userInfo);
             zxxRecyAdapter.setList(result1);
-            Log.e("aaaa", data.getResult()+"");
+            Log.e("aaaa", data.getResult() + "");
         }
 
         @Override
