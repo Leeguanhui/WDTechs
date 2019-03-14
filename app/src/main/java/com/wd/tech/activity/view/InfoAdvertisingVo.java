@@ -113,7 +113,9 @@ public class InfoAdvertisingVo extends WDActivity {
 
         });
         webview.loadUrl(id);
-        //doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1005);
+        if(userInfo!=null){
+            doTheTaskPresenter.request(userInfo.getUserId(), userInfo.getSessionId(), 1005);
+        }
     }
 
     @Override

@@ -66,7 +66,6 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     TextView mXinxitext;
     @BindView(R.id.weixin_text)
     TextView mWeixintext;
-    private Dialog dialog;
     private IWXAPI mWechatApi;
     static int type = 1;
 
@@ -86,7 +85,6 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
     public void onResume() {
         super.onResume();
         findUserTaskListPresenter.request(userInfo.getUserId(), userInfo.getSessionId());
-        dialog = CircularLoading.showLoadDialog(TaskActivity.this, "加载中...", true);
     }
 
     @OnClick(R.id.sign_bnt)
@@ -263,7 +261,6 @@ public class TaskActivity extends WDActivity implements CustomAdapt {
                         break;
                 }
             }
-            CircularLoading.closeDialog(dialog);
             mTasklinear.setVisibility(View.VISIBLE);
         }
 

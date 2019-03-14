@@ -75,7 +75,6 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
                 startActivity(new Intent(LoginActivity.this, RegActivity.class));
             }
         });
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         //输入框不能空格
         mUserphone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -144,20 +143,16 @@ public class LoginActivity extends WDActivity implements CustomAdapt {
 
     @OnClick(R.id.face_btn)
     public void mFaceBtn() {
-        if (((WDApplication) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
-        } else {
-            new AlertDialog.Builder(LoginActivity.this)
-                    .setTitle("请选择相机")
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startDetector(which);
-                        }
-                    })
-                    .show();
-        }
+        new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("请选择相机")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setItems(new String[]{"后置相机", "前置相机"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startDetector(which);
+                    }
+                })
+                .show();
     }
 
     @OnClick(R.id.login_btn)
