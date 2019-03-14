@@ -799,4 +799,10 @@ public interface AllUrls {
                                           @Header("sessionId") String sessionId,
                                           @Query("groupId") int groupId,
                                           @Body MultipartBody body);
+
+
+    @POST("techApi/tool/verify/v1/lottery")
+    Observable<Result> Lottery(@Header("userId") int userId,
+                                          @Header("sessionId") String sessionId
+                                          );
 }

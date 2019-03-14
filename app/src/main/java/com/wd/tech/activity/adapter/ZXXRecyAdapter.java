@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,7 +90,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
                 ((ListViewHolder) viewHolder).like.setImageResource(R.mipmap.collect_s);
             }
 
-            ((ListViewHolder) viewHolder).like.setOnClickListener(new View.OnClickListener() {
+            ((ListViewHolder) viewHolder).ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         ClickCollect.ok(i,list.get(i).getId(),whetherCollection,list.get(i).getCollection(),((ListViewHolder) viewHolder).like,((ListViewHolder) viewHolder).likenum);
@@ -101,7 +102,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             ((ListViewHolder) viewHolder).writer.setText(list.get(i).getSource());
             String time = TimeUtils.getDescriptionTimeFromTimestamp(list.get(i).getReleaseTime());
             ((ListViewHolder) viewHolder).data.setText(time);
-            ((ListViewHolder) viewHolder).sharewith.setOnClickListener(new View.OnClickListener() {
+            ((ListViewHolder) viewHolder).ss.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     View inflate = View.inflate(context, R.layout.share, null);
@@ -122,6 +123,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
                         @Override
                         public void onClick(View v) {
                             wechatShare(i);
+                            dialog.dismiss();
                         }
                     });
                 }
@@ -171,7 +173,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = msg;
-        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
         api.sendReq(req);
     }
     @Override
@@ -191,10 +193,13 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
 
     public void setList(List<InfoRecommecndListBean> result) {
         if (result!=null){
-            this.list.clear();
             this.list.addAll(result);
             notifyDataSetChanged();
         }
+    }
+    public void GetList(){
+        this.list.clear();
+        notifyDataSetChanged();
     }
 
     public void setUser(LoginUserInfoBean userInfo) {
@@ -206,6 +211,7 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
         SimpleDraweeView simple;
         TextView title,content,writer,data,share,likenum;
         ImageView like,sharewith;
+        LinearLayout ss,ll;
         public ListViewHolder(View view) {
             super(view);
             simple=view.findViewById(R.id.simple);
@@ -217,6 +223,8 @@ public class ZXXRecyAdapter extends XRecyclerView.Adapter{
             likenum=view.findViewById(R.id.likenum);
             like=view.findViewById(R.id.like);
             sharewith=view.findViewById(R.id.sharewith);
+            ss=view.findViewById(R.id.ss);
+            ll=view.findViewById(R.id.ll);
         }
     }
 

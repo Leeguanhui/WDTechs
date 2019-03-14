@@ -102,12 +102,6 @@ public class SearchType extends WDActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        zxInformationPresenter.request(userId,sessionId,id,num,10);
-    }
-
     private class Information implements ICoreInfe<Result<List<InfoRecommecndListBean>>> {
 
         @Override

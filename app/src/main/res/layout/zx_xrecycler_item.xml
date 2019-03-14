@@ -60,51 +60,66 @@
         android:layout_marginTop="2dp"
         android:layout_marginLeft="10dp"
         />
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/share"
-        android:text="1111"
-        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
         android:layout_below="@id/content"
         android:layout_marginTop="18dp"
-        android:textColor="#666666"
-        android:textSize="10sp"
         android:paddingRight="12dp"
-        />
-    <ImageView
-        android:layout_width="12dp"
-        android:layout_height="11dp"
-        android:id="@+id/sharewith"
-        android:src="@mipmap/collect"
-        android:layout_toLeftOf="@id/share"
-        android:layout_below="@id/content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="6dp"
-        />
-    <TextView
-        android:layout_width="30dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/ss"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/share"
+            android:text="1111"
+            android:layout_below="@id/content"
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:paddingRight="12dp"
+            />
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="11dp"
+            android:id="@+id/sharewith"
+            android:src="@mipmap/collect"
+            android:layout_toLeftOf="@id/share"
+            android:layout_below="@id/content"
+            android:layout_marginRight="6dp"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/likenum"
-        android:text="1111"
-        android:maxLength="2"
-        android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@id/sharewith"
+        android:orientation="horizontal"
+        android:layout_toLeftOf="@id/ss"
+        android:id="@+id/ll"
         android:layout_below="@id/content"
         android:layout_marginTop="18dp"
-        android:paddingRight="10dp"
-        android:textColor="#666666"
-        android:textSize="10sp" />
-    <ImageView
-        android:layout_width="12dp"
-        android:layout_height="11dp"
-        android:id="@+id/like"
-        android:src="@mipmap/collect_s"
-        android:layout_toLeftOf="@id/likenum"
-        android:layout_below="@id/content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        />
+        >
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="11dp"
+            android:id="@+id/like"
+            android:src="@mipmap/collect_s"
+            android:layout_below="@id/content"
+            android:layout_marginRight="5dp"
+            />
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/likenum"
+            android:text="1111"
+            android:maxLength="2"
+            android:layout_centerHorizontal="true"
+            android:paddingRight="10dp"
+            android:textColor="#666666"
+            android:textSize="10sp" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

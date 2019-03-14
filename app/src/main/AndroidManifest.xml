@@ -149,8 +149,6 @@
         <activity android:name=".activity.DredgeVip" />
         <activity android:name=".activity.ChatSettingsActivity" />
         <activity android:name=".activity.CheckGroupActivity" />
-        <activity android:name=".activity.ChatSettingsActivity" />
-        <activity android:name=".activity.CheckGroupActivity" />
         <activity android:name=".activity.IGActivity" />
         <activity android:name="com.wd.tech.activity.GroupIntroduceActivity"/>
         <provider
@@ -192,6 +190,8 @@
         </receiver>
 
         <activity android:name=".activity.CommunityUserCommentActivity" />
+        <activity android:name=".face.DetecterActivity"/>
+        <activity android:name=".face.RegisterActivity"/>
     </application>
 
 </manifest>

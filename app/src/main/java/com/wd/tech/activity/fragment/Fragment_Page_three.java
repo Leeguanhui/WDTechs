@@ -137,9 +137,9 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             @Override
             public void addCommunityComment(int id, ImageView communityIv) {
                 ids = id;
-                if (userInfo!=null){
+                if (userInfo != null) {
                     show(pl);
-                }else {
+                } else {
                     Toast.makeText(getContext(), "请先登录！！！", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -274,7 +274,7 @@ public class Fragment_Page_three extends WDFragment implements CustomAdapt {
             editText.setText(null);
             communityListAdapter.removeAll();
             communityListPresenter.request(userId, sessionId, 1, 1000);
-            doTheTaskPresenter.request(userId, sessionId, 1000);
+            doTheTaskPresenter.request(userId, sessionId, 1002);
         }
 
         @Override
