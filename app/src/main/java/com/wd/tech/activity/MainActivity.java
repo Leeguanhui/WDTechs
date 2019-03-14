@@ -5,10 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
@@ -49,12 +46,10 @@ import com.wd.tech.core.exception.ApiException;
 import com.wd.tech.core.utils.DrawLayoutEdge;
 import com.wd.tech.presenter.ByIdUserInfoPresenter;
 
-import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends WDActivity {
@@ -99,7 +94,7 @@ public class MainActivity extends WDActivity {
     private int comment;
     @BindView(R.id.vip_btn)
     ImageView vip_btn;
-    private int lll = 0;
+    private int lll = 1;
     private int www = 0;
     private LoginUserInfoBean userInfo;
     /**
