@@ -3,13 +3,20 @@ package com.wd.tech.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.wd.tech.R;
 import com.wd.tech.activity.adapter.MyImageAdapter;
 import com.wd.tech.activity.view.PhotoViewPager;
 import com.wd.tech.core.WDActivity;
 
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,6 +33,9 @@ public class ImageActivity extends WDActivity implements CustomAdapt {
     TextView mTvImageCount;
     //    private TextView mTvSaveImage;
     private List<String> Urls;
+    @BindView(R.id.relat)
+    RelativeLayout relativeLayout;
+    private List<LocalMedia> localMedia;
 
     @Override
     protected int getLayoutId() {

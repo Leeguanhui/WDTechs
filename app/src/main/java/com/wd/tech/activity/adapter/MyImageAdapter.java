@@ -1,5 +1,6 @@
 package com.wd.tech.activity.adapter;
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,7 +9,12 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.wd.tech.activity.ImageActivity;
 
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyImageAdapter extends PagerAdapter {
@@ -22,7 +28,7 @@ public class MyImageAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         String url = imageUrls.get(position);
         PhotoView photoView = new PhotoView(activity);
         Glide.with(activity)

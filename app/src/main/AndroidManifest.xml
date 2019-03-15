@@ -155,12 +155,12 @@
         <activity android:name="com.wd.tech.activity.GroupIntroduceActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.zz.fileprovider"
+            android:authorities="com.yechaoa.pictureselectordemo.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
         <activity android:name=".activity.thirdlyactivity.UpdatePwdActivity" />
