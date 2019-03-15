@@ -19,6 +19,11 @@ import butterknife.BindView;
 public class MessageFragment extends WDFragment {
 
 
+
+
+
+
+    
     @BindView(R.id.search_edit)
     EditText searchEdit;
     @BindView(R.id.search_image)
