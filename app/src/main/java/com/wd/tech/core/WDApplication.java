@@ -91,7 +91,7 @@ public class WDApplication extends Application {
         mMainThread = Thread.currentThread();
         mMainThreadHandler = new Handler();
         mMainLooper = getMainLooper();
-        sharedPreferences = getSharedPreferences("share.xml", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("share", MODE_PRIVATE);
         File file = new File(Environment.getExternalStorageDirectory() + File.separator + "frescocache");
         Fresco.initialize(this, ImagePipelineConfig.newBuilder(this).
                 setMainDiskCacheConfig(

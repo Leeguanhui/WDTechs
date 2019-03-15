@@ -1,6 +1,6 @@
 package com.wd.tech.core;
 
-import com.wd.tech.activity.view.Type;
+
 import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.AttUserListBean;
 import com.wd.tech.bean.ByIdUserInfoBean;
@@ -486,6 +486,7 @@ public interface AllUrls {
      * @param friendUid
      * @return
      */
+    @FormUrlEncoded
     @DELETE("chat/verify/v1/deleteFriendRelation")
     Observable<Result> deleteFriendRelation(@Header("userId") int userId,
                                             @Header("sessionId") String sessionId,
@@ -790,10 +791,18 @@ public interface AllUrls {
                                               @Header("sessionId") String sessionId,
                                               @Field("groupId") int groupId,
                                               @Field("description")String description);
-    @FormUrlEncoded
+
+
+    //上传群头像
     @POST("group/verify/v1/uploadGroupHeadPic")
     Observable<Result> uploadGroupHeadPic(@Header("userId") int userId,
                                           @Header("sessionId") String sessionId,
-                                          @Field("groupId") int groupId,
+                                          @Query("groupId") int groupId,
                                           @Body MultipartBody body);
+
+
+    @POST("techApi/tool/verify/v1/lottery")
+    Observable<Result> Lottery(@Header("userId") int userId,
+                                          @Header("sessionId") String sessionId
+                                          );
 }

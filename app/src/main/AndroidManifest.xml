@@ -112,7 +112,7 @@
             android:name=".activity.secondactivity.UpdateMessageActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.view.Type"
+            android:name=".activity.view.ZXType"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.NewFriendsActivity"
@@ -147,8 +147,6 @@
         <activity android:name=".activity.ClusterActivity" />
         <activity android:name=".activity.IntergralExchange" />
         <activity android:name=".activity.DredgeVip" />
-        <activity android:name=".activity.ChatSettingsActivity" />
-        <activity android:name=".activity.CheckGroupActivity" />
         <activity android:name=".activity.ChatSettingsActivity" />
         <activity android:name=".activity.CheckGroupActivity" />
         <activity android:name=".activity.IGActivity" />
@@ -192,6 +190,8 @@
         </receiver>
 
         <activity android:name=".activity.CommunityUserCommentActivity" />
+        <activity android:name=".face.DetecterActivity"/>
+        <activity android:name=".face.RegisterActivity"/>
     </application>
 
 </manifest>

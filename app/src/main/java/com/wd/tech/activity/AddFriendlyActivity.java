@@ -148,11 +148,11 @@ public class AddFriendlyActivity extends WDActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_r_message:
-//                if (flag == 1) {
-//                    Intent intent1 = new Intent(getApplicationContext(), IMActivity.class);
+                if (flag == 1) {
+                    Intent intent1 = new Intent(getApplicationContext(), IMActivity.class);
 //                    intent1.putExtra("userNames", nickName);
-//                    startActivity(intent1);
-//                }
+                    startActivity(intent1);
+                }
                 break;
         }
 

@@ -70,6 +70,17 @@
         android:layout_alignParentRight="true"
         android:id="@+id/ss"
         >
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="11dp"
+            android:id="@+id/sharewith"
+            android:src="@mipmap/collect"
+            android:layout_marginTop="2dp"
+            android:layout_toLeftOf="@id/share"
+            android:layout_below="@id/content"
+            android:layout_marginRight="6dp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,19 +88,10 @@
             android:text="1111"
             android:layout_below="@id/content"
             android:textColor="#666666"
+            android:layout_marginTop="1dp"
             android:textSize="10sp"
             android:paddingRight="12dp"
             />
-        <ImageView
-            android:layout_width="12dp"
-            android:layout_height="11dp"
-            android:id="@+id/sharewith"
-            android:src="@mipmap/collect"
-            android:layout_toLeftOf="@id/share"
-            android:layout_below="@id/content"
-            android:layout_marginRight="6dp"
-            />
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -106,7 +108,8 @@
             android:id="@+id/like"
             android:src="@mipmap/collect_s"
             android:layout_below="@id/content"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="5dp"
             />
         <TextView
             android:layout_width="30dp"

@@ -73,6 +73,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             Log.e("qw","123");
 //            WeiXin weiXin=new WeiXin(2,resp.errCode,"");
 //            EventBus.getDefault().post(weiXin);
+            doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
+            doTheTaskPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1004);
             finish();
         }else if(resp.getType()==ConstantsAPI.COMMAND_SENDAUTH){
             Log.e("qw","321");
@@ -100,6 +102,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     break;
                 case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX:
                     // 只是做了简单的finish操作
+
                     finish();
                     break;
                 default:
@@ -117,9 +120,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     finish();
                 }
             case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX: {
-                String result2 = null;
-                doTheTaskPresenter = new DoTheTaskPresenter(new TheTaskResult());
-                doTheTaskPresenter.request(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1004);
+
                 finish();
                 break;
             }

@@ -75,6 +75,7 @@ public class GroupDetailsSettingsActivity extends WDActivity {
     private UploadGroupHeadPicPresenter headPicPresenter;
     MyDialog mDialog;
     private View view;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_group_details_settings;
@@ -106,7 +107,7 @@ public class GroupDetailsSettingsActivity extends WDActivity {
             public void onClick(View v) {
                 choseHeadImageFromCameraCapture();
                 if (!(path == null || path.equals(""))) {
-                    headPicPresenter.request(userid,session1d,groupId, path);
+                    headPicPresenter.request(userid, session1d, groupId, path);
                 }
                 bottomDialog.dismiss();
             }
@@ -115,9 +116,7 @@ public class GroupDetailsSettingsActivity extends WDActivity {
             @Override
             public void onClick(View v) {
                 choseHeadImageFromGallery();
-                if (!(path == null || path.equals(""))) {
-                    headPicPresenter.request(userid,session1d,groupId, path);
-                }
+
                 bottomDialog.dismiss();
             }
         });
@@ -174,6 +173,9 @@ public class GroupDetailsSettingsActivity extends WDActivity {
         switch (requestCode) {
             case CODE_GALLERY_REQUEST:
                 cropRawPhoto(intent.getData());
+                if (!(path == null || path.equals(""))) {
+                    headPicPresenter.request(userid, session1d, groupId, path);
+                }
                 break;
 
             case CODE_CAMERA_REQUEST:
@@ -204,7 +206,9 @@ public class GroupDetailsSettingsActivity extends WDActivity {
                 if (intent != null) {
                     setImageToHeadView(intent);
                 }
-
+                if (!(path == null || path.equals(""))) {
+                    headPicPresenter.request(userid, session1d, groupId, path);
+                }
                 break;
         }
 
@@ -310,8 +314,6 @@ public class GroupDetailsSettingsActivity extends WDActivity {
                 break;
         }
     }
-
-
 
 
     class WhetherInGroup implements ICoreInfe<Result> {
