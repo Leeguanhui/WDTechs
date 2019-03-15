@@ -130,25 +130,7 @@ public class Fragment_Page_one extends WDFragment {
                 mLayout.finishLoadmore();
             }
         });
-        /*xrecy.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                newsBannderPresenter.request();
-                NUM++;
-                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
-                zxxRecyAdapter.notifyDataSetChanged();
-                xrecy.refreshComplete();
-            }
 
-            @Override
-            public void onLoadMore() {
-                newsBannderPresenter.request();
-                NUM++;
-                zxInformationPresenter.request(userId, sessionId,0,NUM,10);
-                zxxRecyAdapter.notifyDataSetChanged();
-                xrecy.loadMoreComplete();
-            }
-        });*/
         banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
@@ -267,11 +249,14 @@ public class Fragment_Page_one extends WDFragment {
     }
 
     private class Bannder implements ICoreInfe<Result<List<NewsBannder>>> {
+        FileSaveUtills fileSaveUtills = new FileSaveUtills();
+        Gson gson = new Gson();
         @Override
         public void success(final Result<List<NewsBannder>> data) {
             result = data.getResult();
             mImages = new ArrayList<>();
             mItitles = new ArrayList<>();
+            FileSaveUtills.saveDataToFile(getActivity(),gson.toJson(result),"poi");
             for (int i = 0; i < result.size(); i++) {
                 mImages.add(result.get(i).getImageUrl());
                 mItitles.add(result.get(i).getTitle());
@@ -303,7 +288,42 @@ public class Fragment_Page_one extends WDFragment {
 
         @Override
         public void fail(ApiException e) {
+            String abc = FileSaveUtills.loadDataFromFile(getContext(), "poi");
+            if (abc!=null){
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<NewsBannder>>() {
+                }.getType();
+                List<NewsBannder> o = gson.fromJson(abc, type);
+                mImages = new ArrayList<>();
+                mItitles = new ArrayList<>();
+                FileSaveUtills.saveDataToFile(getActivity(),gson.toJson(result),"poi");
+                for (int i = 0; i < o.size(); i++) {
+                    mImages.add(o.get(i).getImageUrl());
+                    mItitles.add(o.get(i).getTitle());
+                }
+                banner.setIndicatorVisible(false);
+                banner.setPages(mImages, new MZHolderCreator() {
+                    @Override
+                    public MZViewHolder createViewHolder() {
+                        return new MZViewHolder() {
+                            @Override
+                            public View createView(Context context) {
+                                View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
+                                mImageView = view.findViewById(R.id.simple);
+                                title = view.findViewById(R.id.title);
+                                return view;
+                            }
 
+                            @Override
+                            public void onBind(Context context, int i, Object o) {
+                                mImageView.setImageURI(mImages.get(i));
+                                title.setText(mItitles.get(i));
+                            }
+                        };
+                    }
+                });
+                banner.start();
+            }
         }
     }
 
@@ -343,6 +363,7 @@ public class Fragment_Page_one extends WDFragment {
                 }.getType();
                 Result<List<InfoRecommecndListBean>> o = gson.fromJson(abc, type);
                 zxxRecyAdapter.setList(o.getResult());
+                newsBannderPresenter.request();
             }
 
         }
