@@ -1,6 +1,6 @@
 package com.wd.tech.core;
 
-import com.wd.tech.activity.view.Type;
+
 import com.wd.tech.bean.AllCommentBean;
 import com.wd.tech.bean.AttUserListBean;
 import com.wd.tech.bean.ByIdUserInfoBean;

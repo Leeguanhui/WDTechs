@@ -2,7 +2,6 @@ package com.wd.tech.activity.view;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.wd.tech.R;
@@ -17,10 +16,14 @@ import com.wd.tech.presenter.TypePresenter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class Type extends WDActivity {
-
+/**
+ * 作者：夏洪武
+ * 时间：2019/3/14.
+ * 邮箱：
+ * 说明：
+ */
+public class ZXType extends WDActivity {
     @BindView(R.id.recy)
     RecyclerView recy;
     private TypePresenter typePresenter;
@@ -35,7 +38,7 @@ public class Type extends WDActivity {
     protected void initView(Bundle savedInstanceState) {
         recy.setLayoutManager(new GridLayoutManager(this,2));
         typeAdapter = new TypeAdapter(this);
-        typePresenter = new TypePresenter(new AllType());
+        typePresenter = new TypePresenter(new ZXType.AllType());
         typePresenter.request();
         recy.setAdapter(typeAdapter);
     }

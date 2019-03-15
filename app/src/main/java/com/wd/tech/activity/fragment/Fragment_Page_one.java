@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -24,11 +26,12 @@ import com.wd.tech.activity.adapter.ZXXRecyAdapter;
 import com.wd.tech.activity.view.InfoAdvertisingVo;
 import com.wd.tech.activity.thirdlyactivity.SearchActivity;
 import com.wd.tech.activity.view.NewsDetails;
-import com.wd.tech.activity.view.Type;
+import com.wd.tech.activity.view.ZXType;
 import com.wd.tech.bean.InfoRecommecndListBean;
 import com.wd.tech.bean.LoginUserInfoBean;
 import com.wd.tech.bean.NewsBannder;
 import com.wd.tech.bean.Result;
+import com.wd.tech.core.FileSaveUtills;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.WDFragment;
 import com.wd.tech.core.exception.ApiException;
@@ -40,6 +43,7 @@ import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,7 +174,7 @@ public class Fragment_Page_one extends WDFragment {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), Type.class));
+                startActivity(new Intent(getActivity(), ZXType.class));
             }
         });
         xrecy.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -305,6 +309,8 @@ public class Fragment_Page_one extends WDFragment {
 
 
     private class InforMationList implements ICoreInfe<Result<List<InfoRecommecndListBean>>> {
+        FileSaveUtills fileSaveUtills = new FileSaveUtills();
+        Gson gson = new Gson();
         @Override
         public void success(Result<List<InfoRecommecndListBean>> data) {
             newsBannderPresenter.request();
@@ -315,11 +321,29 @@ public class Fragment_Page_one extends WDFragment {
             }
             zxxRecyAdapter.setUser(userInfo);
             zxxRecyAdapter.setList(result1);
+
+            FileSaveUtills.saveDataToFile(getActivity(),gson.toJson(data),"abc");
+
             Log.e("aaaa", data.getResult() + "");
         }
 
         @Override
         public void fail(ApiException e) {
+            /*String abc = FileSaveUtills.loadDataFromFile(getContext(), "abc");
+            Type type = new TypeToken<List<InfoRecommecndListBean>>() {
+            }.getType();
+            List<InfoRecommecndListBean> o = gson.fromJson(abc, type);
+            zxxRecyAdapter.setList(o);
+            zxxRecyAdapter.notifyDataSetChanged();*/
+
+            String abc = FileSaveUtills.loadDataFromFile(getContext(), "abc");
+            if (abc!=null){
+                Gson gson = new Gson();
+                Type type = new TypeToken<Result<List<InfoRecommecndListBean>>>() {
+                }.getType();
+                Result<List<InfoRecommecndListBean>> o = gson.fromJson(abc, type);
+                zxxRecyAdapter.setList(o.getResult());
+            }
 
         }
     }

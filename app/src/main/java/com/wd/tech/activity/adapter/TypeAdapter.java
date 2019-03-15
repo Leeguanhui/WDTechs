@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wd.tech.R;
 import com.wd.tech.activity.view.SearchType;
-import com.wd.tech.activity.view.Type;
+import com.wd.tech.activity.view.ZXType;
 import com.wd.tech.bean.TypeBean;
 
 import java.util.ArrayList;
@@ -23,10 +23,10 @@ import java.util.List;
  * 说明：
  */
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
-    private final Type context;
+    private final ZXType context;
     private List<TypeBean> list;
 
-    public TypeAdapter(Type type) {
+    public TypeAdapter(ZXType type) {
         this.context=type;
         this.list=new ArrayList<>();
     }
