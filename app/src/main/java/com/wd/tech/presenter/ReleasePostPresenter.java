@@ -1,5 +1,8 @@
 package com.wd.tech.presenter;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.wd.tech.core.AllUrls;
 import com.wd.tech.core.ICoreInfe;
 import com.wd.tech.core.utils.NotWorkUtils;
@@ -24,7 +27,7 @@ public class ReleasePostPresenter extends BasePresenter {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder.addFormDataPart("content", (String) args[2]);
         List<Object> list = (List<Object>) args[3];
-        if (list.size() > 1) {
+        if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 File file = new File(String.valueOf(list.get(i)));
                 builder.addFormDataPart("file", file.getName(),

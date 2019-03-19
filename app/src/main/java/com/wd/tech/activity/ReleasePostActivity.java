@@ -381,17 +381,6 @@ public class ReleasePostActivity extends WDActivity implements CustomAdapt {
         }
     }
 
-//    //Dialog
-//    private void show(View contentViewss) {
-//        bottomDialog.setContentView(contentViewss);
-//        ViewGroup.LayoutParams layoutParams = contentViewss.getLayoutParams();
-//        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-//        contentViewss.setLayoutParams(layoutParams);
-//        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-//        bottomDialog.setCanceledOnTouchOutside(true);
-//        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-//        bottomDialog.show();
-//    }
 
     private ReleasePostAdapter.onAddPicClickListener onAddPicClickListener = new ReleasePostAdapter.onAddPicClickListener() {
 
